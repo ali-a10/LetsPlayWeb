@@ -1,0 +1,12 @@
+
+nav bar:
+    (logged out)
+    - home, about, events, log in, get started (sign up)
+
+    (logged in)
+    - home, about, events, log out (maybe just have this under my account page?), my account
+
+home page:
+    - hook + short sentence under it + picture(s)
+    - get started button somewhere
+    - then explore events button
