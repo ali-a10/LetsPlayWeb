@@ -2,11 +2,49 @@
 nav bar:
     (logged out)
     - home, about, events, log in, get started (sign up)
+        - could also have messages here, but when clicked, it'll show a page saying 
+            log in to view your messages
 
     (logged in)
-    - home, about, events, log out (maybe just have this under my account page?), my account
+    - home, about, events, log out (maybe just have this under my account page?), messages(?), my account
 
 home page:
     - hook + short sentence under it + picture(s)
     - get started button somewhere
     - then explore events button
+
+about page:
+    - about the web app
+        - goals and mission
+        - maybe stats about not exercising
+        - when it was founded (?)
+    - 
+
+events page:
+    - if logged out, have a message saying log in to view events (near you? 
+        or in you area?)
+        - maybe display a sample event to show them what it looks like
+            - idk about this ^ cuz we'll have to somehow tell them it's a sample event
+                not a real one
+    - very similar to the app
+        - as in display events in boxes
+            - try other designs too tho
+    - create event button on the top of the page
+    - option to view events in a map
+
+messages page:
+    - if logged out, have a message saying log in to view messages
+    - simple list of chats (similar to insta)
+    - add option to create message?
+        - but idk if there's gonna be "friends/connections/followers"
+        - or you can look up anyone by username and message them
+
+log in and sign up pages:
+    - standard (look at app design)
+
+
+^pages
+------------------------------------------------------------------------
+
+- have website send notification (to your laptop system), if the texh used for that
+    is useful/popular

@@ -12,6 +12,11 @@ app.get('/', (req, res) => {
   });
 
 
+app.get('/about', (req, res) => {
+  res.sendFile(__dirname + '/static-content/about.html');
+});
+
+
 app.post('/submit', (req, res) => {
   const name = req.body.name;
   const age = req.body;
