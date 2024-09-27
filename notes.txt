@@ -31,6 +31,12 @@ events page:
             - try other designs too tho
     - create event button on the top of the page
     - option to view events in a map
+    --------------------------
+    leads to the following pages:
+    - create event
+    - view event
+    - view user account/info
+    - view events by map
 
 messages page:
     - if logged out, have a message saying log in to view messages
@@ -38,10 +44,18 @@ messages page:
     - add option to create message?
         - but idk if there's gonna be "friends/connections/followers"
         - or you can look up anyone by username and message them
+    --------------------------
+    leads to the following pages:
+    - chat with user
+    - search for user?
 
 log in and sign up pages:
     - standard (look at app design)
 
+
+my account page (if logged in):
+    - should users be directed to a different page to edit?
+        - or replace the (form w/ text) with a (form w/ textboxes)?
 
 ^pages
 ------------------------------------------------------------------------
