@@ -62,3 +62,15 @@ my account page (if logged in):
 
 - have website send notification (to your laptop system), if the texh used for that
     is useful/popular
+
+------------------------------------------------------------------------
+API methods to have:
+
+- login (get user)
+- sign up (create user)
+- view event
+- create/post event
+- join event
+- leave event
+- search for user
+- messaging?
