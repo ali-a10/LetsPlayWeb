@@ -117,4 +117,14 @@
   .events-container::-webkit-scrollbar-thumb:hover {
     background-color: #555; /* Scrollbar hover color */
   }
+
+.event-list {
+  display: flex;
+  align-items: center;
+}
   
+  /* Button styling */
+#show-form-btn {
+  margin-left: 2%;
+  margin-bottom: 10px;
+}

@@ -31,6 +31,11 @@ function getEvents() {
   }
   
 
+// Show/hide the event form when the button is clicked
+$('#show-form-btn').on('click', function() {
+    $('#event-form').toggle(); // Toggle visibility of the form
+});
+
 
 
 document.getElementById('event-form').addEventListener('submit', function(e) {

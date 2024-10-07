@@ -32,90 +32,89 @@
     </div>
   </header>
 
-  <!-- Runs Section -->
-  <section id="runs" class="py-5">
-    <div class="container">
-      <h2>Runs</h2>
-      <p>This section will showcase the runs you've completed or plan to complete.</p>
+  <div class="container">
+    <!-- Events Section -->
+    <section id="runs" class="py-5">
+        <h1>Events</h1>
+        <p>This section will showcase the events you've completed or plan to complete.</p>
+    </section>
+
+
+    <!-- Event boxes section -->
+    <section id="event-list" class="event-list">
+      <h2>My Events</h2>
+      <button id="show-form-btn" class="btn btn-primary">Create Event</button>  
+
+      <div id="events-container" class="events-container"></div>
+    </section>
+
+    <!-- create event form -->
+    <div class="container my-5">
+      <form id="event-form" style="display: none;">
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="Event Title" required>
+        </div>
+
+        <!-- Time -->
+        <div class="mb-3">
+          <label for="time" class="form-label">Time</label>
+          <input type="time" class="form-control" id="time" name="time" required>
+        </div>
+
+        <!-- Date -->
+        <div class="mb-3">
+          <label for="date" class="form-label">Date</label>
+          <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+
+        <!-- Sport Dropdown -->
+        <div class="mb-3">
+          <label for="sport" class="form-label">Sport</label>
+          <select class="form-select" id="sport" name="sport" required>
+            <option value="">Select a sport</option>
+            <option value="soccer">Soccer</option>
+            <option value="basketball">Basketball</option>
+            <option value="volleyball">Volleyball</option>
+          </select>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" class="form-control" id="location" name="location" placeholder="Event Location" required>
+        </div>
+
+        <!-- Price -->
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input type="text" class="form-control" id="price" name="price" placeholder="Event Price" required>
+        </div>
+
+        <!-- Max Number of Participants -->
+        <div class="mb-3">
+          <label for="max-participants" class="form-label">Max Number of Participants</label>
+          <input type="number" class="form-control" id="max-participants" name="maxParticipants" placeholder="Max Participants" min="1" required>
+        </div>
+
+        <!-- Current Number of Participants -->
+        <div class="mb-3">
+          <label for="current-participants" class="form-label">Current Number of Participants</label>
+          <input type="number" class="form-control" id="current-participants" name="currentParticipants" placeholder="Current Participants" min="0" required>
+        </div>
+
+        <!-- Notes -->
+        <div class="mb-3">
+          <label for="notes" class="form-label">Notes</label>
+          <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any additional notes"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Create Event</button>
+      </form>
     </div>
-  </section>
-
-  
-
-  <!-- create event form -->
-  <div class="container my-5">
-    <form id="event-form">
-      <!-- Title -->
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Event Title" required>
-      </div>
-
-      <!-- Time -->
-      <!-- <div class="mb-3">
-        <label for="time" class="form-label">Time</label>
-        <input type="time" class="form-control" id="time" name="time" required>
-      </div> -->
-
-      <!-- Date -->
-      <div class="mb-3">
-        <label for="date" class="form-label">Date</label>
-        <input type="date" class="form-control" id="date" name="date" required>
-      </div>
-
-      <!-- Sport Dropdown -->
-      <div class="mb-3">
-        <label for="sport" class="form-label">Sport</label>
-        <select class="form-select" id="sport" name="sport" required>
-          <option value="">Select a sport</option>
-          <option value="soccer">Soccer</option>
-          <option value="basketball">Basketball</option>
-          <option value="volleyball">Volleyball</option>
-        </select>
-      </div>
-
-      <!-- Location -->
-      <!-- <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input type="text" class="form-control" id="location" name="location" placeholder="Event Location" required>
-      </div> -->
-
-      <!-- Price -->
-      <div class="mb-3">
-        <label for="price" class="form-label">Price</label>
-        <input type="text" class="form-control" id="price" name="price" placeholder="Event Price" required>
-      </div>
-
-      <!-- Max Number of Participants -->
-      <!-- <div class="mb-3">
-        <label for="max-participants" class="form-label">Max Number of Participants</label>
-        <input type="number" class="form-control" id="max-participants" name="maxParticipants" placeholder="Max Participants" min="1" required>
-      </div> -->
-
-      <!-- Current Number of Participants -->
-      <!-- <div class="mb-3">
-        <label for="current-participants" class="form-label">Current Number of Participants</label>
-        <input type="number" class="form-control" id="current-participants" name="currentParticipants" placeholder="Current Participants" min="0" required>
-      </div> -->
-
-      <!-- Notes -->
-      <!-- <div class="mb-3">
-        <label for="notes" class="form-label">Notes</label>
-        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any additional notes"></textarea>
-      </div> -->
-
-      <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary w-100">Create Event</button>
-    </form>
   </div>
-
-
-  <!-- Event boxes section -->
-  <section id="event-list" class="event-list">
-    <h2>My Events</h2>
-    <div id="events-container" class="events-container"></div>
-  </section>
-
 
 
   <!-- Footer -->
