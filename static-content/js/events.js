@@ -16,7 +16,7 @@ document.getElementById('event-form').addEventListener('submit', function(e) {
 
   
     // Send form data to the server using AJAX (Fetch API)
-    // fetch('/submit-event', {
+    // fetch('/create-event', {
     //   method: 'POST',
     //   headers: {
     //     'Content-Type': 'application/json',
@@ -31,5 +31,20 @@ document.getElementById('event-form').addEventListener('submit', function(e) {
     // .catch((error) => {
     //   console.error('Error:', error);
     // });
+    
+    $.ajax({
+        method: "POST",
+        url: '/create-event',
+        data: JSON.stringify(formData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+      })
+      .done(function(data, textStatus, jqXHR) {
+        console.log(jqXHR.status + " " + textStatus); 
+        console.log("Server Response: " + JSON.stringify(data));
+      })
+      .fail(function(err) {
+        console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+      });
   });
   

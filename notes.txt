@@ -30,6 +30,7 @@ events page:
         - as in display events in boxes
             - try other designs too tho
     - create event button on the top of the page
+    - have a "my events" section
     - option to view events in a map
     --------------------------
     leads to the following pages:

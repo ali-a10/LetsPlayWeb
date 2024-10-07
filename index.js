@@ -6,6 +6,7 @@ app.use(express.json()); // Middleware to parse JSON data in request bodies
 app.use(express.urlencoded({ extended: true })); // support encoded bodies
 app.use(express.static('static-content')); // Serve static files from 'static-content' directory
 
+const events = [];  // This will act as the "database" for now
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/static-content/index.html');
@@ -32,6 +33,38 @@ app.post('/submit', (req, res) => {
 app.get('/testing', (req, res) => {
   res.send("200!!!!!!!!!!");
 })
+
+//////////////// Events page ////////////////
+app.post('/create-event', (req, res) => {
+  const { title, time, date, sport, location, /*price,*/ maxParticipants, currentParticipants } = req.body;
+  if (!title || !time || !date || !sport || !location || !price || !maxParticipants || !currentParticipants) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+  // will also need user info in the event (username, maybe date event is created)
+  // might want to give events ids
+  const newEvent = {
+    title,
+    time,
+    date,
+    sport,
+    location,
+    price,
+    maxParticipants,
+    currentParticipants,
+    notes
+  };
+
+  events.push(newEvent);
+
+  // Sending a response back to the client
+  // res.status(201).json({
+  //   message: 'Event created successfully!',
+  //   event: newEvent
+  // });
+  res.status(400);
+  res.json({ event: newEvent })
+});
+
 
 
 app.listen(port, () => {
