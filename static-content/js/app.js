@@ -20,6 +20,10 @@ function clicked(){
   posttest();
 }
 
+function CreateEventClicked(){
+  
+}
+
 function testF(){
   $.ajax({
     method: "GET",
