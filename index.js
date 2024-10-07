@@ -35,33 +35,27 @@ app.get('/testing', (req, res) => {
 })
 
 //////////////// Events page ////////////////
+app.get('/events', (req, res) => {
+  res.json(events);  // Respond with the list of events (your "database")
+});
+
+
 app.post('/create-event', (req, res) => {
-  const { title, time, date, sport, location, /*price,*/ maxParticipants, currentParticipants } = req.body;
-  if (!title || !time || !date || !sport || !location || !price || !maxParticipants || !currentParticipants) {
+  const { title, date, sport, price } = req.body;
+  if (!title || !date || !sport || !price) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
   // will also need user info in the event (username, maybe date event is created)
   // might want to give events ids
   const newEvent = {
     title,
-    time,
     date,
     sport,
-    location,
     price,
-    maxParticipants,
-    currentParticipants,
-    notes
   };
 
   events.push(newEvent);
-
-  // Sending a response back to the client
-  // res.status(201).json({
-  //   message: 'Event created successfully!',
-  //   event: newEvent
-  // });
-  res.status(400);
+  res.status(201);
   res.json({ event: newEvent })
 });
 
