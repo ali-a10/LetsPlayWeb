@@ -34,6 +34,7 @@ events page:
     --------------------------
     leads to the following pages:
     - create event
+        - have a user class, event class, user.events will have a list of Events
     - view event
     - view user account/info
     - view events by map
