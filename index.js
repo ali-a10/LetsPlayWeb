@@ -6,7 +6,43 @@ app.use(express.json()); // Middleware to parse JSON data in request bodies
 app.use(express.urlencoded({ extended: true })); // support encoded bodies
 app.use(express.static('static-content')); // Serve static files from 'static-content' directory
 
-const events = [];  // This will act as the "database" for now
+let events = [];  // This will act as the "database" for now
+let users = [ {
+  username: 'ali',
+  email: 'ali@mail.com',
+  password: '123'
+} ];
+
+app.post('/signup', (req, res) => {
+  const { username, email, password } = req.body;
+
+  // Check if user already exists
+  const userExists = users.some(user => user.username === username || user.email === email);
+
+  if (userExists) {
+    res.status(400);
+    res.json({ message: 'User already exists' });
+    return;
+  }
+
+  const newUser = { username, email, password };
+  users.push(newUser);
+  res.status(201).json({ message: 'User created successfully' });
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  const user = users.find(user => user.username === username && user.password === password);
+
+  if (user) {
+    res.json({ success: true });  ////// it was res.status(200).json(...), so make sure the status is 200
+  } else {
+    res.status(401);
+    res.json({ success: false, message: 'Invalid username or password' });
+  }
+});
+
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/static-content/index.html');
