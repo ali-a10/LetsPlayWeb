@@ -58,4 +58,11 @@ function posttest(){
     console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
   });
 }
-  
+
+
+/******************************************************************************
+ * onload                 FROM csc309/a2/wordlep2/static-content/controller.js
+ ******************************************************************************/
+$(function(){
+	console.log("ready");
+});

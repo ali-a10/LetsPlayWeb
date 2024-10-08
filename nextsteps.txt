@@ -1,0 +1,5 @@
+- session cookies to keep track of whos logged in
+
+- if user is logged in, remove login/signup btns from nav
+    - replace with a "my account" btn
+- get sign up to work
