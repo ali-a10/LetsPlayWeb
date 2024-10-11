@@ -13,6 +13,11 @@ let users = [ {
   password: '123'
 } ];
 
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/static-content/index.html');
+// });
+
+//////////////// Signup & login ////////////////
 app.post('/signup', (req, res) => {
   const { username, email, password } = req.body;
 
@@ -30,6 +35,7 @@ app.post('/signup', (req, res) => {
   res.status(201).json({ message: 'User created successfully' });
 });
 
+
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -44,16 +50,11 @@ app.post('/login', (req, res) => {
 });
 
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/static-content/index.html');
-  });
+// app.get('/about', (req, res) => {
+//   res.sendFile(__dirname + '/static-content/about.html');
+// });
 
-
-app.get('/about', (req, res) => {
-  res.sendFile(__dirname + '/static-content/about.html');
-});
-
-
+//////////////// testing ////////////////
 app.post('/submit', (req, res) => {
   const name = req.body.name;
   const age = req.body;
@@ -69,6 +70,7 @@ app.post('/submit', (req, res) => {
 app.get('/testing', (req, res) => {
   res.send("200!!!!!!!!!!");
 })
+
 
 //////////////// Events page ////////////////
 app.get('/events', (req, res) => {

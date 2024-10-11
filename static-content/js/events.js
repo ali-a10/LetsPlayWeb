@@ -39,7 +39,7 @@ $('#show-form-btn').on('click', function() {
 
 
 document.getElementById('event-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();  // Prevent page from refreshing/navigating
   
     // Gather form data
     const formData = {
