@@ -1,9 +1,17 @@
 const express = require('express');
+const session = require('express-session');
 const app = express();
 const port = 3000;
 
 app.use(express.json()); // Middleware to parse JSON data in request bodies
 app.use(express.urlencoded({ extended: true })); // support encoded bodies
+app.use(session({
+  secret: 'your-secret-key', // Use a strong secret key
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 60000 * 60 } // maxAge is 1 hour, adjust as needed
+  })
+);
 app.use(express.static('static-content')); // Serve static files from 'static-content' directory
 
 let events = [];  // This will act as the "database" for now
@@ -11,11 +19,18 @@ let users = [ {
   username: 'ali',
   email: 'ali@mail.com',
   password: '123'
+},
+{
+  username: 'ali12',
+  email: 'ali@mail.com',
+  password: '123'
 } ];
 
-// app.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/static-content/index.html');
-// });
+app.get('/', (req, res) => {
+  console.log("RTESTING");
+
+  // res.sendFile(__dirname + '/static-content/index.html');
+});
 
 //////////////// Signup & login ////////////////
 app.post('/signup', (req, res) => {
@@ -42,6 +57,9 @@ app.post('/login', (req, res) => {
   const user = users.find(user => user.username === username && user.password === password);
 
   if (user) {
+    req.session.user = user;
+    console.log(req.session);
+    console.log(req.sessionID);
     res.json({ success: true });  ////// it was res.status(200).json(...), so make sure the status is 200
   } else {
     res.status(401);
@@ -59,6 +77,7 @@ app.post('/submit', (req, res) => {
   const name = req.body.name;
   const age = req.body;
   console.log(name);
+  console.log(req.sessionID);
 
   // Process form data (e.g., log it or send an email)
   // console.log("here");\
@@ -74,6 +93,10 @@ app.get('/testing', (req, res) => {
 
 //////////////// Events page ////////////////
 app.get('/events', (req, res) => {
+  console.log(req.session);
+  console.log(req.sessionID);
+  // req.session.visited = true;
+
   res.json(events);  // Respond with the list of events (your "database")
 });
 
