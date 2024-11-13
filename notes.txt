@@ -1,4 +1,14 @@
 
+CODE NOTES:
+- fetch vs $.ajax
+    - fetch is built in to JS, ajax is using jQuery library
+    - fetch is promise based (.then .catch)       ajax is callback based (.done .fail)
+
+
+_______________________________________________________________________________________
+WEBSITE NOTES:
+
+
 nav bar:
     (logged out)
     - home, about, events, log in, get started (sign up)
