@@ -57,7 +57,7 @@ app.post('/login', (req, res) => {
   const user = users.find(user => user.username === username && user.password === password);
 
   if (user) {
-    req.session.user = user;
+    req.session.user = { username : user.username };
     console.log(req.session);
     console.log(req.sessionID);
     res.json({ success: true });  ////// it was res.status(200).json(...), so make sure the status is 200
@@ -66,6 +66,51 @@ app.post('/login', (req, res) => {
     res.json({ success: false, message: 'Invalid username or password' });
   }
 });
+
+
+app.get('/logout', function (req, res, next) {
+  // logout logic
+
+  // clear the user from the session object and save.
+  // this will ensure that re-using the old session id
+  // does not have a logged in user
+
+  // ALI edit: should check that a user is logged in first
+  req.session.user = null
+  req.session.save(function (err) {
+    if (err) res.json({ success: false, message: 'error for Log out' })//next(err)
+
+    // regenerate the session, which is good practice to help
+    // guard against forms of session fixation
+    req.session.regenerate(function (err) {
+      if (err) res.json({ success: false, message: 'error for Log out' })//next(err)
+      console.log(req.session);
+      res.json({ success: true, message: 'Logged out' });
+    })
+    
+    
+    // req.session.destroy(function(err) {
+    //   if (err) {
+    //     return res.status(500).send('Failed to destroy session.');
+    //   }
+    //   console.log(req.session);
+    //   res.json({ success: true, message: 'Logged out' });
+      
+    // })
+
+
+    
+  })
+})
+
+
+app.get('/auth/status', (req, res) => {
+  if (req.session.user) {
+    res.json({ loggedIn: true, user: req.session.user });
+  } else {
+    res.json({ loggedIn: false });
+  }
+})
 
 
 // app.get('/about', (req, res) => {
@@ -93,8 +138,10 @@ app.get('/testing', (req, res) => {
 
 //////////////// Events page ////////////////
 app.get('/events', (req, res) => {
+  req.session.event = 1;
   console.log(req.session);
   console.log(req.sessionID);
+  
   // req.session.visited = true;
 
   res.json(events);  // Respond with the list of events (your "database")
