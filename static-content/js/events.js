@@ -1,5 +1,4 @@
 $(document).ready(function() {  
-    // Call fetchEvents on page load
     // getEvents();
     checkLoginStatus();
 });
@@ -18,6 +17,10 @@ function checkLoginStatus() {
     console.log(jqXHR.status + " " + textStatus); 
     console.log("Server Response: " + JSON.stringify(data));
     if (data.loggedIn) {
+      document.getElementById('login-btn').style.display = 'none';
+      document.getElementById('signup-btn').style.display = 'none';
+      document.getElementById('logout-btn').style.display = 'block';
+      document.getElementById('myaccount-btn').style.display = 'block';
       document.getElementById('event-list').style.display = 'block';
       getEvents();
     }
@@ -55,6 +58,32 @@ function getEvents() {
       .catch(error => console.error('Error fetching events:', error));
   }
   
+
+// using addEventListener not onclick to keep the JS and HTML separate
+document.getElementById('logout-btn').addEventListener('click', () => {
+  $.ajax({
+    method: "GET",
+    url: '/logout',
+    processData: false,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json"
+  })
+  .done(function(data, textStatus, jqXHR) {
+    console.log(jqXHR.status + " " + textStatus); 
+    console.log("Server Response: " + JSON.stringify(data));
+    window.location.href = '/'; // Redirect to home page after logout
+  })
+  .fail(function(err) {
+    console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+  });
+  
+  // fetch('/logout')
+  //   .then(() => {
+  //     window.location.href = '/'; // Redirect to home page after logout
+  //   })
+  //   .catch(error => console.error('Error logging out:', error));
+});
+
 
 // Show/hide the event form when the button is clicked
 $('#show-form-btn').on('click', function() {

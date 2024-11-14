@@ -1,12 +1,7 @@
 - review gpt page on promises vs callbacks
 
-- make session useful
-    - make create events btn in the events page only visible if logged in
-
 - session cookies to keep track of whos logged in
 
-- if user is logged in, remove login/signup btns from nav
-    - replace with a "my account" btn
 - get sign up to work
 
 - look into hashing login password

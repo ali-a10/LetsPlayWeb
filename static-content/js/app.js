@@ -32,6 +32,7 @@ function checkLoginStatus() {
       document.getElementById('login-btn').style.display = 'none';
       document.getElementById('signup-btn').style.display = 'none';
       document.getElementById('logout-btn').style.display = 'block';
+      document.getElementById('myaccount-btn').style.display = 'block';
       document.getElementById('welcome-msg').innerText = `Welcome, ${data.user.username}!`;
     } else {
       // User is not logged in, display login/signup options
