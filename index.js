@@ -141,7 +141,10 @@ app.get('/events', (req, res) => {
   req.session.event = 1;
   console.log(req.session);
   console.log(req.sessionID);
-  
+  if (req.session.user){
+    res.json(events);
+    return;
+  }
   // req.session.visited = true;
 
   res.json(events);  // Respond with the list of events (your "database")

@@ -1,7 +1,32 @@
 $(document).ready(function() {  
     // Call fetchEvents on page load
-    getEvents();
+    // getEvents();
+    checkLoginStatus();
 });
+
+// Call the login check API on page load
+function checkLoginStatus() {
+  console.log("checking login status...");
+  $.ajax({
+    method: "GET",
+    url: '/auth/status',
+    processData: false,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json"
+  })
+  .done(function(data, textStatus, jqXHR) {
+    console.log(jqXHR.status + " " + textStatus); 
+    console.log("Server Response: " + JSON.stringify(data));
+    if (data.loggedIn) {
+      document.getElementById('event-list').style.display = 'block';
+      getEvents();
+    }
+  })
+  .fail(function(err) {
+    console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+  });
+}
+
 
 // Fetch events from the server
 function getEvents() {

@@ -28,18 +28,18 @@ function checkLoginStatus() {
     console.log(jqXHR.status + " " + textStatus); 
     console.log("Server Response: " + JSON.stringify(data));
     if (data.loggedIn) {
-        // User is logged in, display user-specific elements
-        document.getElementById('login-btn').style.display = 'none';
-        document.getElementById('signup-btn').style.display = 'none';
-        document.getElementById('logout-btn').style.display = 'block';
-        document.getElementById('welcome-msg').innerText = `Welcome, ${data.user.username}!`;
-      } else {
-        // User is not logged in, display login/signup options
-        document.getElementById('login-btn').style.display = 'block';
-        document.getElementById('signup-btn').style.display = 'block';
-        document.getElementById('logout-btn').style.display = 'none';
-        document.getElementById('welcome-msg').innerText = '';
-      }
+      // User is logged in, display user-specific elements
+      document.getElementById('login-btn').style.display = 'none';
+      document.getElementById('signup-btn').style.display = 'none';
+      document.getElementById('logout-btn').style.display = 'block';
+      document.getElementById('welcome-msg').innerText = `Welcome, ${data.user.username}!`;
+    } else {
+      // User is not logged in, display login/signup options
+      document.getElementById('login-btn').style.display = 'block';
+      document.getElementById('signup-btn').style.display = 'block';
+      document.getElementById('logout-btn').style.display = 'none';
+      document.getElementById('welcome-msg').innerText = '';
+    }
   })
   .fail(function(err) {
     console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
