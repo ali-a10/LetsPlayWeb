@@ -138,16 +138,15 @@ app.get('/testing', (req, res) => {
 
 //////////////// Events page ////////////////
 app.get('/events', (req, res) => {
-  req.session.event = 1;
   console.log(req.session);
   console.log(req.sessionID);
-  if (req.session.user){
-    res.json(events);
+  if (req.session.user && req.session.events){
+    res.json(req.session.events);
     return;
   }
   // req.session.visited = true;
-
-  res.json(events);  // Respond with the list of events (your "database")
+  res.status(400).json({ error: 'Missing required fields' }); //temporsry, change to correct error msg & code
+  // res.json(events);  // Respond with the list of events (your "database")
 });
 
 
@@ -164,7 +163,12 @@ app.post('/create-event', (req, res) => {
     sport,
     price,
   };
-
+  if (req.session.events){
+    req.session.events.push(newEvent);
+  }
+  else {
+    req.session.events = [newEvent];
+  }
   events.push(newEvent);
   res.status(201);
   res.json({ event: newEvent })
