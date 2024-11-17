@@ -1,21 +1,19 @@
-// Show Sign-up Form and hide Login Form
-document.getElementById('show-signup').addEventListener('click', (event) => {
-    event.preventDefault();  // Prevent page from refreshing/navigating
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('signup-form').style.display = 'block';
-    document.getElementById('login-link').style.display = 'block';
-    document.getElementById('show-signup').parentNode.style.display = 'none'; // Hide "Don't have an account" link
+$(document).ready(function () {
+  // Check if we're in "create" or "edit" mode based on the current page URL
+  const path = window.location.pathname;
+  const isSignUpMode = path.includes('create');  // Check if URL contains 'create'
+
+  // Update page elements based on the mode
+  if (isSignUpMode) {
+    document.getElementById('login-link').style.display = "block";
+    document.getElementById('save-button').style.display = "none";
+  } else {
+    document.getElementById('login-link').style.display = "none";
+    document.getElementById('save-button').style.display = "block";
+  }
 });
-  
-// Show Login Form and hide Sign-up Form
-document.getElementById('show-login').addEventListener('click', (event) => {
-  event.preventDefault();  // Prevent page from refreshing/navigating
-  document.getElementById('signup-form').style.display = 'none';
-  document.getElementById('login-form').style.display = 'block';
-  document.getElementById('login-link').style.display = 'none';
-  document.getElementById('show-signup').parentNode.style.display = 'block'; // Show "Don't have an account" link
-});
-  
+
+
 // Sign up function
 function signup(event) {
   event.preventDefault();  // Prevent page from refreshing/navigating

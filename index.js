@@ -26,11 +26,17 @@ let users = [ {
   password: '123'
 } ];
 
-app.get('/', (req, res) => {
-  console.log("RTESTING");
-
-  // res.sendFile(__dirname + '/static-content/index.html');
+app.get('/account/:action', (req, res) => {
+  res.sendFile(__dirname + '/static-content/account.html');
 });
+
+app.get('/a', (req, res) => {
+  console.log("/a");
+
+  res.sendFile(__dirname + '/static-content/about.html');
+});
+
+
 
 //////////////// Signup & login ////////////////
 app.post('/signup', (req, res) => {
