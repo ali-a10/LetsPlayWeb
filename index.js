@@ -30,11 +30,11 @@ app.get('/account/:action', (req, res) => {
   res.sendFile(__dirname + '/static-content/account.html');
 });
 
-app.get('/a', (req, res) => {
-  console.log("/a");
+// app.get('/a', (req, res) => {
+//   console.log("/a");
 
-  res.sendFile(__dirname + '/static-content/about.html');
-});
+//   res.sendFile(__dirname + '/static-content/about.html');
+// });
 
 
 

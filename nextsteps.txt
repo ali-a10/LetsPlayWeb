@@ -1,3 +1,5 @@
+- make login page same as rest of website pages
+
 - review gpt page on promises vs callbacks
 
 - session cookies to keep track of whos logged in
