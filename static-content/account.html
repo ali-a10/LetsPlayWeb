@@ -15,7 +15,7 @@
   <!-- Header Section with Navigation -->
   <header class="bg-primary text-white py-3">
     <div class="container">
-      <h1>My Web App</h1>
+      <h1>My Account</h1>
       <nav>
         <ul class="nav">
           <!-- <li class="nav-item"><a class="nav-link text-white" href="home">Home</a></li>
@@ -38,30 +38,23 @@
     </div>
   </header>
 
-  <!-- Home Section -->
-  <section id="home" class="py-5">
-    <div class="container">
-      <h2>Welcome to the Home Page</h2>
-      <p id="welcome-msg"></p>
-      <p>This is the homepage section. Welcome to the new and improved layout of our website!</p>
-    </div>
-  </section>
+  <main>
+    <form id="account-form">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
 
-  <!-- About Section -->
-  <!-- <section id="about" class="py-5 bg-light">
-    <div class="container">
-      <h2>About Us</h2>
-      <p>This section contains information about the website and its purpose.</p>
-    </div>
-  </section> -->
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
 
-  <!-- Runs Section -->
-  <!-- <section id="runs" class="py-5">
-    <div class="container">
-      <h2>Runs</h2>
-      <p>This section will showcase the runs you've completed or plan to complete.</p>
-    </div>
-  </section> -->
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button id="account-button" type="submit">Save</button>
+      <section id="login-link"  style="display: none;">
+        <p>Already have an account? <a id="toggle-login" href="login.html">Log in</a></p>
+      </section>
+    </form>
+  </main>
 
   <!-- Footer -->
   <footer class="bg-dark text-white py-3">
