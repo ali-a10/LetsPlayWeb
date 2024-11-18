@@ -1,34 +1,27 @@
+import { checkLoginStatus } from './auth.js';
+
 $(document).ready(function() {  
     // getEvents();
-    checkLoginStatus();
+    checkLoginStatus()
+      .then(isLoggedIn => {
+        if (isLoggedIn) {
+          document.getElementById('login-btn').style.display = 'none';
+          document.getElementById('signup-btn').style.display = 'none';
+          document.getElementById('logout-btn').style.display = 'block';
+          document.getElementById('myaccount-btn').style.display = 'block';
+          document.getElementById('event-list').style.display = 'block';
+          getEvents();
+        } else {
+            // User is not logged in, display login/signup options
+            document.getElementById('login-btn').style.display = 'block';
+            document.getElementById('signup-btn').style.display = 'block';
+            document.getElementById('logout-btn').style.display = 'none';
+        }
+      })
+      .catch(error => {
+        console.log("ERROR from check login: ", error)
+      });
 });
-
-// Call the login check API on page load
-function checkLoginStatus() {
-  console.log("checking login status...");
-  $.ajax({
-    method: "GET",
-    url: '/auth/status',
-    processData: false,
-    contentType: "application/json; charset=utf-8",
-    dataType: "json"
-  })
-  .done(function(data, textStatus, jqXHR) {
-    console.log(jqXHR.status + " " + textStatus); 
-    console.log("Server Response: " + JSON.stringify(data));
-    if (data.loggedIn) {
-      document.getElementById('login-btn').style.display = 'none';
-      document.getElementById('signup-btn').style.display = 'none';
-      document.getElementById('logout-btn').style.display = 'block';
-      document.getElementById('myaccount-btn').style.display = 'block';
-      document.getElementById('event-list').style.display = 'block';
-      getEvents();
-    }
-  })
-  .fail(function(err) {
-    console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
-  });
-}
 
 
 // Fetch events from the server

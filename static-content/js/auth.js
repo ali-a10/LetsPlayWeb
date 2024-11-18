@@ -1,5 +1,24 @@
 if (window.location.pathname.includes('/account')) {
   $(document).ready(function () {
+    checkLoginStatus()
+      .then(isLoggedIn => {
+        if (isLoggedIn) {
+          document.getElementById('login-btn').style.display = 'none';
+          document.getElementById('signup-btn').style.display = 'none';
+          document.getElementById('logout-btn').style.display = 'block';
+          document.getElementById('myaccount-btn').style.display = 'block';
+        } else {
+            // User is not logged in, display login/signup options
+            document.getElementById('login-btn').style.display = 'block';
+            document.getElementById('signup-btn').style.display = 'block';
+            document.getElementById('logout-btn').style.display = 'none';
+        }
+      })
+      .catch(error => {
+        console.log("ERROR from check login: ", error)
+      });
+
+
     // Check if we're in "create" or "edit" mode based on the current page URL
     const path = window.location.pathname;
     const isSignUpMode = path.includes('create');  // Check if URL contains 'create'
@@ -13,6 +32,9 @@ if (window.location.pathname.includes('/account')) {
       document.getElementById('save-button').style.display = "block";
     }
   });
+}
+else if (window.location.pathname.includes('/login')) {
+  document.getElementById('login-form').addEventListener('submit', login);
 }
 
 
@@ -70,6 +92,32 @@ export function checkLoginStatus() {
 }
 
 
+// using addEventListener not onclick to keep the JS and HTML separate
+document.getElementById('logout-btn').addEventListener('click', () => {
+  $.ajax({
+    method: "GET",
+    url: '/logout',
+    processData: false,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json"
+  })
+  .done(function(data, textStatus, jqXHR) {
+    console.log(jqXHR.status + " " + textStatus); 
+    console.log("Server Response: " + JSON.stringify(data));
+    window.location.href = '/'; // Redirect to home page after logout
+  })
+  .fail(function(err) {
+    console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+  });
+  
+  // fetch('/logout')
+  //   .then(() => {
+  //     window.location.href = '/'; // Redirect to home page after logout
+  //   })
+  //   .catch(error => console.error('Error logging out:', error));
+});
+
+
 // Sign up function
 function signup(event) {
   event.preventDefault();  // Prevent page from refreshing/navigating
@@ -96,6 +144,7 @@ function signup(event) {
 
 // Log in function
 function login(event) {
+  console.log("LOGGING IN");
   event.preventDefault();  // Prevent page from refreshing/navigating
 
   const username = document.getElementById('login-username').value;
