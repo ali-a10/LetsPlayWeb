@@ -1,16 +1,19 @@
-1. make login page same as rest of website pages
 
-2. check console when we go to events.html while logged in (getting a 400 bad request for get method)
-
-3. check if we can addEventListener for logout button once in all 3 files
+1. check if we can addEventListener for logout button once in all 3 files
     - rn it's there in every files
     - we can prob do this easily in react but check if there's a way rn too
+
+2. make all URLs clean (without .html) and using api calls
+    - check index.html nav comments
+
+3. add text file database
+
+4. get sign up to work
 
 
 - review gpt page on promises vs callbacks
 
 - session cookies to keep track of whos logged in
 
-- get sign up to work
 
 - look into hashing login password

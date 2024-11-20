@@ -30,13 +30,6 @@ app.get('/account/:action', (req, res) => {
   res.sendFile(__dirname + '/static-content/account.html');
 });
 
-// app.get('/a', (req, res) => {
-//   console.log("/a");
-
-//   res.sendFile(__dirname + '/static-content/about.html');
-// });
-
-
 
 //////////////// Signup & login ////////////////
 app.post('/signup', (req, res) => {
@@ -75,8 +68,6 @@ app.post('/login', (req, res) => {
 
 
 app.get('/logout', function (req, res, next) {
-  // logout logic
-
   // clear the user from the session object and save.
   // this will ensure that re-using the old session id
   // does not have a logged in user
@@ -84,16 +75,15 @@ app.get('/logout', function (req, res, next) {
   // ALI edit: should check that a user is logged in first
   req.session.user = null
   req.session.save(function (err) {
-    if (err) res.json({ success: false, message: 'error for Log out' })//next(err)
+  if (err) res.json({ success: false, message: 'error for Log out' })//next(err)
 
-    // regenerate the session, which is good practice to help
-    // guard against forms of session fixation
-    req.session.regenerate(function (err) {
-      if (err) res.json({ success: false, message: 'error for Log out' })//next(err)
-      console.log(req.session);
-      res.json({ success: true, message: 'Logged out' });
-    })
-    
+  // regenerate the session, which is good practice to help
+  // guard against forms of session fixation
+  req.session.regenerate(function (err) {
+    if (err) res.json({ success: false, message: 'error for Log out' })//next(err)
+    console.log(req.session);
+    res.json({ success: true, message: 'Logged out' });
+  })
     
     // req.session.destroy(function(err) {
     //   if (err) {
@@ -102,10 +92,7 @@ app.get('/logout', function (req, res, next) {
     //   console.log(req.session);
     //   res.json({ success: true, message: 'Logged out' });
       
-    // })
-
-
-    
+    // }) 
   })
 })
 
@@ -118,10 +105,6 @@ app.get('/auth/status', (req, res) => {
   }
 })
 
-
-// app.get('/about', (req, res) => {
-//   res.sendFile(__dirname + '/static-content/about.html');
-// });
 
 //////////////// testing ////////////////
 app.post('/submit', (req, res) => {
@@ -137,20 +120,14 @@ app.post('/submit', (req, res) => {
 });
 
 
-app.get('/testing', (req, res) => {
-  res.send("200!!!!!!!!!!");
-})
-
-
 //////////////// Events page ////////////////
 app.get('/events', (req, res) => {
   console.log(req.session);
   console.log(req.sessionID);
-  if (req.session.user && req.session.events){
+  if (req.session.user){
     res.json(req.session.events);
     return;
   }
-  // req.session.visited = true;
   res.status(400).json({ error: 'Missing required fields' }); //temporsry, change to correct error msg & code
   // res.json(events);  // Respond with the list of events (your "database")
 });
