@@ -13,56 +13,7 @@
 //     //   alert('Please fill in both fields.');
 //     // }
 //   });
-
-// Call the login check API on page load
-function checkLoginStatus() {
-  console.log("checking login status...");
-  $.ajax({
-    method: "GET",
-    url: '/auth/status',
-    processData: false,
-    contentType: "application/json; charset=utf-8",
-    dataType: "json"
-  })
-  .done(function(data, textStatus, jqXHR) {
-    console.log(jqXHR.status + " " + textStatus); 
-    console.log("Server Response: " + JSON.stringify(data));
-    if (data.loggedIn) {
-      // User is logged in, display user-specific elements
-      document.getElementById('login-btn').style.display = 'none';
-      document.getElementById('signup-btn').style.display = 'none';
-      document.getElementById('logout-btn').style.display = 'block';
-      document.getElementById('myaccount-btn').style.display = 'block';
-    } else {
-      // User is not logged in, display login/signup options
-      document.getElementById('login-btn').style.display = 'block';
-      document.getElementById('signup-btn').style.display = 'block';
-      document.getElementById('logout-btn').style.display = 'none';
-    }
-  })
-  .fail(function(err) {
-    console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
-  });
-
-  // fetch('/auth/status')     /////////////////////// convert to ajax??
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     if (data.loggedIn) {
-  //       // User is logged in, display user-specific elements
-  //       document.getElementById('login-btn').style.display = 'none';
-  //       document.getElementById('signup-btn').style.display = 'none';
-  //       document.getElementById('logout-btn').style.display = 'block';
-  //       document.getElementById('welcome-msg').innerText = `Welcome, ${data.user.username}!`;
-  //     } else {
-  //       // User is not logged in, display login/signup options
-  //       document.getElementById('login-btn').style.display = 'block';
-  //       document.getElementById('signup-btn').style.display = 'block';
-  //       document.getElementById('logout-btn').style.display = 'none';
-  //       document.getElementById('welcome-msg').innerText = '';
-  //     }
-  //   })
-  //   .catch(error => console.error('Error checking login status:', error));
-}
+import { checkLoginStatus } from './auth.js';
 
 // using addEventListener not onclick to keep the JS and HTML separate
 document.getElementById('logout-btn').addEventListener('click', () => {
@@ -141,5 +92,22 @@ function posttest(){
  ******************************************************************************/
 $(function(){
 	console.log("ready");
-  checkLoginStatus();
+  checkLoginStatus()
+    .then(data => {
+      if (data.loggedIn) {
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('signup-btn').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'block';
+        document.getElementById('myaccount-btn').style.display = 'block';
+        document.getElementById('welcome-msg').innerText = `Welcome, ${data.user.username}!`;
+      } else {
+        document.getElementById('login-btn').style.display = 'block';
+        document.getElementById('signup-btn').style.display = 'block';
+        document.getElementById('logout-btn').style.display = 'none';
+        document.getElementById('welcome-msg').innerText = '';
+      }
+    })
+    .catch(error => {
+      console.log("ERROR from check login: ", error)
+    });
 });

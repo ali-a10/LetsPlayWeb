@@ -1,17 +1,17 @@
 if (window.location.pathname.includes('/account')) {
   $(document).ready(function () {
     checkLoginStatus()
-      .then(isLoggedIn => {
-        if (isLoggedIn) {
+      .then(data => {
+        if (data.loggedIn) {
           document.getElementById('login-btn').style.display = 'none';
           document.getElementById('signup-btn').style.display = 'none';
           document.getElementById('logout-btn').style.display = 'block';
           document.getElementById('myaccount-btn').style.display = 'block';
         } else {
-            // User is not logged in, display login/signup options
-            document.getElementById('login-btn').style.display = 'block';
-            document.getElementById('signup-btn').style.display = 'block';
-            document.getElementById('logout-btn').style.display = 'none';
+          // User is not logged in, display login/signup options
+          document.getElementById('login-btn').style.display = 'block';
+          document.getElementById('signup-btn').style.display = 'block';
+          document.getElementById('logout-btn').style.display = 'none';
         }
       })
       .catch(error => {
@@ -52,23 +52,24 @@ export function checkLoginStatus() {
     .done(function(data, textStatus, jqXHR) {
       console.log(jqXHR.status + " " + textStatus); 
       console.log("Server Response: " + JSON.stringify(data));
-      resolve(data.loggedIn);
-      // if (data.loggedIn) {
-      //   // User is logged in, display user-specific elements
-      //   document.getElementById('login-btn').style.display = 'none';
-      //   document.getElementById('signup-btn').style.display = 'none';
-      //   document.getElementById('logout-btn').style.display = 'block';
-      //   document.getElementById('myaccount-btn').style.display = 'block';
-      // } else {
-      //   // User is not logged in, display login/signup options
-      //   document.getElementById('login-btn').style.display = 'block';
-      //   document.getElementById('signup-btn').style.display = 'block';
-      //   document.getElementById('logout-btn').style.display = 'none';
-      // }
+      if (data.loggedIn) {
+        // User is logged in, display user-specific elements
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('signup-btn').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'block';
+        document.getElementById('myaccount-btn').style.display = 'block';
+      } else {
+        // User is not logged in, display login/signup options
+        document.getElementById('login-btn').style.display = 'block';
+        document.getElementById('signup-btn').style.display = 'block';
+        document.getElementById('logout-btn').style.display = 'none';
+        document.getElementById('myaccount-btn').style.display = 'none';
+      }
+      resolve(data);
     })
     .fail(function(err) {
       console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
-      reject(data.loggedIn);
+      reject(data);
     });
   });
   // fetch('/auth/status')     /////////////////////// convert to ajax??

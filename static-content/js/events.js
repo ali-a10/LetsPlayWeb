@@ -3,8 +3,8 @@ import { checkLoginStatus } from './auth.js';
 $(document).ready(function() {  
     // getEvents();
     checkLoginStatus()
-      .then(isLoggedIn => {
-        if (isLoggedIn) {
+      .then(data => {
+        if (data.loggedIn) {
           document.getElementById('login-btn').style.display = 'none';
           document.getElementById('signup-btn').style.display = 'none';
           document.getElementById('logout-btn').style.display = 'block';
