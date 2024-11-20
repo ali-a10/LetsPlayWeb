@@ -1,28 +1,8 @@
-import { checkLoginStatus } from './auth.js';
+import { checkLoginStatus, bindLogoutBtn } from './auth.js';
 
-// using addEventListener not onclick to keep the JS and HTML separate
-document.getElementById('logout-btn').addEventListener('click', () => {
-  $.ajax({
-    method: "GET",
-    url: '/logout',
-    processData: false,
-    contentType: "application/json; charset=utf-8",
-    dataType: "json"
-  })
-  .done(function(data, textStatus, jqXHR) {
-    console.log(jqXHR.status + " " + textStatus); 
-    console.log("Server Response: " + JSON.stringify(data));
-    window.location.href = '/'; // Redirect to home page after logout
-  })
-  .fail(function(err) {
-    console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
-  });
-  
-  // fetch('/logout')
-  //   .then(() => {
-  //     window.location.href = '/'; // Redirect to home page after logout
-  //   })
-  //   .catch(error => console.error('Error logging out:', error));
+// event listener that waits for the DOM to fully load before running the callback function bindLogoutBtn
+document.addEventListener('DOMContentLoaded', () => {
+  bindLogoutBtn();
 });
 
 
@@ -38,6 +18,7 @@ $(function(){
         document.getElementById('signup-btn').style.display = 'none';
         document.getElementById('logout-btn').style.display = 'block';
         document.getElementById('myaccount-btn').style.display = 'block';
+        // there's no welcome-msg in about.html, so this will cause an error in the browser console
         document.getElementById('welcome-msg').innerText = `Welcome, ${data.user.username}!`;
       } else {
         document.getElementById('login-btn').style.display = 'block';

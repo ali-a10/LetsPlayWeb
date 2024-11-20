@@ -1,14 +1,9 @@
-
-1. check if we can addEventListener for logout button once in all 3 files
-    - rn it's there in every files
-    - we can prob do this easily in react but check if there's a way rn too
-
-2. make all URLs clean (without .html) and using api calls
+1. make all URLs clean (without .html) and using api calls
     - check index.html nav comments
 
-3. add text file database
+2. add text file database
 
-4. get sign up to work
+3. get sign up to work
 
 
 - review gpt page on promises vs callbacks

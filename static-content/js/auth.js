@@ -93,6 +93,34 @@ export function checkLoginStatus() {
 }
 
 
+export function bindLogoutBtn() {
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      logout()
+        .done(function(data, textStatus, jqXHR) {
+          console.log(jqXHR.status + " " + textStatus); 
+          console.log("Server Response: " + JSON.stringify(data));
+          window.location.href = '/'; // Redirect to home page after logout
+        })
+        .fail(function(err) {
+          console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+        });
+    });
+  }
+}
+
+
+function logout() {
+  $.ajax({
+    method: "GET",
+    url: '/logout',
+    processData: false,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json"
+  })
+}
+
 // using addEventListener not onclick to keep the JS and HTML separate
 document.getElementById('logout-btn').addEventListener('click', () => {
   $.ajax({
