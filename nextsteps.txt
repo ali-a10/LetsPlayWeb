@@ -1,4 +1,4 @@
-1. check why 'navigating to page: login' is console logged 3 times when we navigate to login
+1. check why 'navigating to page: login' is console logged 3 times when we navigate to a page
 
 2. add text file database
 
