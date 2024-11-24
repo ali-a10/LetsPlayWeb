@@ -26,6 +26,7 @@ let users = [ {
   password: '123'
 } ];
 
+
 app.get('/account/:action', (req, res) => {
   res.sendFile(__dirname + '/static-content/account.html');
 });
@@ -50,7 +51,7 @@ app.post('/signup', (req, res) => {
 });
 
 
-app.post('/login', (req, res) => {
+app.post('/submitLogin', (req, res) => {
   const { username, password } = req.body;
 
   const user = users.find(user => user.username === username && user.password === password);
@@ -121,7 +122,7 @@ app.post('/submit', (req, res) => {
 
 
 //////////////// Events page ////////////////
-app.get('/events', (req, res) => {
+app.get('/getEvents', (req, res) => {
   console.log(req.session);
   console.log(req.sessionID);
   if (req.session.user){
@@ -157,6 +158,12 @@ app.post('/create-event', (req, res) => {
   res.json({ event: newEvent })
 });
 
+// Express uses the first matching route it encounters in the order they are declared
+// so we have to put this at the end so it doesn't intefere with '/getEvents' for example
+app.get('/:page', (req, res) => {
+  console.log("navigating to page: ", req.params.page);
+  res.sendFile(__dirname + '/static-content/' + req.params.page + '.html');
+});
 
 
 app.listen(port, () => {

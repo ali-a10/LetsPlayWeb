@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 // Fetch events from the server
 function getEvents() {
-    fetch('/events')
+    fetch('/getEvents')
       .then(response => response.json())
       .then(events => {
         const eventsContainer = document.getElementById('events-container');

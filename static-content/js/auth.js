@@ -183,7 +183,7 @@ function login(event) {
   errorMessage.style.display = 'none';
   errorMessage.textContent = '';
 
-  fetch('/login', {
+  fetch('/submitLogin', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -193,7 +193,7 @@ function login(event) {
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      window.location.href = 'index.html';
+      window.location.href = '/';
     } else {
       errorMessage.style.display = 'block';
       errorMessage.textContent = data.message;
