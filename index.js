@@ -1,3 +1,4 @@
+const { getUsers, addUser, getEvents, addEvent } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -15,16 +16,8 @@ app.use(session({
 app.use(express.static('static-content')); // Serve static files from 'static-content' directory
 
 let events = [];  // This will act as the "database" for now
-let users = [ {
-  username: 'ali',
-  email: 'ali@mail.com',
-  password: '123'
-},
-{
-  username: 'ali12',
-  email: 'ali@mail.com',
-  password: '123'
-} ];
+// let users = getUsers();  // should i call this here or call it in every api call when needed
+                        // put in api calls^
 
 
 app.get('/account/:action', (req, res) => {
@@ -51,8 +44,9 @@ app.post('/signup', (req, res) => {
 });
 
 
-app.post('/submitLogin', (req, res) => {
+app.post('/submitLogin', async (req, res) => {
   const { username, password } = req.body;
+  const users = await getUsers();
 
   const user = users.find(user => user.username === username && user.password === password);
 
