@@ -26,7 +26,7 @@ app.get('/account/:action', (req, res) => {
 
 
 //////////////// Signup & login ////////////////
-app.post('/signup', (req, res) => {
+app.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
 
   // Check if user already exists
@@ -40,6 +40,7 @@ app.post('/signup', (req, res) => {
 
   const newUser = { username, email, password };
   users.push(newUser);
+  await addUser(newUser);
   res.status(201).json({ message: 'User created successfully' });
 });
 
@@ -47,6 +48,7 @@ app.post('/signup', (req, res) => {
 app.post('/submitLogin', async (req, res) => {
   const { username, password } = req.body;
   const users = await getUsers();
+  console.log(users);
 
   const user = users.find(user => user.username === username && user.password === password);
 
@@ -155,7 +157,6 @@ app.post('/create-event', (req, res) => {
 // Express uses the first matching route it encounters in the order they are declared
 // so we have to put this at the end so it doesn't intefere with '/getEvents' for example
 app.get('/:page', (req, res) => {
-  console.log("navigating to page: ", req.params.page);
   res.sendFile(__dirname + '/static-content/' + req.params.page + '.html');
 });
 

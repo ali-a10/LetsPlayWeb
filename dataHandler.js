@@ -1,5 +1,5 @@
 // import fs from 'fs/promises';
-const { fs } = require('fs/promises');
+const fs = require('fs/promises');
 
 const USERS_FILE = './jsonDB/users.json';
 const EVENTS_FILE = './jsonDB/events.json';
