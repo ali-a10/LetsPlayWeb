@@ -22,13 +22,13 @@ if (window.location.pathname.includes('/account')) {
     // Check if we're in "create" or "edit" mode based on the current page URL
     const path = window.location.pathname;
     const isSignUpMode = path.includes('create');  // Check if URL contains 'create'
-    console.log("IN AUUTH.JS");
     // Update page elements based on the mode
     if (isSignUpMode) {
-      document.getElementById('login-link').style.display = "block";
+      document.getElementById('signup-btns').style.display = "block";
       document.getElementById('save-button').style.display = "none";
+      document.getElementById('account-form').addEventListener('submit', signup);
     } else {
-      document.getElementById('login-link').style.display = "none";
+      document.getElementById('signup-btns').style.display = "none";
       document.getElementById('save-button').style.display = "block";
     }
   });
@@ -138,16 +138,16 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 function signup(event) {
   event.preventDefault();  // Prevent page from refreshing/navigating
 
-  const username = document.getElementById('signup-username').value;
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-
+  const email = document.getElementById('email').value;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  console.log(JSON.stringify({ email, username, password }));
   fetch('/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, email, password })
+    body: JSON.stringify({ email, username, password })
   })
   .then(response => response.json())
   .then(data => {

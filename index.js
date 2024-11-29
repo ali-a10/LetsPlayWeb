@@ -15,7 +15,7 @@ app.use(session({
 );
 app.use(express.static('static-content')); // Serve static files from 'static-content' directory
 
-let events = [];  // This will act as the "database" for now
+let events = [];
 // let users = getUsers();  // should i call this here or call it in every api call when needed
                         // put in api calls^
 
@@ -28,20 +28,20 @@ app.get('/account/:action', (req, res) => {
 //////////////// Signup & login ////////////////
 app.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
-
+  let users = await getUsers();
   // Check if user already exists
   const userExists = users.some(user => user.username === username || user.email === email);
 
   if (userExists) {
     res.status(400);
-    res.json({ message: 'User already exists' });
+    res.json({ success: false, message: 'User already exists' });
     return;
   }
 
   const newUser = { username, email, password };
   users.push(newUser);
   await addUser(newUser);
-  res.status(201).json({ message: 'User created successfully' });
+  res.status(201).json({ success: true });
 });
 
 
@@ -56,7 +56,7 @@ app.post('/submitLogin', async (req, res) => {
     req.session.user = { username : user.username };
     console.log(req.session);
     console.log(req.sessionID);
-    res.json({ success: true });  ////// it was res.status(200).json(...), so make sure the status is 200
+    res.status(200).json({ success: true });  ////// it was res.status(200).json(...), so make sure the status is 200
   } else {
     res.status(401);
     res.json({ success: false, message: 'Invalid username or password' });
