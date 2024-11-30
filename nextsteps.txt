@@ -1,9 +1,9 @@
+double check sign up functionality
+
 1. check why 'navigating to page: login' is console logged 3 times when we navigate to a page
 
 2. add text file database
     - UNDERSTAND PROMISES, async
-
-3. get sign up to work
 
 
 - review gpt page on promises vs callbacks

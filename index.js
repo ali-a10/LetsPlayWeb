@@ -41,6 +41,7 @@ app.post('/signup', async (req, res) => {
   const newUser = { username, email, password };
   users.push(newUser);
   await addUser(newUser);
+  req.session.user = { username : username };
   res.status(201).json({ success: true });
 });
 

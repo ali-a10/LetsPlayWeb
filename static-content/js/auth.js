@@ -151,7 +151,16 @@ function signup(event) {
   })
   .then(response => response.json())
   .then(data => {
-    alert('Sign up successful!');
+    // console.log("DOT THEN");
+    // console.log(data);
+    if (data.success) {
+      window.location.href = '/';
+    }
+    else {
+      console.log(document.getElementById("accountErrorMessage"));
+      document.getElementById("accountErrorMessage").textContent = data.message;
+      document.getElementById("accountErrorMessage").style.display = "block";
+    }
   })
   .catch(err => {
     console.error('Error:', err);
