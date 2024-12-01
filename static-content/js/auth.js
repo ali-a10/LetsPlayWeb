@@ -1,5 +1,6 @@
 if (window.location.pathname.includes('/account')) {
   $(document).ready(function () {
+    let user = null;
     checkLoginStatus()
       .then(data => {
         if (data.loggedIn) {
@@ -7,30 +8,34 @@ if (window.location.pathname.includes('/account')) {
           document.getElementById('signup-btn').style.display = 'none';
           document.getElementById('logout-btn').style.display = 'block';
           document.getElementById('myaccount-btn').style.display = 'block';
+          user = data.user;
         } else {
           // User is not logged in, display login/signup options
           document.getElementById('login-btn').style.display = 'block';
           document.getElementById('signup-btn').style.display = 'block';
           document.getElementById('logout-btn').style.display = 'none';
         }
+        
+        // Check if we're in "create" or "edit" mode based on the current page URL
+        const path = window.location.pathname;
+        const isSignUpMode = path.includes('create');  // Check if URL contains 'create'
+        // Update page elements based on the mode
+        if (isSignUpMode) {
+          document.getElementById('signup-btns').style.display = "block";
+          document.getElementById('save-button').style.display = "none";
+          document.getElementById('account-form').addEventListener('submit', signup);
+        } else {
+          document.getElementById('signup-btns').style.display = "none";
+          document.getElementById('save-button').style.display = "block";
+          // console.log(user1);
+          document.getElementById('email').value = user.email;
+          document.getElementById('username').value = user.username;
+          document.getElementById('password').value = user.password;
+        }
       })
       .catch(error => {
         console.log("ERROR from check login: ", error)
       });
-
-
-    // Check if we're in "create" or "edit" mode based on the current page URL
-    const path = window.location.pathname;
-    const isSignUpMode = path.includes('create');  // Check if URL contains 'create'
-    // Update page elements based on the mode
-    if (isSignUpMode) {
-      document.getElementById('signup-btns').style.display = "block";
-      document.getElementById('save-button').style.display = "none";
-      document.getElementById('account-form').addEventListener('submit', signup);
-    } else {
-      document.getElementById('signup-btns').style.display = "none";
-      document.getElementById('save-button').style.display = "block";
-    }
   });
 }
 else if (window.location.pathname.includes('/login')) {

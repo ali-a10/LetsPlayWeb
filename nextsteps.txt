@@ -1,4 +1,5 @@
-have user info loaded in My Account page (when logged in)
+get my account save button to work for email and username
+    - have to check that the new info doesn't exist
 
 1. check why 'navigating to page: login' is console logged 3 times when we navigate to a page
 
