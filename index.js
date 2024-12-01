@@ -29,12 +29,17 @@ app.get('/account/:action', (req, res) => {
 app.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
   let users = await getUsers();
-  // Check if user already exists
-  const userExists = users.some(user => user.username === username || user.email === email);
 
-  if (userExists) {
+  // Check if user already exists
+  if (users.some(user => user.email === email)) {
     res.status(400);
-    res.json({ success: false, message: 'User already exists' });
+    res.json({ success: false, message: 'Email already in use' });
+    return;
+  }
+
+  if (users.some(user => user.username === username)) {
+    res.status(400);
+    res.json({ success: false, message: 'Username already exists' });
     return;
   }
 
