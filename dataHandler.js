@@ -34,6 +34,32 @@ async function addUser(user) {
   await writeJSON(USERS_FILE, users); // save updated users
 }
 
+
+async function editUser(username, updatedUserInfo) {
+  const users = await getUsers();
+
+  // Find the index of the user to edit
+  const userIndex = users.findIndex(user => user.username === username);
+  console.log("IN");
+  if (userIndex === -1) {
+    throw new Error(`User with username "${username}" not found`);
+  }
+
+  // Update the user details
+  const userToUpdate = users[userIndex];
+  
+  for (const key in updatedUserInfo) {
+    // console.log("111111 ", updatedUserInfo[key]);
+    if (updatedUserInfo[key] !== null) {
+      userToUpdate[key] = updatedUserInfo[key];
+    }
+  }
+
+  // Write the updated list back to the JSON file
+  await writeJSON(USERS_FILE, users);
+}
+
+
 async function getEvents() {
   return await readJSON(EVENTS_FILE);
 }
@@ -44,4 +70,4 @@ async function addEvent(event) {
   await writeJSON(EVENTS_FILE, events);
 }
 
-module.exports = { getUsers, addUser, getEvents, addEvent };
+module.exports = { getUsers, addUser, editUser, getEvents, addEvent };

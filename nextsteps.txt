@@ -1,6 +1,9 @@
 get my account save button to work for email and username
     - have to check that the new info doesn't exist
 
+    ----- rn if i change the email, then save, it works
+                - but if i dont refresh the page, and change username, it says email is already in use
+
 1. check why 'navigating to page: login' is console logged 3 times when we navigate to a page
 
 2. add text file database

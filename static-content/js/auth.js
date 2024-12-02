@@ -24,13 +24,16 @@ if (window.location.pathname.includes('/account')) {
           document.getElementById('signup-btns').style.display = "block";
           document.getElementById('save-button').style.display = "none";
           document.getElementById('account-form').addEventListener('submit', signup);
-        } else {
+        } 
+        else {
           document.getElementById('signup-btns').style.display = "none";
           document.getElementById('save-button').style.display = "block";
-          // console.log(user1);
           document.getElementById('email').value = user.email;
           document.getElementById('username').value = user.username;
           document.getElementById('password').value = user.password;
+          document.getElementById('save-button').addEventListener('click', (event) => {
+            editProfile(event, user);
+        });
         }
       })
       .catch(error => {
@@ -146,7 +149,7 @@ function signup(event) {
   const email = document.getElementById('email').value;
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
-  console.log(JSON.stringify({ email, username, password }));
+
   fetch('/signup', {
     method: 'POST',
     headers: {
@@ -205,4 +208,41 @@ function login(event) {
       errorMessage.style.display = 'block';
       errorMessage.textContent = 'An error occurred during login.';
   });
+}
+
+function editProfile(event, currUserInfo) {
+  event.preventDefault();  // Prevent page from refreshing/navigating
+
+  let newEmail = document.getElementById('email').value;
+  let newUsername = document.getElementById('username').value;
+  console.log("curr", currUserInfo);
+  if (newEmail === currUserInfo.email) {
+    newEmail = null;
+  }
+  if (newUsername === currUserInfo.username) {
+    newUsername = null;
+  }
+  console.log(JSON.stringify({newEmail, newUsername}));
+
+  if (newEmail || newUsername) {  // if at least one field is changed
+    $.ajax({
+      method: "PUT",
+      url: '/editProfile/' + currUserInfo.username,
+      processData: false,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      data: JSON.stringify({ newEmail, newUsername })
+    })
+    .done(function(data, textStatus, jqXHR) {
+      console.log(jqXHR.status + " " + textStatus); 
+      console.log("Server Response: " + JSON.stringify(data));
+      if (data.success) {
+        // cu
+      }
+    })
+    .fail(function(err) {
+      console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+    });
+  }
+  
 }

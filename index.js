@@ -1,4 +1,4 @@
-const { getUsers, addUser, getEvents, addEvent } = require('./dataHandler.js');
+const { getUsers, addUser, editUser, getEvents, addEvent } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -159,6 +159,44 @@ app.post('/create-event', (req, res) => {
   res.status(201);
   res.json({ event: newEvent })
 });
+
+
+//////////////// My Account page ////////////////
+app.put('/editProfile/:username', async (req, res) => {
+  if (req.session.user) {
+    const username = req.params.username;
+    let newEmail = req.body.newEmail;
+    let newUsername = req.body.newUsername;  // should we prevent usernames from being changed in the future??
+
+    const users = await getUsers();
+    const userWNewEmail = users.find(user => user.email === newEmail);
+    if (userWNewEmail) {
+      res.json({ success: false, message: 'This email is already in use' });
+      // what status??
+      return;
+    }
+
+    const userWNewUsername = users.find(user => user.username === newUsername);
+    if (userWNewUsername) {
+      res.json({ success: false, message: 'This username is already in use' });
+      // what status??
+      return;
+    }
+
+    const updatedUserInfo = { email: newEmail, username: newUsername };
+    try {
+      console.log("---", updatedUserInfo);
+      await editUser(username, updatedUserInfo);
+      req.session.user.email = newEmail;
+      req.session.user.username = newUsername;
+      res.status(200).json({ success: true, message: 'User updated successfully' });
+    }
+    catch (error) {
+      res.status(400).json({ success: false, message: error.message });
+    }
+  }
+})
+
 
 // Express uses the first matching route it encounters in the order they are declared
 // so we have to put this at the end so it doesn't intefere with '/getEvents' for example
