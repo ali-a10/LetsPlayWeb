@@ -22,12 +22,12 @@ if (window.location.pathname.includes('/account')) {
         // Update page elements based on the mode
         if (isSignUpMode) {
           document.getElementById('signup-btns').style.display = "block";
-          document.getElementById('save-button').style.display = "none";
+          document.getElementById('save-btns').style.display = "none";
           document.getElementById('account-form').addEventListener('submit', signup);
         } 
         else {
           document.getElementById('signup-btns').style.display = "none";
-          document.getElementById('save-button').style.display = "block";
+          document.getElementById('save-btns').style.display = "block";
           document.getElementById('email').value = user.email;
           document.getElementById('username').value = user.username;
           document.getElementById('password').value = user.password;
@@ -236,8 +236,9 @@ function editProfile(event, currUserInfo) {
     .done(function(data, textStatus, jqXHR) {
       console.log(jqXHR.status + " " + textStatus); 
       console.log("Server Response: " + JSON.stringify(data));
+      document.getElementById("save-msg").innerText = data.message;
       if (data.success) {
-        // cu
+        
       }
     })
     .fail(function(err) {
