@@ -169,15 +169,16 @@ app.put('/editProfile/:username', async (req, res) => {
     let newUsername = req.body.newUsername;  // should we prevent usernames from being changed in the future??
 
     const users = await getUsers();
+    const currUser = users.find(user => user.username === username);
     const userWNewEmail = users.find(user => user.email === newEmail);
-    if (userWNewEmail) {
+    if (userWNewEmail && currUser != userWNewEmail) {
       res.json({ success: false, message: 'This email is already in use' });
       // what status??
       return;
     }
 
     const userWNewUsername = users.find(user => user.username === newUsername);
-    if (userWNewUsername) {
+    if (userWNewUsername && currUser != userWNewEmail) {
       res.json({ success: false, message: 'This username is already in use' });
       // what status??
       return;
@@ -187,8 +188,8 @@ app.put('/editProfile/:username', async (req, res) => {
     try {
       console.log("---", updatedUserInfo);
       await editUser(username, updatedUserInfo);
-      req.session.user.email = newEmail;
-      req.session.user.username = newUsername;
+      if (newEmail !== null) req.session.user.email = newEmail;
+      if (newUsername !== null) req.session.user.username = newUsername;
       res.status(200).json({ success: true, message: 'User updated successfully' });
     }
     catch (error) {
