@@ -124,11 +124,13 @@ app.post('/submit', (req, res) => {
 
 
 //////////////// Events page ////////////////
-app.get('/getEvents', (req, res) => {
+app.get('/getEvents', async (req, res) => {
   console.log(req.session);
   console.log(req.sessionID);
   if (req.session.user){
-    res.json(req.session.events);
+    // res.json(req.session.events);
+    const events = await getEvents();
+    res.json(events);
     return;
   }
   res.status(400).json({ error: 'Missing required fields' }); //temporsry, change to correct error msg & code
