@@ -35,25 +35,33 @@ async function addUser(user) {
 }
 
 
-async function editUser(username, updatedUserInfo) {
+async function editUser(currentUsername, updatedUserInfo) {
   const users = await getUsers();
 
   // Find the index of the user to edit
-  const userIndex = users.findIndex(user => user.username === username);
+  const userIndex = users.findIndex(user => user.username === currentUsername);
   console.log("IN");
   if (userIndex === -1) {
     throw new Error(`User with username "${username}" not found`);
   }
 
-  // Update the user details
-  const userToUpdate = users[userIndex];
-  
-  for (const key in updatedUserInfo) {
-    // console.log("111111 ", updatedUserInfo[key]);
-    if (updatedUserInfo[key] !== null) {
-      userToUpdate[key] = updatedUserInfo[key];
+  // Check for unique username/email
+  for (const user of users) {
+    if (user.username === updatedUserInfo.username && user.username !== currentUsername) {
+      throw new Error('Username already taken');
+    }
+    if (user.email === updatedUserInfo.email && user.username !== currentUsername) {
+      throw new Error('Email already taken');
     }
   }
+
+  // Update the user details
+  const userToUpdate = users[userIndex];
+  if (updatedUserInfo.username) userToUpdate.username = updatedUserInfo.username;
+  if (updatedUserInfo.email) userToUpdate.email = updatedUserInfo.email;
+  if (updatedUserInfo.password) userToUpdate.password = updatedUserInfo.password;
+
+  // do we wanna check if any of the keys above are null?
 
   // Write the updated list back to the JSON file
   await writeJSON(USERS_FILE, users);
