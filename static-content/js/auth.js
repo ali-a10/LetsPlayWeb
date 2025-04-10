@@ -236,14 +236,29 @@ function editProfile(event, currUserInfo) {
     .done(function(data, textStatus, jqXHR) {
       console.log(jqXHR.status + " " + textStatus); 
       console.log("Server Response: " + JSON.stringify(data));
-      document.getElementById("save-msg").innerText = data.message;
-      if (data.success) {
-        
-      }
+      showPopup(data.message || 'Profile updated.', data.success);
     })
     .fail(function(err) {
       console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+      const errMsg = err.responseJSON?.message || 'Failed to update profile.';
+      showPopup(errMsg, data.success);
     });
   }
+  else {
+    // no changes made, but user clicked save
+    showPopup('You didn', false);
+  }
   
+}
+
+// helper for popup when account info is updated (or failed to update)
+function showPopup(message, isSuccess) {
+  const popup = document.getElementById('notification-popup');
+  popup.textContent = message;
+  popup.style.backgroundColor = isSuccess ? '#28a745' : '#dc3545'; // Green or red
+  popup.style.display = 'block';
+
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 3000);
 }
