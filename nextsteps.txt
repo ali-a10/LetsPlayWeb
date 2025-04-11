@@ -4,6 +4,14 @@ get my account save button to work for email and username
     ----- rn if i change the email, then save, it works
                 - but if i dont refresh the page, and change username, it says email is already in use
 
+
+- handle case where users input random url parameters
+    - e.g. /accountss
+    - also handle pages that exist but users don't have permission to access
+        - e.g. not logged in trying to access pages only for logged in users
+        - DID THIS BUT DOUBLE CHECK^^^
+
+
 1. check why 'navigating to page: login' is console logged 3 times when we navigate to a page
 
 2. add text file database

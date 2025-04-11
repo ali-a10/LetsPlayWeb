@@ -204,7 +204,13 @@ app.put('/editProfile/:username', async (req, res) => {
 // Express uses the first matching route it encounters in the order they are declared
 // so we have to put this at the end so it doesn't intefere with '/getEvents' for example
 app.get('/:page', (req, res) => {
-  res.sendFile(__dirname + '/static-content/' + req.params.page + '.html');
+  let page = req.params.page
+
+  // if user isn't logged in, they shouldn't be able to access account.html
+  if (page === 'account' && !req.session.username) {
+    return res.redirect('login');
+  }
+  res.sendFile(__dirname + '/static-content/' + page + '.html');
 });
 
 
