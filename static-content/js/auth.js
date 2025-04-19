@@ -1,8 +1,10 @@
 if (window.location.pathname.includes('/account')) {
+  console.log('IS SIGN UP MODE = ', window.location.pathname);
   $(document).ready(function () {
     let user = null;
     checkLoginStatus()
       .then(data => {
+        console.log("DATA ON LINE 7: ", data);
         if (data.loggedIn) {
           document.getElementById('login-btn').style.display = 'none';
           document.getElementById('signup-btn').style.display = 'none';
@@ -20,6 +22,7 @@ if (window.location.pathname.includes('/account')) {
         const path = window.location.pathname;
         const isSignUpMode = path.includes('create');  // Check if URL contains 'create'
         // Update page elements based on the mode
+        
         if (isSignUpMode) {
           document.getElementById('signup-btns').style.display = "block";
           document.getElementById('save-btns').style.display = "none";
@@ -32,7 +35,11 @@ if (window.location.pathname.includes('/account')) {
           document.getElementById('username').value = user.username;
           document.getElementById('password').value = user.password;
           document.getElementById('save-button').addEventListener('click', (event) => {
-            editProfile(event, user);
+            editProfile(event);  // when we get into this page, this is set once
+            // i.e it doesn't change until we refresh the page
+            // so we might have to get the current user every time save-button is clicked
+            // that means we might have to call editProfile(event) and get the user inseide
+            // this function
         });
         }
       })
@@ -210,44 +217,62 @@ function login(event) {
   });
 }
 
-function editProfile(event, currUserInfo) {
+function editProfile(event) {
   event.preventDefault();  // Prevent page from refreshing/navigating
+  
+  // somehow check if textboxes have changed
 
-  let newEmail = document.getElementById('email').value;
-  let newUsername = document.getElementById('username').value;
-  console.log("curr", currUserInfo);
-  if (newEmail === currUserInfo.email) {
-    newEmail = null;
-  }
-  if (newUsername === currUserInfo.username) {
-    newUsername = null;
-  }
-  console.log(JSON.stringify({newEmail, newUsername}));
+  // if so:
+  let currUserInfo = null;
+  checkLoginStatus()
+    .then(data => {
+      if (data.loggedIn) {
+        currUserInfo = data.user;
+        let newEmail = document.getElementById('email').value;
+        let newUsername = document.getElementById('username').value;
+        if (newEmail === currUserInfo.email) {
+          newEmail = null;
+        }
+        if (newUsername === currUserInfo.username) {
+          newUsername = null;
+        }
 
-  if (newEmail || newUsername) {  // if at least one field is changed
-    $.ajax({
-      method: "PUT",
-      url: '/editProfile/' + currUserInfo.username,
-      processData: false,
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      data: JSON.stringify({ newEmail, newUsername })
+        if (newEmail || newUsername) {  // if at least one field is changed
+          $.ajax({
+            method: "PUT",
+            url: '/editProfile/' + currUserInfo.username,
+            processData: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify({ newEmail, newUsername })
+          })
+          .done(function(data, textStatus, jqXHR) {
+            console.log(jqXHR.status + " " + textStatus); 
+            console.log("Server Response: " + JSON.stringify(data));
+            showPopup(data.message || 'Profile updated.', data.success);
+          })
+          .fail(function(err) {
+            console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+            const errMsg = err.responseJSON?.message || 'Failed to update profile.';
+            showPopup(errMsg, data.success);
+          });
+        }
+        else {
+          // no changes made, but user clicked save
+          showPopup('No changes made', false);
+        }
+      }
+      else {
+        window.location.href = '/'; // Redirect to home page after logout
+        // do we want to do anything else here?
+        // i dont think we'll ever get this cuz editProfile is only accessible if logged in
+        // but maybe still have something in case
+      }
     })
-    .done(function(data, textStatus, jqXHR) {
-      console.log(jqXHR.status + " " + textStatus); 
-      console.log("Server Response: " + JSON.stringify(data));
-      showPopup(data.message || 'Profile updated.', data.success);
-    })
-    .fail(function(err) {
-      console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
-      const errMsg = err.responseJSON?.message || 'Failed to update profile.';
-      showPopup(errMsg, data.success);
+    .catch(error => {
+      console.log("ERROR from check login: ", error);
+      // what do we want to do here
     });
-  }
-  else {
-    // no changes made, but user clicked save
-    showPopup('You didn', false);
-  }
   
 }
 

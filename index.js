@@ -188,7 +188,6 @@ app.put('/editProfile/:username', async (req, res) => {
 
     const updatedUserInfo = { email: newEmail, username: newUsername };
     try {
-      console.log("---", updatedUserInfo);
       await editUser(username, updatedUserInfo);
       if (newEmail !== null) req.session.user.email = newEmail;
       if (newUsername !== null) req.session.user.username = newUsername;
