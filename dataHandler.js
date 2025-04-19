@@ -40,7 +40,6 @@ async function editUser(currentUsername, updatedUserInfo) {
 
   // Find the index of the user to edit
   const userIndex = users.findIndex(user => user.username === currentUsername);
-  console.log("IN");
   if (userIndex === -1) {
     throw new Error(`User with username "${username}" not found`);
   }

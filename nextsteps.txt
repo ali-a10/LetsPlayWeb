@@ -1,9 +1,3 @@
-get my account save button to work for email and username
-    - have to check that the new info doesn't exist
-
-    ----- rn if i change the email, then save, it works
-                - but if i dont refresh the page, and change username, it says email is already in use
-
 
 - handle case where users input random url parameters
     - e.g. /accountss
@@ -12,12 +6,9 @@ get my account save button to work for email and username
         - DID THIS BUT DOUBLE CHECK^^^
 
 
-1. check why 'navigating to page: login' is console logged 3 times when we navigate to a page
 
-2. add text file database
-    - UNDERSTAND PROMISES, async
-
-
+for later:
+- ability to change password
 - review gpt page on promises vs callbacks
 
 - look into hashing login password
