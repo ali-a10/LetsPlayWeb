@@ -1,3 +1,8 @@
+1. events page:
+    - make events more detailed (add other fields)
+    - make event cards clickable (event page) maybe with event id in url?
+        - if this is the user's event, make it editable
+
 
 - handle case where users input random url parameters
     - e.g. /accountss
