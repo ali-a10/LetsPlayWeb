@@ -17,3 +17,4 @@ for later:
 - review gpt page on promises vs callbacks
 
 - look into hashing login password
+- have a place to see my past events (that I created or joined)

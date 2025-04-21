@@ -23,33 +23,39 @@ $(document).ready(function() {
       });
 });
 
-
-// Fetch events from the server
 function getEvents() {
-    fetch('/getEvents')
-      .then(response => response.json())
-      .then(events => {
-        const eventsContainer = document.getElementById('events-container');
-        eventsContainer.innerHTML = ''; // Clear previous events
+  fetch('/getEvents')
+    .then(response => response.json())
+    .then(events => {
+      const eventsContainer = document.getElementById('events-container');
+      eventsContainer.innerHTML = ''; // Clear previous events
 
-        // Loop through the events and create an event box for each one
-        events.forEach(event => {
-          const eventBox = document.createElement('div');
-          eventBox.className = 'event-box';
+      events.forEach((event, index) => {
+        const eventBox = document.createElement('div');
+        eventBox.className = 'event-box';
 
-          eventBox.innerHTML = `
-            <h3>${event.title}</h3>
-            <p><strong>Date:</strong> ${event.date}</p>
-            <p><strong>Sport:</strong> ${event.sport}</p>
-            <p><strong>Price:</strong> ${event.price}</p>
-          `;
+        eventBox.innerHTML = `
+          <h3>${event.title}</h3>
+          <p><strong>Date:</strong> ${event.date}</p>
+          <p><strong>Sport:</strong> ${event.sport}</p>
+          <p><strong>Price:</strong> ${event.price}</p>
+          <button class="btn btn-secondary edit-event-btn" data-index="${index}">Edit</button>
+        `;
 
-          // Append the event box to the container
-          eventsContainer.appendChild(eventBox);
+        eventsContainer.appendChild(eventBox);
+      });
+
+      // Add click handlers for edit buttons
+      document.querySelectorAll('.edit-event-btn').forEach(button => {
+        button.addEventListener('click', function () {
+          const eventIndex = this.getAttribute('data-index');
+          window.location.href = `/event.html?id=${eventIndex}`;
         });
-      })
-      .catch(error => console.error('Error fetching events:', error));
-  }
+      });
+    })
+    .catch(error => console.error('Error fetching events:', error));
+}
+
   
 
 document.addEventListener('DOMContentLoaded', () => {
