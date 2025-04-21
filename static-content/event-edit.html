@@ -33,21 +33,35 @@
   </header>
 
   <div class="container">
-    <!-- Events Section -->
-    <section id="runs" class="py-5">
-        <h1>Events</h1>
-        <p>This section will showcase the events you've completed or plan to complete.</p>
-    </section>
+    <h1 id="form-title">Create Event</h1>
+    <form id="event-form">
+      <div class="mb-3">
+        <label for="title" class="form-label">Event Title</label>
+        <input type="text" id="title" name="title" class="form-control" required/>
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" id="date" name="date" class="form-control" required/>
+      </div>
+      <div class="mb-3">
+        <label for="sport" class="form-label">Sport</label>
+        <select id="sport" name="sport" class="form-select" required>
+          <option value="">Select sport</option>
+          <option value="Soccer">Soccer</option>
+          <option value="Basketball">Basketball</option>
+          <option value="Volleyball">Volleyball</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" id="price" name="price" class="form-control" required/>
+      </div>
 
+      <input type="hidden" id="event-index" />
 
-    <!-- Event boxes section -->
-    <section id="event-list" class="event-list" style="display: none;">
-      <h2>My Events</h2>
-      <button id="create-event-btn" class="btn btn-primary" onclick="window.location.href='/event-edit'">Create Event</button>
-      <br/>
-      <div id="events-container" class="events-container"></div>
-    </section>
-
+      <button type="submit" class="btn btn-success">Save</button>
+      <a href="events.html" class="btn btn-secondary">Cancel</a>
+    </form>
   </div>
 
 

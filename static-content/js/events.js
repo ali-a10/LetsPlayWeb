@@ -49,7 +49,7 @@ function getEvents() {
       document.querySelectorAll('.edit-event-btn').forEach(button => {
         button.addEventListener('click', function () {
           const eventIndex = this.getAttribute('data-index');
-          window.location.href = `/event.html?id=${eventIndex}`;
+          window.location.href = `/edit-event?id=${eventIndex}`;
         });
       });
     })
@@ -62,61 +62,128 @@ document.addEventListener('DOMContentLoaded', () => {
   bindLogoutBtn();
 });
 
-// Show/hide the event form when the button is clicked
-$('#show-form-btn').on('click', function() {
-    $('#event-form').toggle(); // Toggle visibility of the form
-});
+
+// document.getElementById('create-event-btn').addEventListener('click', function () {
+//   window.location.href = '/create';
+// });
 
 
 
-document.getElementById('event-form').addEventListener('submit', function(e) {
-    e.preventDefault();  // Prevent page from refreshing/navigating
+// ///////////////// this is for the submit btn of the visible/invisible form (not used rn)
+// document.getElementById('event-form').addEventListener('submit', function(e) {
+//     e.preventDefault();  // Prevent page from refreshing/navigating
   
-    // Gather form data
-    const formData = {
-      title: document.getElementById('title').value,
-    //   time: document.getElementById('time').value,
-      date: document.getElementById('date').value,
-      sport: document.getElementById('sport').value,
-    //   location: document.getElementById('location').value,
-      price: document.getElementById('price').value,
-    //   maxParticipants: document.getElementById('max-participants').value,
-    //   currentParticipants: document.getElementById('current-participants').value,
-    //   notes: document.getElementById('notes').value
-    };
+//     // Gather form data
+//     const formData = {
+//       title: document.getElementById('title').value,
+//     //   time: document.getElementById('time').value,
+//       date: document.getElementById('date').value,
+//       sport: document.getElementById('sport').value,
+//     //   location: document.getElementById('location').value,
+//       price: document.getElementById('price').value,
+//     //   maxParticipants: document.getElementById('max-participants').value,
+//     //   currentParticipants: document.getElementById('current-participants').value,
+//     //   notes: document.getElementById('notes').value
+//     };
 
   
-    // Send form data to the server using AJAX (Fetch API)
-    // fetch('/create-event', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(formData)
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   alert('Event created successfully!');
-    //   console.log('Server response:', data);
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
+//     // Send form data to the server using AJAX (Fetch API)
+//     // fetch('/create-event', {
+//     //   method: 'POST',
+//     //   headers: {
+//     //     'Content-Type': 'application/json',
+//     //   },
+//     //   body: JSON.stringify(formData)
+//     // })
+//     // .then(response => response.json())
+//     // .then(data => {
+//     //   alert('Event created successfully!');
+//     //   console.log('Server response:', data);
+//     // })
+//     // .catch((error) => {
+//     //   console.error('Error:', error);
+//     // });
 
-    $.ajax({
-        method: "POST",
-        url: '/create-event',
-        data: JSON.stringify(formData),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-      })
-      .done(function(data, textStatus, jqXHR) {
-        console.log(jqXHR.status + " " + textStatus); 
-        console.log("Server Response: " + JSON.stringify(data));
-        getEvents();
-      })
-      .fail(function(err) {
-        console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
-      });
-  });
+//     $.ajax({
+//         method: "POST",
+//         url: '/create-event',
+//         data: JSON.stringify(formData),
+//         contentType: "application/json; charset=utf-8",
+//         dataType: "json"
+//       })
+//       .done(function(data, textStatus, jqXHR) {
+//         console.log(jqXHR.status + " " + textStatus); 
+//         console.log("Server Response: " + JSON.stringify(data));
+//         getEvents();
+//       })
+//       .fail(function(err) {
+//         console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+//       });
+//   });
   
+/////////////////////////////// the form that was in events.html:
+// <div class="container my-5">
+//       <form id="event-form" style="display: none;">
+//         <!-- Title -->
+//         <div class="mb-3">
+//           <label for="title" class="form-label">Title</label>
+//           <input type="text" class="form-control" id="title" name="title" placeholder="Event Title" required>
+//         </div>
+
+//         <!-- Time -->
+//         <div class="mb-3">
+//           <label for="time" class="form-label">Time</label>
+//           <input type="time" class="form-control" id="time" name="time" required>
+//         </div>
+
+//         <!-- Date -->
+//         <div class="mb-3">
+//           <label for="date" class="form-label">Date</label>
+//           <input type="date" class="form-control" id="date" name="date" required>
+//         </div>
+
+//         <!-- Sport Dropdown -->
+//         <div class="mb-3">
+//           <label for="sport" class="form-label">Sport</label>
+//           <select class="form-select" id="sport" name="sport" required>
+//             <option value="">Select a sport</option>
+//             <option value="soccer">Soccer</option>
+//             <option value="basketball">Basketball</option>
+//             <option value="volleyball">Volleyball</option>
+//           </select>
+//         </div>
+
+//         <!-- Location -->
+//         <div class="mb-3">
+//           <label for="location" class="form-label">Location</label>
+//           <input type="text" class="form-control" id="location" name="location" placeholder="Event Location" required>
+//         </div>
+
+//         <!-- Price -->
+//         <div class="mb-3">
+//           <label for="price" class="form-label">Price</label>
+//           <input type="text" class="form-control" id="price" name="price" placeholder="Event Price" required>
+//         </div>
+
+//         <!-- Max Number of Participants -->
+//         <div class="mb-3">
+//           <label for="max-participants" class="form-label">Max Number of Participants</label>
+//           <input type="number" class="form-control" id="max-participants" name="maxParticipants" placeholder="Max Participants" min="1" required>
+//         </div>
+
+//         <!-- Current Number of Participants -->
+//         <div class="mb-3">
+//           <label for="current-participants" class="form-label">Current Number of Participants</label>
+//           <input type="number" class="form-control" id="current-participants" name="currentParticipants" placeholder="Current Participants" min="0" required>
+//         </div>
+
+//         <!-- Notes -->
+//         <div class="mb-3">
+//           <label for="notes" class="form-label">Notes</label>
+//           <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any additional notes"></textarea>
+//         </div>
+
+//         <!-- Submit Button -->
+//         <button type="submit" class="btn btn-primary w-100">Create Event</button>
+//       </form>
+//     </div>

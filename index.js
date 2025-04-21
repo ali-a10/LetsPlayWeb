@@ -138,7 +138,7 @@ app.get('/getEvents', async (req, res) => {
 });
 
 
-app.post('/create-event', (req, res) => {
+app.post('/post-event', (req, res) => {
   const { title, date, sport, price } = req.body;
   if (!title || !date || !sport || !price) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -208,6 +208,11 @@ app.get('/:page', (req, res) => {
   // if user isn't logged in, they shouldn't be able to access account.html
   if (page === 'account' && !req.session.username) {
     return res.redirect('login');
+  }
+
+  // i still dk if we wanna move this to its own function:
+  if (page === 'create' && req.session.username) {
+    res.sendFile(__dirname + '/static-content/event-edit.html');
   }
   res.sendFile(__dirname + '/static-content/' + page + '.html');
 });
