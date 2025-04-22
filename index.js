@@ -1,4 +1,4 @@
-const { getUsers, addUser, editUser, getEvents, addEvent } = require('./dataHandler.js');
+const { getUsers, addUser, editUser, getEvents, addEvent, updateEvent } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -138,7 +138,7 @@ app.get('/getEvents', async (req, res) => {
 });
 
 
-app.post('/post-event', (req, res) => {
+app.post('/post-event', async (req, res) => {
   const { title, date, sport, price } = req.body;
   if (!title || !date || !sport || !price) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -150,17 +150,34 @@ app.post('/post-event', (req, res) => {
     date,
     sport,
     price,
+    createdBy: req.session.username
   };
-  if (req.session.events){
-    req.session.events.push(newEvent);
+  
+  try {
+    await addEvent(newEvent);
+    res.status(201).json({ event: newEvent });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to save event' });
   }
-  else {
-    req.session.events = [newEvent];
-  }
-  events.push(newEvent);
-  res.status(201);
-  res.json({ event: newEvent })
 });
+
+
+app.put('/update-event/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { title, date, sport, price } = req.body;
+
+  if (!title || !date || !sport || !price) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    await updateEvent(id, { title, date, sport, price });
+    res.json({ message: 'Event updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message || 'Error updating event' });
+  }
+});
+
 
 
 //////////////// My Account page ////////////////

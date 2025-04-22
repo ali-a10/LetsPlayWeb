@@ -1,14 +1,26 @@
 [
-    {
-        "createdBy": "ali",
-        "title": "Morning Soccer",
-        "time": "08:00",
-        "date": "2024-12-15",
-        "sport": "Soccer",
-        "location": "Community Park",
-        "price": 10,
-        "maxParticipants": 20,
-        "currentParticipants": 5,
-        "notes": "Bring a water bottle and soccer gear"
-    }
+  {
+    "createdBy": "ali",
+    "title": "Morning Soccer",
+    "time": "08:00",
+    "date": "2024-12-15",
+    "sport": "Soccer",
+    "location": "Community Park",
+    "price": 10,
+    "maxParticipants": 20,
+    "currentParticipants": 5,
+    "notes": "Bring a water bottle and soccer gear"
+  },
+  {
+    "title": "2nd event",
+    "date": "2022-12-12",
+    "sport": "Volleyball",
+    "price": "1"
+  },
+  {
+    "title": "bball",
+    "date": "1999-11-11",
+    "sport": "Basketball",
+    "price": "1"
+  }
 ]

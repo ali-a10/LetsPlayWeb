@@ -49,7 +49,7 @@ function getEvents() {
       document.querySelectorAll('.edit-event-btn').forEach(button => {
         button.addEventListener('click', function () {
           const eventIndex = this.getAttribute('data-index');
-          window.location.href = `/edit-event?id=${eventIndex}`;
+          window.location.href = `/event-edit?id=${eventIndex}`;
         });
       });
     })

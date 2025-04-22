@@ -24,9 +24,11 @@ async function writeJSON(filePath, data) {
   }
 }
 
+
 async function getUsers() {
   return await readJSON(USERS_FILE);
 }
+
 
 async function addUser(user) {
   const users = await getUsers();
@@ -71,10 +73,26 @@ async function getEvents() {
   return await readJSON(EVENTS_FILE);
 }
 
+
 async function addEvent(event) {
   const events = await getEvents();
   events.push(event);
   await writeJSON(EVENTS_FILE, events);
 }
 
-module.exports = { getUsers, addUser, editUser, getEvents, addEvent };
+
+async function updateEvent(id, updatedData) {
+  const events = await getEvents();
+
+  if (id < 0 || id >= events.length) {
+    throw new Error('Invalid event id');
+  }
+
+  // Replace the existing event at id with new data
+  events[id] = { ...events[id], ...updatedData };
+
+  await writeJSON(EVENTS_FILE, events);
+}
+
+
+module.exports = { getUsers, addUser, editUser, getEvents, addEvent, updateEvent };
