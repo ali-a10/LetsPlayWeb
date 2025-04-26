@@ -10,6 +10,10 @@
         - e.g. not logged in trying to access pages only for logged in users
         - DID THIS BUT DOUBLE CHECK^^^
 
+to check:
+- have to understand syntax on line 91 in datahandler: 
+    // Replace the existing event at id with new data
+    events[id] = { ...events[id], ...updatedData };
 
 
 for later:

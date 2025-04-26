@@ -1,4 +1,32 @@
+import { checkLoginStatus, bindLogoutBtn } from './auth.js';
+
+// $(document).ready(function() {  
+//     // getEvents();
+    
+      
+// });
+
 document.addEventListener('DOMContentLoaded', async () => {
+    checkLoginStatus()
+        .then(data => {
+            if (data.loggedIn) {
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('signup-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'block';
+                document.getElementById('myaccount-btn').style.display = 'block';
+            } else {
+                // User is not logged in, display login/signup options
+                document.getElementById('login-btn').style.display = 'block';
+                document.getElementById('signup-btn').style.display = 'block';
+                document.getElementById('logout-btn').style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.log("ERROR from check login: ", error)
+        });
+
+    bindLogoutBtn();
+
     const params = new URLSearchParams(window.location.search);
     const eventIndex = params.get('id');
     console.log("params: ",params, eventIndex);
