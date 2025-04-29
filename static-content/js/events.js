@@ -9,7 +9,8 @@ $(document).ready(function() {
           document.getElementById('signup-btn').style.display = 'none';
           document.getElementById('logout-btn').style.display = 'block';
           document.getElementById('myaccount-btn').style.display = 'block';
-          document.getElementById('event-list').style.display = 'block';
+          document.getElementById('my-event-list').style.display = 'block';
+          document.getElementById('events-list').style.display = 'block';
           getEvents();
         } else {
             // User is not logged in, display login/signup options
@@ -56,11 +57,57 @@ function getEvents() {
     .catch(error => console.error('Error fetching events:', error));
 }
 
-  
 
 document.addEventListener('DOMContentLoaded', () => {
   bindLogoutBtn();
+  loadPublicEvents();
 });
+
+
+function loadPublicEvents() {
+  fetch('/getEvents')
+    .then(res => res.json())
+    .then(events => {
+      const container = document.getElementById('public-events-container');
+      container.innerHTML = '';
+
+      events.forEach(event => {
+        const card = document.createElement('div');
+        card.className = 'event-card';
+
+        card.innerHTML = `
+          <div class="event-card-title">${event.title}</div>
+          <div class="event-card-body">
+            <div>
+              <p><strong>${formatDate(event.date)}</strong> ${event.time || ''}</p>
+              <div class="event-icon">
+                <span>[icon]</span> ${event.sport}
+              </div>
+              <p><strong>Location</strong></p>
+              <div class="profile-host">
+                <div class="circle"></div>
+                <span>${event.createdBy || 'Host'}</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+              <div class="event-capacity">${event.currentParticipants || 0}/${event.maxParticipants || 10}</div>
+              <div class="event-price">${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}</div>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    })
+    .catch(err => {
+      console.error('Failed to load events:', err);
+    });
+}
+
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+}
 
 
 // document.getElementById('create-event-btn').addEventListener('click', function () {

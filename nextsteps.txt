@@ -1,7 +1,6 @@
 1. events page:
     - make events more detailed (add other fields)
-    - make event cards clickable (event page) maybe with event id in url?
-        - if this is the user's event, make it editable
+    - review explore events section
 
 
 - handle case where users input random url parameters
@@ -14,6 +13,9 @@ to check:
 - have to understand syntax on line 91 in datahandler: 
     // Replace the existing event at id with new data
     events[id] = { ...events[id], ...updatedData };
+
+- use document.addEventListener('DOMContentLoaded'...) instead of $(document).ready()
+    - some pages may have both
 
 
 for later:
