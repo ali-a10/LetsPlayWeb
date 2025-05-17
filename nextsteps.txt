@@ -1,4 +1,5 @@
 1. events page:
+    - make "my events" only visible to that user
     - make events more detailed (add other fields)
     - review explore events section
 

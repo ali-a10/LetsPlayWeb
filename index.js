@@ -42,11 +42,11 @@ app.post('/signup', async (req, res) => {
     res.json({ success: false, message: 'Username already exists' });
     return;
   }
-
-  const newUser = { username, email, password };
+  const id = users.length + 1;
+  const newUser = { id, username, email, password };
   users.push(newUser);
   await addUser(newUser);
-  req.session.user = { email : email, username : username, password : password };
+  req.session.user = { user_id: id, email : email, username : username, password : password };
   res.status(201).json({ success: true });
 });
 
@@ -54,12 +54,10 @@ app.post('/signup', async (req, res) => {
 app.post('/submitLogin', async (req, res) => {
   const { username, password } = req.body;
   const users = await getUsers();
-  console.log(users);
-
   const user = users.find(user => user.username === username && user.password === password);
 
   if (user) {
-    req.session.user = { email : user.email, username : user.username, password : user.password };
+    req.session.user = { user_id: user.id, email : user.email, username : user.username, password : user.password };
     console.log(req.session);
     console.log(req.sessionID);
     res.status(200).json({ success: true });  ////// it was res.status(200).json(...), so make sure the status is 200
@@ -150,7 +148,7 @@ app.post('/post-event', async (req, res) => {
     date,
     sport,
     price,
-    createdBy: req.session.username
+    createdBy: req.session.user.id
   };
   
   try {
@@ -188,7 +186,8 @@ app.put('/editProfile/:username', async (req, res) => {
     let newUsername = req.body.newUsername;  // should we prevent usernames from being changed in the future??
 
     const users = await getUsers();
-    const currUser = users.find(user => user.username === username);
+    const currUser = users.find(user => user.username === username); // use id to find instead
+    // for comment on line above, prob use req.session.user.id
     const userWNewEmail = users.find(user => user.email === newEmail);
     if (userWNewEmail && currUser != userWNewEmail) {
       res.json({ success: false, message: 'This email is already in use' });
@@ -223,12 +222,12 @@ app.get('/:page', (req, res) => {
   let page = req.params.page
 
   // if user isn't logged in, they shouldn't be able to access account.html
-  if (page === 'account' && !req.session.username) {
+  if (page === 'account' && !req.session.user) {
     return res.redirect('login');
   }
 
   // i still dk if we wanna move this to its own function:
-  if (page === 'create' && req.session.username) {
+  if (page === 'create' && req.session.user) {
     res.sendFile(__dirname + '/static-content/event-edit.html');
   }
   res.sendFile(__dirname + '/static-content/' + page + '.html');
