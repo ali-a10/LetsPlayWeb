@@ -11,7 +11,7 @@ $(document).ready(function() {
           document.getElementById('myaccount-btn').style.display = 'block';
           document.getElementById('my-event-list').style.display = 'block';
           document.getElementById('events-list').style.display = 'block';
-          getEvents();
+          loadPublicEvents(data.user);
         } else {
             // User is not logged in, display login/signup options
             document.getElementById('login-btn').style.display = 'block';
@@ -60,17 +60,51 @@ function getEvents() {
 
 document.addEventListener('DOMContentLoaded', () => {
   bindLogoutBtn();
-  loadPublicEvents();
+  // loadPublicEvents();
 });
 
 
-function loadPublicEvents() {
+function loadPublicEvents(loggedInUser) {
   fetch('/getEvents')
     .then(res => res.json())
     .then(events => {
-      const container = document.getElementById('public-events-container');
-      container.innerHTML = '';
+      const publicEventsContainer = document.getElementById('public-events-container');
+      publicEventsContainer.innerHTML = '';
+      const myEventsContainer = document.getElementById('events-container');
+      myEventsContainer.innerHTML = '';
 
+      const myEvents = events.filter(event => event.createdBy == loggedInUser.id);
+      console.log("LENGTHHH ", myEvents.length, events.length);
+      if (myEvents.length === 0) {
+        myEventsContainer.innerHTML = '<p>You have not created any events yet.</p>';
+      }
+      else {
+        // load my events
+        myEvents.forEach((event, index) => {
+          const card = document.createElement('div');
+          card.className = 'event-card';
+
+          card.innerHTML = `
+            <div class="event-card-title">${event.title}</div>
+            <div class="event-card-body">
+              <div>
+                <p><strong>${formatDate(event.date)}</strong> ${event.time || ''}</p>
+                <div class="event-icon"><span>[icon]</span> ${event.sport}</div>
+                <p><strong>Location</strong></p>
+              </div>
+              <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                <div class="event-capacity">${event.currentParticipants || 0}/${event.maxParticipants || 10}</div>
+                <div class="event-price">${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}</div>
+                <button class="btn btn-secondary edit-event-btn" data-index="${index}">Edit</button>
+              </div>
+            </div>
+          `;
+
+          myEventsContainer.appendChild(card);
+        });
+      }      
+
+      // load public events
       events.forEach(event => {
         const card = document.createElement('div');
         card.className = 'event-card';
@@ -96,7 +130,7 @@ function loadPublicEvents() {
           </div>
         `;
 
-        container.appendChild(card);
+        publicEventsContainer.appendChild(card);
       });
     })
     .catch(err => {

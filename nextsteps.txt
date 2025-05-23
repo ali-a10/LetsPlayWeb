@@ -1,5 +1,5 @@
 1. events page:
-    - make "my events" only visible to that user
+    - make the 'edit' button for 'my events' clickable and functional
     - make events more detailed (add other fields)
     - review explore events section
 

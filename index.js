@@ -46,7 +46,7 @@ app.post('/signup', async (req, res) => {
   const newUser = { id, username, email, password };
   users.push(newUser);
   await addUser(newUser);
-  req.session.user = { user_id: id, email : email, username : username, password : password };
+  req.session.user = { id: id, email : email, username : username, password : password };
   res.status(201).json({ success: true });
 });
 
@@ -57,7 +57,7 @@ app.post('/submitLogin', async (req, res) => {
   const user = users.find(user => user.username === username && user.password === password);
 
   if (user) {
-    req.session.user = { user_id: user.id, email : user.email, username : user.username, password : user.password };
+    req.session.user = { id: user.id, email : user.email, username : user.username, password : user.password };
     console.log(req.session);
     console.log(req.sessionID);
     res.status(200).json({ success: true });  ////// it was res.status(200).json(...), so make sure the status is 200
