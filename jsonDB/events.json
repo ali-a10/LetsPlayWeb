@@ -7,7 +7,7 @@
     "date": "2024-12-15",
     "sport": "Soccer",
     "location": "Community Park",
-    "price": 10,
+    "price": "10",
     "maxParticipants": 20,
     "currentParticipants": 5,
     "notes": "Bring a water bottle and soccer gear"
@@ -16,7 +16,7 @@
     "id": 2,
     "createdBy": 1,
     "title": "2nd event",
-    "date": "2022-12-12",
+    "date": "2021-05-03",
     "sport": "Volleyball",
     "price": "1"
   },

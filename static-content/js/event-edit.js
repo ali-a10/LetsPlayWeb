@@ -28,18 +28,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     bindLogoutBtn();
 
     const params = new URLSearchParams(window.location.search);
-    const eventIndex = params.get('id');
-    console.log("params: ",params, eventIndex);
+    const eventId = params.get('id');
+    console.log("params: ",params, eventId);
   
-    if (eventIndex !== null) {
+    if (eventId !== null) {
         document.getElementById('form-title').innerText = 'Edit Event';
-        document.getElementById('event-index').value = eventIndex;
+        // document.getElementById('event-index').value = eventId;
     
         try {
             const res = await fetch('/getEvents');
             const events = await res.json();
     
-            const event = events[eventIndex];
+            const event = events.find(e => e.id === parseInt(eventId));
             if (event) {
             document.getElementById('title').value = event.title;
             document.getElementById('date').value = event.date;
@@ -63,12 +63,13 @@ document.getElementById('event-form').addEventListener('submit', async (e) => {
         price: document.getElementById('price').value,
     };
   
-    const index = document.getElementById('event-index').value;
-  
+    const params = new URLSearchParams(window.location.search);
+    const eventId = params.get('id');
+
     try {
         let res;
-        if (index) {
-            res = await fetch(`/update-event/${index}`, {
+        if (eventId) {
+            res = await fetch(`/update-event/${eventId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(event),

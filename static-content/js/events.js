@@ -95,14 +95,21 @@ function loadPublicEvents(loggedInUser) {
               <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
                 <div class="event-capacity">${event.currentParticipants || 0}/${event.maxParticipants || 10}</div>
                 <div class="event-price">${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}</div>
-                <button class="btn btn-secondary edit-event-btn" data-index="${index}">Edit</button>
+                <button class="btn btn-secondary edit-event-btn" onclick="window.location.href='/event-edit?id=${event.id}'">Edit</button>
               </div>
             </div>
           `;
 
           myEventsContainer.appendChild(card);
         });
-      }      
+      }
+      // Add click handlers for edit buttons
+      // document.querySelectorAll('.edit-event-btn').forEach(button => {
+      //   button.addEventListener('click', function () {
+      //     const eventId = this.getAttribute('data-index');
+      //     window.location.href = `/event-edit?id=${eventId}`;
+      //   });
+      // });
 
       // load public events
       events.forEach(event => {

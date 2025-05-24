@@ -1,7 +1,8 @@
 1. events page:
-    - make the 'edit' button for 'my events' clickable and functional
     - make events more detailed (add other fields)
     - review explore events section
+    - make sure http://localhost:3000/event-edit?id=X is accessible only
+        if event w/ id=X is the current user's event
 
 
 - handle case where users input random url parameters
