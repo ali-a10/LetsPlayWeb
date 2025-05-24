@@ -95,4 +95,4 @@ async function updateEvent(id, updatedData) {
 }
 
 
-module.exports = { getUsers, addUser, editUser, getEvents, addEvent, updateEvent };
+module.exports = { getUsers, addUser, editUser, getEvents, addEvent, updateEvent, writeJSON };

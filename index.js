@@ -1,4 +1,4 @@
-const { getUsers, addUser, editUser, getEvents, addEvent, updateEvent } = require('./dataHandler.js');
+const { getUsers, addUser, editUser, getEvents, addEvent, updateEvent, writeJSON } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -143,7 +143,14 @@ app.post('/post-event', async (req, res) => {
   }
   // will also need user info in the event (username, maybe date event is created)
   // might want to give events ids
+  
+  // figure out what the id should be
+  const events = await getEvents();
+  const lastEventId = events[events.length - 1].id;
+  const id = lastEventId + 1
+
   const newEvent = {
+    id,
     title,
     date,
     sport,
@@ -175,6 +182,31 @@ app.put('/update-event/:id', async (req, res) => {
     res.status(500).json({ error: err.message || 'Error updating event' });
   }
 });
+
+
+app.delete('/delete-event/:id', async (req, res) => {
+  const eventId = parseInt(req.params.id);
+  try {
+    const events = await getEvents();
+    const index = events.findIndex(e => e.id === eventId);
+
+    if (index === -1) {
+      return res.status(404).json({ success: false, message: 'Event not found' });
+    }
+
+    // Only allow deletion if user owns the event
+    if (events[index].createdBy !== req.session.user?.id) {
+      return res.status(403).json({ success: false, message: 'Unauthorized to delete this event' });
+    }
+
+    events.splice(index, 1);  // removes 1 item starting at 'index'
+    await writeJSON('./jsonDB/events.json', events);
+    res.status(200).json({ success: true, message: 'Event deleted' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server error while deleting event' });
+  }
+});
+
 
 
 

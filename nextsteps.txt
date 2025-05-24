@@ -4,6 +4,10 @@
     - make sure http://localhost:3000/event-edit?id=X is accessible only
         if event w/ id=X is the current user's event
 
+        - ALSO make sure only logged in users can go to that page
+            - if no user is logged in and i go to the event-edit page, don't have the form,
+            maybe redirect user to events page or put a message on a blank page
+
 
 - handle case where users input random url parameters
     - e.g. /accountss
@@ -21,6 +25,9 @@ to check:
 
 
 for later:
+- when an event is first created, a popup appears & we stay on the event-edit page,
+    maybe we can change the 'save' btn to 'back to events' once the event is 
+    succesfully created
 - ability to change password
 - review gpt page on promises vs callbacks
 
