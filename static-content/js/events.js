@@ -74,7 +74,6 @@ function loadPublicEvents(loggedInUser) {
       myEventsContainer.innerHTML = '';
 
       const myEvents = events.filter(event => event.createdBy == loggedInUser.id);
-      console.log("LENGTHHH ", myEvents.length, events.length);
       if (myEvents.length === 0) {
         myEventsContainer.innerHTML = '<p>You have not created any events yet.</p>';
       }
@@ -133,6 +132,7 @@ function loadPublicEvents(loggedInUser) {
             <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
               <div class="event-capacity">${event.currentParticipants || 0}/${event.maxParticipants || 10}</div>
               <div class="event-price">${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}</div>
+              <button class="btn btn-info view-event-btn" onclick="window.location.href='/event.html?id=${event.id}'">View</button>
             </div>
           </div>
         `;
