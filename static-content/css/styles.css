@@ -1,4 +1,19 @@
 /* Modern Redesign with Blue & Teal Color Scheme */
+/* Highlight current page */
+.nav-link.active {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Hover effect for nav links */
+.nav-link:hover {
+  color: #03dac6 !important; /* teal accent */
+}
+
+/* Buttons spacing/look */
+.navbar .btn {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,7 +27,7 @@ body {
 header {
   /* background: linear-gradient(90deg, #1e88e5, #03dac6); */
   color: white;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 0.5rem 2em;
   text-align: center;
   border-bottom: #e0e0e0 2px solid;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -24,26 +39,26 @@ header h1 {
   font-weight: bold;
 }
 
-nav ul {
+/* nav ul {
   list-style: none;
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding: 0;
   margin-top: 1rem;
-}
+} */
 
-nav ul li a {
+/* nav ul li a {
   color: white;
   text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 100;
   transition: color 0.3s;
-}
+} */
 
-nav ul li a:hover {
+/* nav ul li a:hover {
   color: #03dac6;
-}
+} */
 
 section {
   padding: 2rem;
@@ -68,7 +83,7 @@ footer {
 }
 
 /* Buttons */
-button, .btn {
+/* button, .btn {
   padding: 0.6rem 1.2rem;
   background: #1e88e5;
   border: none;
@@ -77,11 +92,11 @@ button, .btn {
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s;
-}
+} */
 
-button:hover, .btn:hover {
+/* button:hover, .btn:hover {
   background: #1565c0;
-}
+} */
 
 /* Events Section */
 .event-list {
