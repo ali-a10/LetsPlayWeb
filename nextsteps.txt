@@ -33,6 +33,7 @@ to check:
 for later:
 - group duplicate code into one view/partial view 
         (e.g. checkLogin then make btn visible/invisible)
+    - THIS ^ will prob be done once i add react
 
 - when an event is first created, a popup appears & we stay on the event-edit page,
     maybe we can change the 'save' btn to 'back to events' once the event is 
