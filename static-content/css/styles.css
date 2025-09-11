@@ -1,13 +1,13 @@
 /* Modern Redesign with Blue & Teal Color Scheme */
 /* Highlight current page */
 .nav-link.active {
-  text-decoration: underline;
-  font-weight: 600;
+  text-shadow: 0 1rem 1rem rgba(0,0,0,0.8);
+  font-weight: 650;
 }
 
 /* Hover effect for nav links */
 .nav-link:hover {
-  color: #03dac6 !important; /* teal accent */
+  color: #1e1e1e !important; /* teal accent */
 }
 
 /* Buttons spacing/look */
@@ -18,7 +18,7 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  background: linear-gradient(135deg, #1e88e5, #03dac6);
+  background: linear-gradient(90deg, #1e88e5, #03dac6);
   color: #e0e0e0;
   margin: 0;
   padding: 0;
@@ -65,7 +65,8 @@ section {
   margin: 1rem auto;
   max-width: 80%;
   border-radius: 0.75rem;
-  background: #1e1e1e;
+  /* background: #1e1e1e; */
+  background: #e1f6ff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
