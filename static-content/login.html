@@ -11,23 +11,38 @@
   <link rel="shortcut icon" href="#">
 </head>
 <body>
-  <header class="py-3">
-    <div class="container">
-      <h1>Login</h1>
-      <nav>
-        <ul class="nav">
-            <li class="nav-item"><a class="nav-link text-white" href="/">Home</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="/about">About</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="/events">Events</a></li>
-            <div class="nav-buttons" style="display: inline-flex;">
-              <button id="login-btn" onclick="window.location.href='/login'">Log in</button>
-              <button id="signup-btn" onclick="window.location.href='/account/create'">Sign up</button>
-              <button id="logout-btn" style="display:none;">Log Out</button>
-              <button id="myaccount-btn" style="display:none;" onclick="window.location.href='/account/edit'">My Account</button>
-            </div>
-        </ul>
-      </nav>
+  <header>
+    <div class="container text-center">
+      <!-- Brand/Logo -->
+      <a class="navbar-brand fs-2 fw-bold" href="/">
+        My Web App
+      </a>
     </div>
+  
+    <!-- Sticky nav below logo -->
+    <nav class="navbar navbar-expand-lg sticky-top bg-transparent">
+      <div class="container justify-content-center">
+        <ul class="navbar-nav gap-3 fs-5">
+          <li class="nav-item">
+            <a class="nav-link text-white active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/events">Events</a>
+          </li>
+        </ul>
+  
+        <!-- Auth buttons -->
+        <div class="ms-3 d-inline-flex gap-3">
+          <button id="login-btn" class="btn btn-outline-light btn-sm fs-6" onclick="window.location.href='/login'">Log in</button>
+          <button id="signup-btn" class="btn btn-light btn-sm fs-6" onclick="window.location.href='/account/create'">Sign up</button>
+          <button id="logout-btn" class="btn btn-danger btn-sm fs-6" style="display:none;">Log Out</button>
+          <button id="myaccount-btn" class="btn btn-outline-light btn-sm fs-6" style="display:none;" onclick="window.location.href='/account/edit'">My Account</button>
+        </div>
+      </div>
+    </nav>
   </header>
 
   <main>

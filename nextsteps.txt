@@ -46,3 +46,5 @@ for later:
 - have a loading icon (e.g. when clicking edit event, instead of seeing the empty
     fields for a sec then having the text load into them, have a loading icon
     until the fields are filled / when the info is retrieved from server)
+
+- account.html doesn't have the 'active aria-current="page"' code
