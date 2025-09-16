@@ -71,7 +71,7 @@ section {
 }
 
 h2 {
-  color: #03dac6;
+  color: #1e1e1e;
   margin-bottom: 1rem;
 }
 
@@ -175,4 +175,44 @@ form button {
 
 form button:hover {
   background: #00bfa5;
+}
+
+/* Section wrapper */
+/* .login-section {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  color: #1e1e1e;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+} */
+
+/* Custom textboxes */
+.custom-input {
+  background-color: #fff;
+  border: 1px solid #1e1e1e;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  color: #1e1e1e;
+  font-size: 1rem;
+}
+
+/* Buttons */
+.modern-btn {
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.modern-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Error message */
+.error-msg {
+  color: red;
+  font-weight: 500;
 }

@@ -46,28 +46,37 @@
   </header>
 
   <main>
-    <!-- Login Form (visible by default) -->
-    <form id="login-form">
-      <div>
-          <label for="login-username">Username:</label>
-          <input type="text" id="login-username" name="username" required>
+    <section>
+      <h2 class="text-center mb-4">Log In</h2>
+  
+      <form id="login-form" class="d-flex flex-column align-items-center">
+        <div class="mb-3 w-50">
+          <label for="login-username" class="form-label">Username</label>
+          <input type="text" id="login-username" name="username" class="form-control custom-input" required>
         </div>
-        <div>
-          <label for="login-password">Password:</label>
-          <input type="password" id="login-password" name="password" required>
+        <div class="mb-3 w-50">
+          <label for="login-password" class="form-label">Password</label>
+          <input type="password" id="login-password" name="password" class="form-control custom-input" required>
         </div>
-      <button type="submit">Log in</button>
-
-      <!-- Error message container -->
-      <p id="errorMessage" style="color: red; display: none;"></p>
-    </form>
-
-    <!-- Toggle Link to Sign Up -->
-    <p>Don't have an account? <a href="/account/create" id="show-signup">Sign up</a></p>
-
-    <!-- Back to Home Button -->
-    <button id="back-home" onclick="window.location.href='/'">Back to Home</button>
+  
+        <button type="submit" class="btn btn-primary modern-btn w-50">Log in</button>
+  
+        <!-- Error message container -->
+        <p id="errorMessage" class="error-msg mt-3" style="display: none;"></p>
+      </form>
+  
+      <!-- Toggle Link to Sign Up -->
+      <p class="text-center mt-4">
+        Don't have an account? <a href="/account/create" id="show-signup">Sign up</a>
+      </p>
+  
+      <!-- Back to Home Button -->
+      <div class="text-center mt-3">
+        <button id="back-home" class="btn btn-outline-secondary modern-btn" onclick="window.location.href='/'">Back to Home</button>
+      </div>
+    </section>
   </main>
+  
 
   <script type="module" src="js/auth.js"></script>
 </body>
