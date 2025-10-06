@@ -1,218 +1,177 @@
-/* Modern Redesign with Blue & Teal Color Scheme */
-/* Highlight current page */
-.nav-link.active {
-  text-shadow: 0 1rem 1rem rgba(0,0,0,0.8);
-  font-weight: 650;
-}
-
-/* Hover effect for nav links */
-.nav-link:hover {
-  color: #1e1e1e !important; /* teal accent */
-}
-
-/* Buttons spacing/look */
-.navbar .btn {
-  transition: background-color 0.3s ease, color 0.3s ease;
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  background: linear-gradient(90deg, #1e88e5, #03dac6);
-  color: #e0e0e0;
-  margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #1e1e1e;
 }
 
-header {
-  /* background: linear-gradient(90deg, #1e88e5, #03dac6); */
+/* Hero */
+.hero {
+  background-color: #003b46;
   color: white;
-  padding: 1rem 2rem 0.5rem 2em;
-  text-align: center;
-  border-bottom: #e0e0e0 2px solid;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  padding: 2rem;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2rem;
+.top-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
   font-weight: bold;
 }
 
-/* nav ul {
-  list-style: none;
+.nav-link:hover {
+  color: #03dac6 !important;
+}
+
+.nav-link.active {
+  text-shadow: 0 1rem 1rem rgba(0,0,0,0.8);
+  font-weight: 550;
+  color: #03dac6 !important;
+}
+
+.hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin: 0rem 6rem;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-text .highlight {
+  color: #03dac6;
+}
+
+.hero-text p {
+  margin-bottom: 1.5rem;
+}
+
+.cta-btn {
+  background-color: #03dac6;
+  color: #003b46;
+  font-weight: bold;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.cta-btn:hover {
+  background-color: #1e88e5;
+  color: white;
+}
+
+/* Placeholders */
+.placeholder {
+  background-color: #ccc;
+  border-radius: 0.5rem;
+}
+
+.hero-img {
+  width: 300px;
+  height: 300px;
+}
+
+/* How it works */
+.how-it-works {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.how-it-works .cards {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  padding: 0;
-  margin-top: 1rem;
-} */
-
-/* nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 100;
-  transition: color 0.3s;
-} */
-
-/* nav ul li a:hover {
-  color: #03dac6;
-} */
-
-section {
-  padding: 2rem;
-  margin: 1rem auto;
-  max-width: 80%;
-  border-radius: 0.75rem;
-  /* background: #1e1e1e; */
-  background: #e1f6ff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-
-h2 {
-  color: #1e1e1e;
-  margin-bottom: 1rem;
-}
-
-footer {
-  /* background: #1e88e5; */
-  color: white;
-  text-align: center;
-  padding: 1rem;
   margin-top: 2rem;
 }
 
-/* Buttons */
-/* button, .btn {
-  padding: 0.6rem 1.2rem;
-  background: #1e88e5;
-  border: none;
-  border-radius: 0.5rem;
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.3s;
-} */
-
-/* button:hover, .btn:hover {
-  background: #1565c0;
-} */
-
-/* Events Section */
-.event-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.event-card {
-  background: #2a2a2a;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+.card {
+  background-color: #e0f7fa;
   padding: 1.5rem;
+  border-radius: 0.75rem;
+  width: 200px;
 }
 
-.event-card-title {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #1e88e5;
+.card h3 {
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
 
-.event-card-body {
+.icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+}
+
+/* Featured Events */
+.featured-events {
+  padding: 3rem 2rem;
+}
+
+.events-list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 1rem;
-  color: #e0e0e0;
 }
 
-.event-capacity,
-.event-price {
-  background: #03dac6;
-  color: #121212;
-  padding: 0.4rem 0.8rem;
+.event-card {
+  background-color: #e0f7fa;
+  padding: 1rem;
   border-radius: 0.5rem;
+}
+
+.event-card h3 {
+  color: #1e88e5;
+}
+
+.event-date {
+  display: block;
   font-weight: bold;
 }
 
-.profile-host {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.profile-host .circle {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  background: #03dac6;
-}
-
-/* Forms */
-form input, form textarea, form select {
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #444;
-  border-radius: 0.5rem;
-  background: #1e1e1e;
-  color: #e0e0e0;
-}
-
-form input:focus, form textarea:focus, form select:focus {
-  border-color: #1e88e5;
-  outline: none;
-}
-
-form button {
-  background: #03dac6;
-  color: #121212;
+.event-spots {
+  display: block;
+  color: #03dac6;
   font-weight: bold;
 }
 
-form button:hover {
-  background: #00bfa5;
+.event-img {
+  margin-top: 2rem;
+  height: 200px;
 }
 
-/* Section wrapper */
-/* .login-section {
-  background: #ffffff;
-  border-radius: 0.75rem;
-  padding: 2rem;
+/* CTA Banner */
+.cta-banner {
+  background-color: #003b46;
+  color: white;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.cta-banner .cta-btn {
+  margin-top: 1rem;
+}
+
+.main-section {
+  background-color: #f9f9f9;
+  border-radius: 1rem;
+  padding: 3rem 2rem;
   margin: 2rem auto;
-  max-width: 600px;
-  color: #1e1e1e;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-} */
-
-/* Custom textboxes */
-.custom-input {
-  background-color: #fff;
-  border: 1px solid #1e1e1e;
-  border-radius: 0.75rem;
-  padding: 0.75rem;
-  color: #1e1e1e;
-  font-size: 1rem;
-}
-
-/* Buttons */
-.modern-btn {
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.modern-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-/* Error message */
-.error-msg {
-  color: red;
-  font-weight: 500;
+  max-width: 1000px;
+  box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.1);
 }

@@ -3,44 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic Web App</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title>Let's Play</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="shortcut icon" href="#">
 </head>
 <body>
-  <!-- Header Section with Navigation -->
-  <!-- <header class="py-3">
-    <div class="container">
-      <h1>My Web App</h1>
-      <nav class="navbar border-bottom border-body fixed-top">
-        <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-          <li class="nav-item"><a class="" href="/events">Events</a></li>
-          <div class="nav-buttons" style="display: inline-flex;">
-            <button id="login-btn" onclick="window.location.href='/login'">Log in</button>
-            <button id="signup-btn" onclick="window.location.href='/account/create'">Sign up</button>
-            <button id="logout-btn" style="display:none;">Log Out</button>
-            <button id="myaccount-btn" style="display:none;" onclick="window.location.href='/account/edit'">My Account</button>
-          </div>
-        </ul>
-      </nav>
-    </div>
-  </header> -->
-
-
-  <header>
-    <div class="container text-center">
-      <!-- Brand/Logo -->
-      <a class="navbar-brand fs-2 fw-bold" href="/">
-        My Web App
-      </a>
-    </div>
-  
-    <!-- Sticky nav below logo -->
+  <header class="hero">
     <nav class="navbar navbar-expand-lg sticky-top bg-transparent">
       <div class="container justify-content-center">
         <ul class="navbar-nav gap-5 fs-5">
@@ -64,37 +35,68 @@
         </div>
       </div>
     </nav>
+    
   </header>
-  
-
-
-  <!-- Home Section -->
-  <section id="home" class="py-5">
-    <div class="container">
-      <h2>Welcome to the Home Page</h2>
-      <p id="welcome-msg"></p>
-      <p>This is the homepage section. Welcome to the new and improved layout of our website!</p>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Find and Join<br>Local Sports Games<br><span class="highlight">Near You</span></h1>
+        <p>Post your games, join events, and meet players in your area.</p>
+        <button class="cta-btn">Sign Up Now</button>
+      </div>
+      <div class="hero-img placeholder"></div>
     </div>
   </section>
-  
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <!-- <form id="contact-form" action="/submit" method="POST"> -->
-      <input type="text" id="name" name="name" placeholder="Your Name" required>
-      <button type="submit" class="btn btn-primary" onclick="clicked()">Send Message</button>
-    <!-- </form> -->
+  <section class="how-it-works">
+    <h2>How it works</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon placeholder"></div>
+        <h3>Find & join events</h3>
+        <p>Browse nearby games that suit your interest</p>
+      </div>
+      <div class="card">
+        <div class="icon placeholder"></div>
+        <h3>Meet new people</h3>
+        <p>Connect with like-minded friends</p>
+      </div>
+      <div class="card">
+        <div class="icon placeholder"></div>
+        <h3>Chat & organize</h3>
+        <p>Communicate with teammates and stay organized</p>
+      </div>
+    </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-3">
-    <div class="container text-center">
-      <p>&copy; 2024 My Web App</p>
+  <section class="featured-events">
+    <h2>Featured Events</h2>
+    <div class="events-list">
+      <div class="event-card">
+        <h3>Pick-Up Football</h3>
+        <p>Los Angeles</p>
+        <span class="event-date">December 21</span>
+        <span class="event-spots">8 spots remaining</span>
+      </div>
+      <div class="event-card">
+        <h3>Basketball</h3>
+        <p>Los Angeles</p>
+        <span class="event-date">December 16</span>
+        <span class="event-spots">3 spots remaining</span>
+      </div>
+      <div class="event-card">
+        <h3>Pick-Up Football</h3>
+        <p>Los Angeles</p>
+        <span class="event-date">December 21</span>
+        <span class="event-spots">2 spots remaining</span>
+      </div>
     </div>
-  </footer>
+    <div class="event-img placeholder"></div>
+  </section>
 
-  <script type="module" src="js/app.js"></script>
-
-  <!-- bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <section class="cta-banner">
+    <h2>Why Use the App</h2>
+    <p>Sign up and start connecting with local players today.</p>
+    <button class="cta-btn">Sign Up Now</button>
+  </section>
 </body>
 </html>
