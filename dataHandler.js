@@ -83,8 +83,7 @@ async function addEvent(event) {
 
 async function updateEvent(id, updatedData) {
   const events = await getEvents();
-
-  if (id < 0 || id >= events.length) {
+  if (id < 0 || id > events.length) {
     throw new Error('Invalid event id');
   }
 

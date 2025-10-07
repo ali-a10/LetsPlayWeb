@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /******************************************************************************
  * onload                 FROM csc309/a2/wordlep2/static-content/controller.js
  ******************************************************************************/
-$(function(){
+$(document).ready(function() {
   checkLoginStatus()
     .then(data => {
       if (data.loggedIn) {

@@ -3,28 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic Web App</title>
+  <title>Edit Event - Let's Play</title>
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="shortcut icon" href="#">
+<link rel="shortcut icon" href="#">
 </head>
 <body>
-
-  <!-- Header Section with Navigation -->
-  <header>
-    <div class="container text-center">
-      <!-- Brand/Logo -->
-      <a class="navbar-brand fs-2 fw-bold" href="/">
-        My Web App
-      </a>
-    </div>
-  
-    <!-- Sticky nav below logo -->
+  <header class="hero">
     <nav class="navbar navbar-expand-lg sticky-top bg-transparent">
       <div class="container justify-content-center">
-        <ul class="navbar-nav gap-3 fs-5">
+        <ul class="navbar-nav gap-5 fs-5">
           <li class="nav-item">
             <a class="nav-link text-white" href="/">Home</a>
           </li>
@@ -35,7 +24,7 @@
             <a class="nav-link text-white active" aria-current="page" href="/events">Events</a>
           </li>
         </ul>
-  
+
         <!-- Auth buttons -->
         <div class="ms-5 d-inline-flex gap-5">
           <button id="login-btn" class="btn btn-outline-light btn-sm fs-6" onclick="window.location.href='/login'">Log in</button>
@@ -83,12 +72,10 @@
     </form>
   </div>
 
-
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-3">
-    <div class="container text-center">
-      <p>&copy; 2024 My Web App</p>
-    </div>
+  <footer class="cta-banner">
+    <h2>Why Use the App</h2>
+    <p>Sign up and start connecting with local players today.</p>
+    <button class="cta-btn">Sign Up Now</button>
   </footer>
 
   <script type="module" src="js/event-edit.js"></script>
