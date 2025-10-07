@@ -88,7 +88,7 @@ async function updateEvent(id, updatedData) {
   }
 
   // Replace the existing event at id with new data
-  events[id] = { ...events[id], ...updatedData };
+  events[id - 1] = { ...events[id-1], ...updatedData };
 
   await writeJSON(EVENTS_FILE, events);
 }

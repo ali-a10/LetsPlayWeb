@@ -27,19 +27,5 @@
     "date": "1999-11-29",
     "sport": "Basketball",
     "price": "1"
-  },
-  {
-    "id": 4,
-    "title": "new ui test",
-    "date": "2025-10-07",
-    "sport": "Basketball",
-    "price": "1",
-    "createdBy": 1
-  },
-  {
-    "title": "new ui test - EDIT ",
-    "date": "2025-10-07",
-    "sport": "Basketball",
-    "price": "1"
   }
 ]
