@@ -11,12 +11,18 @@ $(document).ready(function() {
           document.getElementById('myaccount-btn').style.display = 'block';
           document.getElementById('my-event-list').style.display = 'block';
           document.getElementById('events-list').style.display = 'block';
+          document.getElementById('events-hero-btn').addEventListener('click', () => {
+            window.location.href = '/event-edit';
+          });
           loadPublicEvents(data.user);
         } else {
             // User is not logged in, display login/signup options
             document.getElementById('login-btn').style.display = 'block';
             document.getElementById('signup-btn').style.display = 'block';
             document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('events-hero-btn').addEventListener('click', () => {
+              window.location.href = '/account/create';
+            });
         }
       })
       .catch(error => {
