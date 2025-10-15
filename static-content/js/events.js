@@ -105,11 +105,11 @@ function loadPublicEvents(loggedInUser) {
               </div>
 
               <div class="text-end">
-                <div class="event-capacity fw-semibold mb-1">
+                <div class="event-capacity fw-semibold mb-1 fs-5">
                   <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
                 </div>
                 <div class="event-price mb-2">
-                  <span class="badge bg-teal text-white">
+                  <span class="badge bg-teal text-white fs-6">
                     ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
                   </span>
                 </div>
@@ -119,7 +119,6 @@ function loadPublicEvents(loggedInUser) {
                 </button>
               </div>
             </div>
-
             
           `;
 

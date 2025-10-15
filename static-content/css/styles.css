@@ -170,6 +170,7 @@ body {
 .main-section {
   background-color: #f9f9f9;
   border-radius: 1rem;
+  border: 0.25rem solid #003b46;
   padding: 3rem 2rem;
   margin: 2rem auto;
   max-width: 1000px;
