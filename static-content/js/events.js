@@ -87,22 +87,40 @@ function loadPublicEvents(loggedInUser) {
         // load my events
         myEvents.forEach((event, index) => {
           const card = document.createElement('div');
-          card.className = 'event-card';
+          // card.className = 'event-card';
 
           card.innerHTML = `
-            <div class="event-card-title">${event.title}</div>
-            <div class="event-card-body">
-              <div>
-                <p><strong>${formatDate(event.date)}</strong> ${event.time || ''}</p>
-                <div class="event-icon"><span>[icon]</span> ${event.sport}</div>
-                <p><strong>Location</strong></p>
+            <div class="event-card shadow-sm p-3 mb-3 rounded d-flex justify-content-between align-items-center">
+              <div class="d-flex flex-column">
+                <h4 class="text-teal mb-2">${event.title}</h4>
+                <p class="mb-1 text-muted">
+                  <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
+                </p>
+                <p class="mb-1">
+                  <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                </p>
+                <p class="mb-1">
+                  <i class="bi bi-dribbble text-teal"></i> ${event.sport}
+                </p>
               </div>
-              <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
-                <div class="event-capacity">${event.currentParticipants || 0}/${event.maxParticipants || 10}</div>
-                <div class="event-price">${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}</div>
-                <button class="btn btn-secondary edit-event-btn" onclick="window.location.href='/event-edit?id=${event.id}'">Edit</button>
+
+              <div class="text-end">
+                <div class="event-capacity fw-semibold mb-1">
+                  <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                </div>
+                <div class="event-price mb-2">
+                  <span class="badge bg-teal text-white">
+                    ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
+                  </span>
+                </div>
+                <button class="btn-outline-teal fs-5"
+                  onclick="window.location.href='/event-edit?id=${event.id}'">
+                  Edit
+                </button>
               </div>
             </div>
+
+            
           `;
 
           myEventsContainer.appendChild(card);
@@ -122,7 +140,7 @@ function loadPublicEvents(loggedInUser) {
         card.className = 'event-card';
 
         card.innerHTML = `
-          <div class="event-card-title">${event.title}</div>
+          <div class="">${event.title}</div>
           <div class="event-card-body">
             <div>
               <p><strong>${formatDate(event.date)}</strong> ${event.time || ''}</p>

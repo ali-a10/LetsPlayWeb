@@ -129,15 +129,15 @@ body {
   gap: 1rem;
 }
 
-.event-card {
+/* .event-card {
   background-color: #e0f7fa;
   padding: 1rem;
   border-radius: 0.5rem;
-}
+} */
 
-.event-card h3 {
+/* .event-card h3 {
   color: #1e88e5;
-}
+} */
 
 .event-date {
   display: block;
@@ -174,4 +174,42 @@ body {
   margin: 2rem auto;
   max-width: 1000px;
   box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: left;
+  margin-bottom: 2rem;
+  color: #003b46;
+}
+
+.text-teal {
+  color: #009688; /* teal accent */
+}
+
+.bg-teal {
+  background-color: #009688;
+}
+
+.event-card {
+  background-color: #fff;
+  border-left: 4px solid #009688;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-outline-teal {
+  color: #009688;
+  border: 1px solid #009688;
+  border-radius: 0.25rem;
+  padding: 0.15rem 0.75rem;
+}
+
+.btn-outline-teal:hover {
+  background-color: #009688;
+  color: #fff;
 }

@@ -56,14 +56,18 @@
 
       <!-- My Events -->
       <div id="my-event-list" style="display:none;">
-        <h2>My Events</h2>
-        <button id="create-event-btn" class="cta-btn" onclick="window.location.href='/event-edit'">Create Event</button>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2>My Events</h2>
+          <button id="create-event-btn" class="cta-btn" onclick="window.location.href='/event-edit'">Create Event</button>
+        </div>
         <div id="events-container" class="row g-4"></div>
       </div>
 
       <!-- Explore Events -->
       <div id="events-list" style="display:none;">
-        <h2>Explore Events</h2>
+        <div class="d-flex justify-content-between align-items-center m-4">
+          <h2>Explore Events</h2>
+        </div>
         <div id="public-events-container" class="row g-4"></div>
       </div>
     </div>
