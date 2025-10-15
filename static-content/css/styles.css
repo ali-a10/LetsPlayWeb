@@ -219,3 +219,11 @@ h2 {
   height: 9.5em;
   border-radius: 0px;
 }
+
+.btn-view-event {
+  background-color: #03dac6;
+  color: #003b46;
+  border: 1px solid #003b46;
+  border-radius: 0.25rem;
+  padding: 0.15rem 0.75rem;
+}

@@ -91,38 +91,38 @@ function loadPublicEvents(loggedInUser) {
 
           card.innerHTML = `
             <div class="container">
-            <div class="row">
-              <div class="col-2 event-card-img placeholder mb-2"></div>
+              <div class="row">
+                <div class="col-2 event-card-img placeholder mb-2 h-100"></div>
 
-              <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center">
-                <div class="d-flex flex-column">
-                  <h4 class="text-teal mb-2">${event.title}</h4>
-                  <p class="mb-1 text-muted">
-                    <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
-                  </p>
-                  <p class="mb-1">
-                    <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
-                  </p>
-                  <p class="mb-1">
-                    <i class="bi bi-dribbble text-teal"></i> ${event.sport}
-                  </p>
-                </div>
+                <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
+                  <div class="d-flex flex-column">
+                    <h4 class="text-teal mb-2">${event.title}</h4>
+                    <p class="mb-1 text-muted">
+                      <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
+                    </p>
+                    <p class="mb-1">
+                      <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                    </p>
+                    <p class="mb-1">
+                      <i class="bi bi-dribbble text-teal"></i> ${event.sport}
+                    </p>
+                  </div>
 
-                <div class="text-end">
-                  <div class="event-capacity fw-semibold mb-1 fs-5">
-                    <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                  <div class="text-end">
+                    <div class="event-capacity fw-semibold mb-1 fs-5">
+                      <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                    </div>
+                    <div class="event-price mb-2">
+                      <span class="badge bg-teal text-white fs-6">
+                        ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
+                      </span>
+                    </div>
+                    <button class="btn-outline-teal fs-5"
+                      onclick="window.location.href='/event-edit?id=${event.id}'">
+                      Edit
+                    </button>
                   </div>
-                  <div class="event-price mb-2">
-                    <span class="badge bg-teal text-white fs-6">
-                      ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
-                    </span>
-                  </div>
-                  <button class="btn-outline-teal fs-5"
-                    onclick="window.location.href='/event-edit?id=${event.id}'">
-                    Edit
-                  </button>
                 </div>
-              </div>
               </div>
             </div>  
           `;
@@ -141,28 +141,44 @@ function loadPublicEvents(loggedInUser) {
       // load public events
       events.forEach(event => {
         const card = document.createElement('div');
-        card.className = 'event-card';
+        // card.className = 'event-card';
 
         card.innerHTML = `
-          <div class="">${event.title}</div>
-          <div class="event-card-body">
-            <div>
-              <p><strong>${formatDate(event.date)}</strong> ${event.time || ''}</p>
-              <div class="event-icon">
-                <span>[icon]</span> ${event.sport}
+            <div class="container">
+              <div class="row">
+                <div class="col-2 event-card-img placeholder mb-2 h-100"></div>
+
+                <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
+                  <div class="d-flex flex-column">
+                    <h4 class="text-teal mb-2">${event.title}</h4>
+                    <p class="mb-1 text-muted">
+                      <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
+                    </p>
+                    <p class="mb-1">
+                      <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                    </p>
+                    <p class="mb-1">
+                      <i class="bi bi-dribbble text-teal"></i> ${event.sport}
+                    </p>
+                  </div>
+
+                  <div class="text-end">
+                    <div class="event-capacity fw-semibold mb-1 fs-5">
+                      <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                    </div>
+                    <div class="event-price mb-2">
+                      <span class="badge bg-teal text-white fs-6">
+                        ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
+                      </span>
+                    </div>
+                    <button class="btn-view-event fs-5"
+                      onclick="window.location.href='/event.html?id=${event.id}'">
+                      View
+                    </button>
+                  </div>
+                </div>
               </div>
-              <p><strong>Location</strong></p>
-              <div class="profile-host">
-                <div class="circle"></div>
-                <span>${event.createdBy || 'Host'}</span>
-              </div>
-            </div>
-            <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
-              <div class="event-capacity">${event.currentParticipants || 0}/${event.maxParticipants || 10}</div>
-              <div class="event-price">${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}</div>
-              <button class="btn btn-info view-event-btn" onclick="window.location.href='/event.html?id=${event.id}'">View</button>
-            </div>
-          </div>
+            </div>  
         `;
 
         publicEventsContainer.appendChild(card);
