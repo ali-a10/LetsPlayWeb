@@ -21,7 +21,7 @@ $(document).ready(function() {
             document.getElementById('signup-btn').style.display = 'block';
             document.getElementById('logout-btn').style.display = 'none';
             document.getElementById('events-hero-btn').addEventListener('click', () => {
-              window.location.href = '/account/create';
+              window.location.href = '/login';
             });
         }
       })
@@ -90,36 +90,41 @@ function loadPublicEvents(loggedInUser) {
           // card.className = 'event-card';
 
           card.innerHTML = `
-            <div class="event-card shadow-sm p-3 mb-3 rounded d-flex justify-content-between align-items-center">
-              <div class="d-flex flex-column">
-                <h4 class="text-teal mb-2">${event.title}</h4>
-                <p class="mb-1 text-muted">
-                  <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
-                </p>
-                <p class="mb-1">
-                  <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
-                </p>
-                <p class="mb-1">
-                  <i class="bi bi-dribbble text-teal"></i> ${event.sport}
-                </p>
-              </div>
+            <div class="container">
+            <div class="row">
+              <div class="col-2 event-card-img placeholder mb-2"></div>
 
-              <div class="text-end">
-                <div class="event-capacity fw-semibold mb-1 fs-5">
-                  <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+              <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-column">
+                  <h4 class="text-teal mb-2">${event.title}</h4>
+                  <p class="mb-1 text-muted">
+                    <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
+                  </p>
+                  <p class="mb-1">
+                    <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                  </p>
+                  <p class="mb-1">
+                    <i class="bi bi-dribbble text-teal"></i> ${event.sport}
+                  </p>
                 </div>
-                <div class="event-price mb-2">
-                  <span class="badge bg-teal text-white fs-6">
-                    ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
-                  </span>
+
+                <div class="text-end">
+                  <div class="event-capacity fw-semibold mb-1 fs-5">
+                    <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                  </div>
+                  <div class="event-price mb-2">
+                    <span class="badge bg-teal text-white fs-6">
+                      ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
+                    </span>
+                  </div>
+                  <button class="btn-outline-teal fs-5"
+                    onclick="window.location.href='/event-edit?id=${event.id}'">
+                    Edit
+                  </button>
                 </div>
-                <button class="btn-outline-teal fs-5"
-                  onclick="window.location.href='/event-edit?id=${event.id}'">
-                  Edit
-                </button>
               </div>
-            </div>
-            
+              </div>
+            </div>  
           `;
 
           myEventsContainer.appendChild(card);

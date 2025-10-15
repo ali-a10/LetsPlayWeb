@@ -193,8 +193,7 @@ h2 {
 
 .event-card {
   background-color: #fff;
-  border-left: 4px solid #009688;
-  border-radius: 12px;
+  border-right: 4px solid #009688;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -213,4 +212,10 @@ h2 {
 .btn-outline-teal:hover {
   background-color: #009688;
   color: #fff;
+}
+
+.event-card-img {
+  width: 8em;
+  height: 9.5em;
+  border-radius: 0px;
 }
