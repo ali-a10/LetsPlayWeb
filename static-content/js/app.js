@@ -18,7 +18,8 @@ $(document).ready(function() {
         document.getElementById('logout-btn').style.display = 'block';
         document.getElementById('myaccount-btn').style.display = 'block';
         // there's no welcome-msg in about.html, so this will cause an error in the browser console
-        document.getElementById('welcome-msg').innerText = `Welcome, ${data.user.username}!`;
+        //// TO FIX//////// document.getElementById('welcome-msg').innerText = `Welcome, ${data.user.username}!`;
+        document.getElementById('hero-signup-btn').style.display = 'none';
       } else {
         document.getElementById('login-btn').style.display = 'block';
         document.getElementById('signup-btn').style.display = 'block';
