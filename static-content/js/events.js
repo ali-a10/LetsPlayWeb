@@ -5,10 +5,10 @@ $(document).ready(function() {
     checkLoginStatus()
       .then(data => {
         if (data.loggedIn) {
-          document.getElementById('login-btn').style.display = 'none';
-          document.getElementById('signup-btn').style.display = 'none';
-          document.getElementById('logout-btn').style.display = 'block';
-          document.getElementById('myaccount-btn').style.display = 'block';
+          // document.getElementById('login-btn').style.display = 'none';
+          // document.getElementById('signup-btn').style.display = 'none';
+          document.getElementById('logout-btn').classList.remove('d-none');
+          document.getElementById('myaccount-btn').classList.remove('d-none');
           document.getElementById('my-event-list').style.display = 'block';
           document.getElementById('events-list').style.display = 'block';
           document.getElementById('events-hero-btn').addEventListener('click', () => {
@@ -17,9 +17,9 @@ $(document).ready(function() {
           loadPublicEvents(data.user);
         } else {
             // User is not logged in, display login/signup options
-            document.getElementById('login-btn').style.display = 'block';
-            document.getElementById('signup-btn').style.display = 'block';
-            document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('login-btn').classList.remove('d-none');
+            document.getElementById('signup-btn').classList.remove('d-none');
+            // document.getElementById('logout-btn').style.display = 'none';
             document.getElementById('events-hero-btn').addEventListener('click', () => {
               window.location.href = '/login';
             });
@@ -92,7 +92,7 @@ function loadPublicEvents(loggedInUser) {
           card.innerHTML = `
             <div class="container">
               <div class="row">
-                <div class="col-2 event-card-img placeholder mb-2 h-100"></div>
+                <div class="col-2 event-card-img placeholder mb-2"></div>
 
                 <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
                   <div class="d-flex flex-column">
@@ -146,7 +146,7 @@ function loadPublicEvents(loggedInUser) {
         card.innerHTML = `
             <div class="container">
               <div class="row">
-                <div class="col-2 event-card-img placeholder mb-2 h-100"></div>
+                <div class="col-2 event-card-img placeholder mb-2"></div>
 
                 <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
                   <div class="d-flex flex-column">
