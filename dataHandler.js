@@ -1,5 +1,6 @@
 // import fs from 'fs/promises';
 const fs = require('fs/promises');
+const User = require('./models/User');
 
 const USERS_FILE = './jsonDB/users.json';
 const EVENTS_FILE = './jsonDB/events.json';
@@ -26,41 +27,50 @@ async function writeJSON(filePath, data) {
 
 
 async function getUsers() {
-  return await readJSON(USERS_FILE);
+  const users = await readJSON(USERS_FILE);
+  return users.map(u => new User(u));
 }
 
 
 async function addUser(user) {
   const users = await getUsers();
-  users.push(user);
-  await writeJSON(USERS_FILE, users); // save updated users
+  const newUser = user instanceof User ? user : new User(user);
+  users.push(newUser.userToJSON());
+  await writeJSON(USERS_FILE, users);
 }
 
 
-async function editUser(currentUsername, updatedUserInfo) {
+async function editUser(id, updatedUserInfo) {
   const users = await getUsers();
 
   // Find the index of the user to edit
-  const userIndex = users.findIndex(user => user.username === currentUsername);
+  const userIndex = users.findIndex(user => user.id === id);
   if (userIndex === -1) {
-    throw new Error(`User with username "${username}" not found`);
+    throw new Error(`User not found`);
   }
 
-  // Check for unique username/email
+  // Check for unique username, email, and phone number
   for (const user of users) {
-    if (user.username === updatedUserInfo.username && user.username !== currentUsername) {
-      throw new Error('Username already taken');
+    if (user.username === updatedUserInfo.username && user.id !== id) {
+      throw new Error('Username already in use');
     }
-    if (user.email === updatedUserInfo.email && user.username !== currentUsername) {
-      throw new Error('Email already taken');
+    if (user.email === updatedUserInfo.email && user.id !== id) {
+      throw new Error('Email already in use');
+    }
+    if (user.phone === updatedUserInfo.phone && user.id !== id) {
+      throw new Error('Phone number already in use');
     }
   }
 
   // Update the user details
-  const userToUpdate = users[userIndex];
-  if (updatedUserInfo.username) userToUpdate.username = updatedUserInfo.username;
-  if (updatedUserInfo.email) userToUpdate.email = updatedUserInfo.email;
-  if (updatedUserInfo.password) userToUpdate.password = updatedUserInfo.password;
+  // const userToUpdate = users[userIndex];
+  // if (updatedUserInfo.username) userToUpdate.username = updatedUserInfo.username;
+  // if (updatedUserInfo.email) userToUpdate.email = updatedUserInfo.email;
+  // if (updatedUserInfo.password) userToUpdate.password = updatedUserInfo.password;
+  // if (updatedUserInfo.phone) userToUpdate.phone = updatedUserInfo.phone;
+  const userToUpdate = new User(users[userIndex]);
+  userToUpdate.updateFields(updatedUserInfo);
+  users[userIndex] = userToUpdate.userToJSON();
 
   // do we wanna check if any of the keys above are null?
 

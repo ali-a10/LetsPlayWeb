@@ -1,3 +1,4 @@
+const User = require('./models/User.js');
 const { getUsers, addUser, editUser, getEvents, addEvent, updateEvent, writeJSON } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
@@ -27,27 +28,56 @@ app.get('/account/:action', (req, res) => {
 
 //////////////// Signup & login ////////////////
 app.post('/signup', async (req, res) => {
-  const { username, email, password } = req.body;
-  let users = await getUsers();
+  try {
+    const { username, email, password, phone, gender, favoriteSports, about, dob, profilePic } = req.body;
+    let users = await getUsers();
 
-  // Check if user already exists
-  if (users.some(user => user.email === email)) {
-    res.status(400);
-    res.json({ success: false, message: 'Email already in use' });
-    return;
-  }
+    // Check for duplicates
+    if (users.some(user => user.email === email)) {
+      return res.status(400).json({ success: false, message: 'Email already in use' });
+    }
 
-  if (users.some(user => user.username === username)) {
-    res.status(400);
-    res.json({ success: false, message: 'Username already exists' });
-    return;
+    if (users.some(user => user.username === username)) {
+      return res.status(400).json({ success: false, message: 'Username already exists' });
+    }
+
+    if (phone && users.some(user => user.phone === phone)) {
+      return res.status(400).json({ success: false, message: 'Phone number already in use' });
+    }
+
+    // Create new user (with incremented id)
+    // const id = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+    // from gpt ^^, but i just used the line below this comment
+    const id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+
+    const newUser = new User({
+      id,
+      username,
+      email,
+      password,
+      phone,
+      gender,
+      favoriteSports,
+      about,
+      dob,
+      // profilePic
+    });
+
+    // Save user to storage
+    await addUser(newUser);
+
+    // Store some info in session
+    req.session.user = {
+      id: newUser.id,
+      username: newUser.username,
+      email: newUser.email
+    };
+
+    res.status(201).json({ success: true });
+  } catch (err) {
+    console.error('Signup error:', err);
+    res.status(500).json({ success: false, message: 'Server error during sign up.' });
   }
-  const id = users.length + 1;
-  const newUser = { id, username, email, password };
-  users.push(newUser);
-  await addUser(newUser);
-  req.session.user = { id: id, email : email, username : username, password : password };
-  res.status(201).json({ success: true });
 });
 
 

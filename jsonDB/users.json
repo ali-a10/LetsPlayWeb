@@ -2,19 +2,14 @@
   {
     "id": 1,
     "username": "ali",
-    "email": "ali@mail.com",
-    "password": "123"
-  },
-  {
-    "id": 2,
-    "username": "ali2",
-    "email": "ali21@gmail.com",
-    "password": "22"
-  },
-  {
-    "id": 3,
-    "username": "ali3",
-    "email": "ali3@gmail.com",
-    "password": "33"
+    "email": "ali2@gmail.com",
+    "password": "123",
+    "phone": "",
+    "gender": "",
+    "favoriteSports": [
+      "Soccer"
+    ],
+    "about": "",
+    "dob": ""
   }
 ]

@@ -36,36 +36,101 @@
     </nav>
   </header>
 
-  <section class="main-section">
-    <div class="container text-center">
-      <h1>My Account</h1>
-      <form id="account-form">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <section id="save-btns">
-          <p id="save-msg"></p>
-          <button id="save-button" type="submit">Save</button>
-        </section>
-      </form>
-    </div>
-  </section>
-
-  <div id="notification-popup" class="popup"></div>
-      <!-- Error message container -->
-    <p id="accountErrorMessage" style="color: red; display: none;"></p>
-      <section id="signup-btns" style="display: none;">
-    <button id="signup-button" type="submit">Sign up</button>
-<p>Already have an account? <a id="toggle-login" href="/login">Log in</a></p>
-      </section>
+  <section class="container my-5 main-section">
+    <h2 class="mb-4 text-center">My Account</h2>
+    <form id="account-form" enctype="multipart/form-data" class="p-4">
       
-    </form>
+      <!-- Username and Email -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" id="username" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
       </div>
-  </footer>
+  
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" required>
+      </div>
+  
+      <!-- Phone and DOB -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" id="phone" class="form-control" placeholder="123-456-7890">
+        </div>
+        <div class="col-md-6">
+          <label for="dob" class="form-label">Date of Birth</label>
+          <input type="date" id="dob" class="form-control">
+        </div>
+      </div>
+  
+      <!-- Gender -->
+      <div class="mb-3">
+        <label class="form-label">Gender</label>
+        <div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male">
+            <label class="form-check-label" for="genderMale">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="Female">
+            <label class="form-check-label" for="genderFemale">Female</label>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Favorite Sports -->
+      <div class="mb-3">
+        <label class="form-label">Favorite Sports (select at least one)</label>
+        <select id="favoriteSports" class="form-select" multiple required>
+          <option>Soccer</option>
+          <option>Basketball</option>
+          <option>Volleyball</option>
+          <option>Tennis</option>
+          <option>Running</option>
+        </select>
+        <small class="text-muted">Hold Ctrl (Windows) or Command (Mac) to select multiple</small>
+      </div>
+  
+      <!-- About Me -->
+      <div class="mb-3">
+        <label for="about" class="form-label">About Me (optional)</label>
+        <textarea id="about" class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
+      </div>
+  
+      <!-- Profile Picture -->
+      <!-- <div class="mb-3">
+        <label for="profilePic" class="form-label">Profile Picture (optional)</label>
+        <input class="form-control" type="file" id="profilePic" accept="image/*">
+      </div> -->
+  
+      <div id="save-btns" class="d-flex justify-content-center d-none">
+        <button type="submit" class="btn btn-success px-5">Save Changes</button>
+      </div>
+
+       <!-- Sign up section -->
+      <div id="signup-btns" class=" justify-content-center">
+        <button id="signup-button" class="btn btn-success px-5" type="submit">Sign up</button>
+        <p>Already have an account? <a id="toggle-login" href="/login">Log in</a></p>
+      </div>
+
+      <!-- Error message container -->
+      <p id="accountErrorMessage" style="color: red; display: none;"></p>
+      <div id="notification-popup" class="popup"></div>
+
+    </form>
+  </section>
+  
+
+  
+
+ 
 
   <script type="module" src="/js/auth.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -1,3 +1,14 @@
+- save changes doesn't work, i think when we go to my account, something else 
+    should be passed in
+
+- started working on editing user, but didn't finish (update to use User class)
+    - dataHandler editUser function now takes an id instead of username
+
+- check if we need to add and remove d-none in if statements, or is 1 of them 
+    enough and it refreshes when the page is refreshed?
+
+
+
 1. events page:
     - make events more detailed (add other fields)
         - and sort them by most recently modified or created

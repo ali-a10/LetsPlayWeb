@@ -24,13 +24,13 @@ if (window.location.pathname.includes('/account')) {
         // Update page elements based on the mode
         
         if (isSignUpMode) {
-          document.getElementById('signup-btns').style.display = "block";
-          document.getElementById('save-btns').style.display = "none";
+          // document.getElementById('signup-btns');
+          // document.getElementById('save-btns').classList;
           document.getElementById('account-form').addEventListener('submit', signup);
         } 
         else {
-          document.getElementById('signup-btns').style.display = "none";
-          document.getElementById('save-btns').style.display = "block";
+          document.getElementById('signup-btns').classList.add('d-none');
+          document.getElementById('save-btns').classList.remove('d-none');
           document.getElementById('email').value = user.email;
           document.getElementById('username').value = user.username;
           document.getElementById('password').value = user.password;
@@ -150,37 +150,70 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 
 
 // Sign up function
-function signup(event) {
-  event.preventDefault();  // Prevent page from refreshing/navigating
+async function signup(event) {
+  event.preventDefault(); // Prevent page reload
 
-  const email = document.getElementById('email').value;
-  const username = document.getElementById('username').value;
+  // Collect form fields
+  const username = document.getElementById('username').value.trim();
+  const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
+  const phone = document.getElementById('phone').value.trim();
+  const dob = document.getElementById('dob').value;
+  const gender = document.querySelector('input[name="gender"]:checked')?.value || '';
 
-  fetch('/signup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, username, password })
-  })
-  .then(response => response.json())
-  .then(data => {
-    // console.log("DOT THEN");
-    // console.log(data);
+  // Collect multiple select (Favorite Sports)
+  const favoriteSports = Array.from(document.getElementById('favoriteSports').selectedOptions)
+                              .map(option => option.value);
+
+  const about = document.getElementById('about').value.trim();
+  // const profilePicInput = document.getElementById('profilePic');
+  // const profilePic = profilePicInput.files[0] ? profilePicInput.files[0].name : ''; 
+  // // For now just use filename — once multer is added we’ll upload the actual file
+
+  // Create a user object matching your User class
+  const newUser = {
+    username,
+    email,
+    password,
+    phone,
+    gender,
+    favoriteSports,
+    about,
+    dob
+    // profilePic
+  };
+
+  try {
+    const response = await fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    });
+
+    const data = await response.json();
+
+    const messageBox = document.getElementById('accountErrorMessage');
+    messageBox.style.display = 'block';
+
     if (data.success) {
-      window.location.href = '/';
+      messageBox.textContent = 'Account created successfully! Redirecting...';
+      messageBox.style.color = 'green';
+      setTimeout(() => (window.location.href = '/'), 1500);
+    } else {
+      messageBox.textContent = data.message || 'Sign up failed. Please try again.';
+      messageBox.style.color = 'red';
     }
-    else {
-      console.log(document.getElementById("accountErrorMessage"));
-      document.getElementById("accountErrorMessage").textContent = data.message;
-      document.getElementById("accountErrorMessage").style.display = "block";
-    }
-  })
-  .catch(err => {
+  } catch (err) {
     console.error('Error:', err);
-  });
+    const messageBox = document.getElementById('accountErrorMessage');
+    messageBox.textContent = 'An unexpected error occurred.';
+    messageBox.style.color = 'red';
+    messageBox.style.display = 'block';
+  }
 }
+
 
 // Log in function
 function login(event) {

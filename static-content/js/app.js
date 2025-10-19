@@ -24,7 +24,7 @@ $(document).ready(function() {
         document.getElementById('login-btn').style.display = 'block';
         document.getElementById('signup-btn').style.display = 'block';
         document.getElementById('logout-btn').style.display = 'none';
-        document.getElementById('welcome-msg').innerText = '';
+        //// TO FIX////////document.getElementById('welcome-msg').innerText = '';
       }
     })
     .catch(error => {
