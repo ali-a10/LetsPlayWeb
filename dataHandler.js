@@ -32,6 +32,12 @@ async function getUsers() {
 }
 
 
+async function getUserById(id) {
+  const users = await getUsers();
+  return users.find(u => u.id === id) || null;
+}
+
+
 async function addUser(user) {
   const users = await getUsers();
   const newUser = user instanceof User ? user : new User(user);
@@ -104,4 +110,4 @@ async function updateEvent(id, updatedData) {
 }
 
 
-module.exports = { getUsers, addUser, editUser, getEvents, addEvent, updateEvent, writeJSON };
+module.exports = { getUsers, getUserById, addUser, editUser, getEvents, addEvent, updateEvent, writeJSON };

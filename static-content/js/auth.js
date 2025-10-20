@@ -1,5 +1,4 @@
 if (window.location.pathname.includes('/account')) {
-  console.log('IS SIGN UP MODE = ', window.location.pathname);
   $(document).ready(function () {
     let user = null;
     checkLoginStatus()
@@ -260,40 +259,63 @@ function editProfile(event) {
   checkLoginStatus()
     .then(data => {
       if (data.loggedIn) {
-        currUserInfo = data.user;
-        let newEmail = document.getElementById('email').value;
-        let newUsername = document.getElementById('username').value;
-        if (newEmail === currUserInfo.email) {
-          newEmail = null;
-        }
-        if (newUsername === currUserInfo.username) {
-          newUsername = null;
-        }
+        currUserId = data.user.id;
+        $.ajax({
+          method: "GET",
+          url: '/user/' + data.user.id,
+          processData: false,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json"
+        })
+        .done(function(data, textStatus, jqXHR) {
+          // Collect form fields
+          const username = document.getElementById('username').value.trim() == data.user ? null : document.getElementById('username').value.trim();
+          const email = document.getElementById('email').value.trim() == data.user.email ? null : document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value == data.user.password ? null : document.getElementById('password').value;
+          const phone = document.getElementById('phone').value.trim() == data.user.phone ? null : document.getElementById('phone').value.trim();
+          const dob = document.getElementById('dob').value == data.user.dob ? null : document.getElementById('dob').value;
+          const gender = document.querySelector('input[name="gender"]:checked')?.value == data.user.gender ? null : document.querySelector('input[name="gender"]:checked')?.value;
 
-        if (newEmail || newUsername) {  // if at least one field is changed
-          $.ajax({
-            method: "PUT",
-            url: '/editProfile/' + currUserInfo.username,
-            processData: false,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify({ newEmail, newUsername })
-          })
-          .done(function(data, textStatus, jqXHR) {
-            console.log(jqXHR.status + " " + textStatus); 
-            console.log("Server Response: " + JSON.stringify(data));
-            showPopup(data.message || 'Profile updated.', data.success);
-          })
-          .fail(function(err) {
-            console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
-            const errMsg = err.responseJSON?.message || 'Failed to update profile.';
-            showPopup(errMsg, data.success);
-          });
-        }
-        else {
-          // no changes made, but user clicked save
-          showPopup('No changes made', false);
-        }
+          // // Collect multiple select (Favorite Sports)
+          // const favoriteSports = Array.from(document.getElementById('favoriteSports').selectedOptions)
+          //                             .map(option => option.value);
+
+          const about = document.getElementById('about').value.trim() == data.user.about ? null : document.getElementById('about').value.trim();
+          
+          if (!username && !email && !password && !phone && !dob && !gender && !about) {
+            // UPDATE
+            $.ajax({
+              method: "PUT",
+              url: '/editProfile/' + data.user.id,
+              processData: false,
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              data: JSON.stringify({ newEmail, newUsername })
+            })
+            .done(function(data, textStatus, jqXHR) {
+              console.log(jqXHR.status + " " + textStatus); 
+              console.log("Server Response: " + JSON.stringify(data));
+              showPopup(data.message || 'Profile updated.', data.success);
+            })
+            .fail(function(err) {
+              console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+              const errMsg = err.responseJSON?.message || 'Failed to update profile.';
+              showPopup(errMsg, data.success);
+            });
+          }
+          else {
+            showPopup('No changes detected.', false);
+          }
+
+          console.log(jqXHR.status + " " + textStatus); 
+          console.log("Server Response: " + JSON.stringify(data));
+          showPopup(data.message || 'Profile updated.', data.success);
+        })
+        .fail(function(err) {
+          console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+          const errMsg = err.responseJSON?.message || 'Failed to update profile.';
+          showPopup(errMsg, data.success);
+        });
       }
       else {
         window.location.href = '/'; // Redirect to home page after logout
