@@ -64,7 +64,7 @@ export function checkLoginStatus() {
       dataType: "json"
     })
     .done(function(data, textStatus, jqXHR) {
-      console.log(jqXHR.status + " " + textStatus); 
+      // console.log(jqXHR.status + " " + textStatus); 
       console.log("Server Response: " + JSON.stringify(data));
       resolve(data);
     })
@@ -255,11 +255,9 @@ function editProfile(event) {
   // somehow check if textboxes have changed
 
   // if so:
-  let currUserInfo = null;
   checkLoginStatus()
     .then(data => {
       if (data.loggedIn) {
-        currUserId = data.user.id;
         $.ajax({
           method: "GET",
           url: '/user/' + data.user.id,
@@ -269,31 +267,66 @@ function editProfile(event) {
         })
         .done(function(data, textStatus, jqXHR) {
           // Collect form fields
-          const username = document.getElementById('username').value.trim() == data.user ? null : document.getElementById('username').value.trim();
-          const email = document.getElementById('email').value.trim() == data.user.email ? null : document.getElementById('email').value.trim();
-          const password = document.getElementById('password').value == data.user.password ? null : document.getElementById('password').value;
-          const phone = document.getElementById('phone').value.trim() == data.user.phone ? null : document.getElementById('phone').value.trim();
-          const dob = document.getElementById('dob').value == data.user.dob ? null : document.getElementById('dob').value;
-          const gender = document.querySelector('input[name="gender"]:checked')?.value == data.user.gender ? null : document.querySelector('input[name="gender"]:checked')?.value;
+          const fields = ['email', 'username', 'password', 'phone', 'dob', 'gender', 'about'];
+          const fieldsToUpdate = {};
+          let updateNeeded = false;
+
+          for (const field of fields) {
+            console.log("testingggggggg : ", data.user[field]);
+            let newValue = null;
+            if (field === 'gender') {
+              newValue = document.querySelector('input[name="gender"]:checked')?.value || '';
+              console.log(`Type of ${field}:`, typeof document.querySelector('input[name="gender"]:checked')?.value);
+            }
+            else {
+              newValue = document.getElementById(field).value.trim();
+              console.log(`Type of ${field}:`, typeof document.getElementById(field).value);
+
+            }
+            if (newValue !== data.user[field]) {
+              fieldsToUpdate[field] = newValue;
+              updateNeeded = true;
+            }
+          }
+
+          // const emailTxtValue = document.getElementById('email').value.trim();
+          // const emailNew = null;
+          // if (emailTxtValue === data.user.email) {
+          // } else {
+          //   fieldsToUpdate.email = emailTxtValue;
+          //   emailNew = emailTxtValue;
+          // }
+          // // const emailNew = document.getElementById('email').value.trim() == data.user.email ? null : document.getElementById('email').value.trim();
+          // const usernameNew = document.getElementById('username').value.trim() == data.user ? null : document.getElementById('username').value.trim();
+          // const passwordNew = document.getElementById('password').value == data.user.password ? null : document.getElementById('password').value;
+          // const phoneNew = document.getElementById('phone').value.trim() == data.user.phone ? null : document.getElementById('phone').value.trim();
+          // const dobNew = document.getElementById('dob').value == data.user.dob ? null : document.getElementById('dob').value;
+          // const genderNew = document.querySelector('input[name="gender"]:checked')?.value == data.user.gender ? null : document.querySelector('input[name="gender"]:checked')?.value;
 
           // // Collect multiple select (Favorite Sports)
           // const favoriteSports = Array.from(document.getElementById('favoriteSports').selectedOptions)
           //                             .map(option => option.value);
 
-          const about = document.getElementById('about').value.trim() == data.user.about ? null : document.getElementById('about').value.trim();
+          // const aboutNew = document.getElementById('about').value.trim() == data.user.about ? null : document.getElementById('about').value.trim();
           
-          if (!username && !email && !password && !phone && !dob && !gender && !about) {
+          // check if any fields are empty / changed
+          if (updateNeeded == false) {
+            showPopup('No changes detected.', false);
+            return;
+          }
+          else {
+            console.log(fieldsToUpdate);
             // UPDATE
+            // Add fields that aren't null to fieldsToUpdate list
             $.ajax({
               method: "PUT",
               url: '/editProfile/' + data.user.id,
               processData: false,
               contentType: "application/json; charset=utf-8",
               dataType: "json",
-              data: JSON.stringify({ newEmail, newUsername })
+              data: JSON.stringify(fieldsToUpdate)
             })
             .done(function(data, textStatus, jqXHR) {
-              console.log(jqXHR.status + " " + textStatus); 
               console.log("Server Response: " + JSON.stringify(data));
               showPopup(data.message || 'Profile updated.', data.success);
             })
@@ -303,13 +336,6 @@ function editProfile(event) {
               showPopup(errMsg, data.success);
             });
           }
-          else {
-            showPopup('No changes detected.', false);
-          }
-
-          console.log(jqXHR.status + " " + textStatus); 
-          console.log("Server Response: " + JSON.stringify(data));
-          showPopup(data.message || 'Profile updated.', data.success);
         })
         .fail(function(err) {
           console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));

@@ -1,3 +1,5 @@
+- make checklogin() return the whole user instance, rn it only return username, email and pw so the account page only populates these fields
+
 - save changes doesn't work, i think when we go to my account, something else 
     should be passed in
 

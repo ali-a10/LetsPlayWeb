@@ -62,11 +62,6 @@ class User {
         // profilePic: this.profilePic
       };
     }
-  
-    // Update user fields
-    update(data) {
-      Object.assign(this, data);
-    }
 
     // Update user fields
     updateFields(updates) {
@@ -83,9 +78,9 @@ class User {
         ];
   
         for (const key in updates) {
-          if (allowedFields.includes(key) && updates[key] !== undefined) {
-            this[key] = updates[key];
-          }
+            if (allowedFields.includes(key) && updates[key] !== undefined) {
+                this[key] = updates[key];
+            }
         }
       }
   }

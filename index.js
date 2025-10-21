@@ -242,102 +242,57 @@ app.delete('/delete-event/:id', async (req, res) => {
 
 //////////////// My Account page ////////////////
 app.put('/editProfile/:id', async (req, res) => {
-  if (req.session.user) {
-    const userId = req.params.id;
-    let newEmail = req.body.newEmail;
-    let newUsername = req.body.newUsername;  // should we prevent usernames from being changed in the future??
-
-    const users = await getUsers();
-    const currUser = users.find(user => user.username === username); // use id to find instead
-    // for comment on line above, prob use req.session.user.id
-    const userWNewEmail = users.find(user => user.email === newEmail);
-    if (userWNewEmail && currUser != userWNewEmail) {
-      res.json({ success: false, message: 'This email is already in use' });
-      // what status??
-      return;
-    }
-
-    const userWNewUsername = users.find(user => user.username === newUsername);
-    if (userWNewUsername && currUser != userWNewEmail) {
-      res.json({ success: false, message: 'This username is already in use' });
-      // what status??
-      return;
-    }
-
-    const updatedUserInfo = { email: newEmail, username: newUsername };
-    try {
-      await editUser(username, updatedUserInfo);
-      if (newEmail !== null) req.session.user.email = newEmail;
-      if (newUsername !== null) req.session.user.username = newUsername;
-      res.status(200).json({ success: true, message: 'User updated successfully' });
-    }
-    catch (error) {
-      res.status(400).json({ success: false, message: error.message });
-    }
-  }
-})
-app.put('/editProfile/:id', async (req, res) => {
   try {
     if (!req.session.user) {
       return res.status(401).json({ success: false, message: 'Not logged in' });
     }
-
+    const { emailNew, usernameNew, passwordNew, phoneNew, genderNew, aboutNew, dobNew   } = req.body;
+    console.log(req.body);
     const userId = parseInt(req.params.id);
-    const users = await getUsers();
+    await editUser(userId, req.body);
+    // const users = await getUsers();
 
-    // Find the current user by ID
-    const currUser = users.find(u => u.id === userId);
-    if (!currUser) {
-      return res.status(404).json({ success: false, message: 'User not found' });
-    }
+    // // Find the current user by ID
+    // const currUser = users.find(u => u.id === userId);
+    // if (!currUser) {
+    //   return res.status(404).json({ success: false, message: 'User not found' });
+    // }
 
-    // const { email, username, password, phone, gender, favoriteSports, about, dob } = req.body;
+    // // Check if new email is already in use by another user
+    // const userWNewEmail = users.find(u => u.email === emailNew && u.id !== userId);
+    // if (userWNewEmail) {
+    //   return res.status(409).json({ success: false, message: 'This email is already in use' });
+    // }
 
-    // Check if new email is already in use by another user
-    const userWNewEmail = users.find(u => u.email === email && u.id !== userId);
-    if (userWNewEmail) {
-      return res.status(409).json({ success: false, message: 'This email is already in use' });
-    }
+    // // Check if new username is already in use by another user
+    // const userWNewUsername = users.find(u => u.username === usernameNew && u.id !== userId);
+    // if (userWNewUsername) {
+    //   return res.status(409).json({ success: false, message: 'This username is already in use' });
+    // }
 
-    // Check if new username is already in use by another user
-    const userWNewUsername = users.find(u => u.username === username && u.id !== userId);
-    if (userWNewUsername) {
-      return res.status(409).json({ success: false, message: 'This username is already in use' });
-    }
+    // // Check if phone number is already in use by another user
+    // const userWNewPhone = users.find(u => u.phone === phoneNew && u.id !== userId);
+    // if (userWNewPhone) {
+    //   return res.status(409).json({ success: false, message: 'This phone number is already in use' });
+    // }
+    // const index1 = users.findIndex(u => u.id === userId);
+    // console.log(users[index1]);
+    // const userObj = User(currUser);
+    // userObj.updateFields(req.body);
+    // console.log(users[index1]);
 
-    // Check if phone number is already in use by another user
-    const userWNewPhone = users.find(u => u.phone === phone && u.id !== userId);
-    if (userWNewPhone) {
-      return res.status(409).json({ success: false, message: 'This phone number is already in use' });
-    }
-    
+    // // Replace user in users array
+    // const index = users.findIndex(u => u.id === userId);
+    // users[index] = userObj.userToJSON();
 
-    // Create updated user object using the User class
-    const updatedUser = new User(
-      currUser.id,
-      username,
-      email,
-      password, // password stays unchanged
-      phone,
-      gender,
-      favoriteSports,
-      about,
-      dob
-      // profilePic || currUser.profilePic
-    );
-
-    // Replace user in users array
-    const index = users.findIndex(u => u.id === userId);
-    users[index] = updatedUser;
-
-    // Save all users back to file
-    await writeJSON(USERS_FILE, users);
+    // // Save all users back to file
+    // await writeJSON(USERS_FILE, users);
 
     // Update session info
     req.session.user = {
-      id: updatedUser.id,
-      username: updatedUser.username,
-      email: updatedUser.email
+      id: userId,
+      username: usernameNew,
+      email: emailNew
     };
 
     return res.status(200).json({ success: true, message: 'Profile updated successfully' });
