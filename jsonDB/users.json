@@ -4,12 +4,12 @@
     "username": "ali",
     "email": "ali2@gmail.com",
     "password": "123",
-    "phone": "",
+    "phone": "6471234567",
     "gender": "",
     "favoriteSports": [
       "Soccer"
     ],
     "about": "",
-    "dob": ""
+    "dob": "2025-10-21"
   }
 ]

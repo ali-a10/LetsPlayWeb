@@ -28,11 +28,22 @@ if (window.location.pathname.includes('/account')) {
           document.getElementById('account-form').addEventListener('submit', signup);
         } 
         else {
+
+          getUser(data.user.id)
+            .done(function(data, textStatus, jqXHR) {
+              const user = data.user;
+              Object.keys(user).forEach(key => {
+                console.log("KEY: ", key);
+                const element = document.getElementById(key);
+                if (element) {
+                  element.value = user[key];
+                }
+              });
+            });
+          
+
           document.getElementById('signup-btns').classList.add('d-none');
           document.getElementById('save-btns').classList.remove('d-none');
-          document.getElementById('email').value = user.email;
-          document.getElementById('username').value = user.username;
-          document.getElementById('password').value = user.password;
           document.getElementById('save-button').addEventListener('click', (event) => {
             editProfile(event);  // when we get into this page, this is set once
             // i.e it doesn't change until we refresh the page
@@ -355,6 +366,17 @@ function editProfile(event) {
       // what do we want to do here
     });
   
+}
+
+
+function getUser(id) {
+  return $.ajax({
+    method: "GET",
+    url: '/user/' + id,
+    processData: false,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json"
+  })
 }
 
 // helper for popup when account info is updated (or failed to update)
