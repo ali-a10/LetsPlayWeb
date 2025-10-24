@@ -34,9 +34,19 @@ if (window.location.pathname.includes('/account')) {
               const user = data.user;
               Object.keys(user).forEach(key => {
                 console.log("KEY: ", key);
-                const element = document.getElementById(key);
-                if (element) {
-                  element.value = user[key];
+                if (key == "gender") {
+                  const genderInputs = document.getElementsByName("gender");
+                  genderInputs.forEach(input => {
+                    if (input.value === user[key]) {
+                      input.checked = true;
+                    }
+                  });
+                }
+                else {
+                  const element = document.getElementById(key);
+                  if (element) {
+                    element.value = user[key];
+                  }
                 }
               });
             });
