@@ -1,6 +1,7 @@
 class Event {
     constructor({
         id,
+        userId,
         title,
         description,
         dateTime,
@@ -11,9 +12,11 @@ class Event {
         currentParticipants,
         maxParticipants,
         ageGroup,
-        level
+        level,
+        usersJoined
     }) {
         this.id = id;
+        this.userId = userId;  // The user who created the event
         this.title = title;
         this.description = description;
         this.dateTime = dateTime;
@@ -25,6 +28,7 @@ class Event {
         this.maxParticipants = maxParticipants || null;
         this.ageGroup = ageGroup || '';
         this.level = level || '';
+        this.usersJoined = usersJoined || [];  // List of ids of users who joined the event
     }
 
     // Validate required fields and data formats
@@ -48,6 +52,7 @@ class Event {
     eventToJSON() {
         return {
             id: this.id,
+            userId: this.userId,
             title: this.title,
             description: this.description,
             dateTime: this.dateTime,
@@ -58,7 +63,8 @@ class Event {
             currentParticipants: this.currentParticipants,
             maxParticipants: this.maxParticipants,
             ageGroup: this.ageGroup,
-            level: this.level
+            level: this.level,
+            usersJoined: this.usersJoined  // list of int ids
         };
     }
 
@@ -75,7 +81,8 @@ class Event {
             'currentParticipants',
             'maxParticipants',
             'ageGroup',
-            'level'
+            'level',
+            'usersJoined'
         ];
 
         for (const key in updates) {

@@ -20,6 +20,8 @@ class User {
         this.favoriteSports = favoriteSports || [];
         this.about = about || '';
         this.dob = dob || '';
+        this.eventsCreated = [];
+        this.eventsJoined = [];
     //   this.profilePic = profilePic || '';
     }
   
@@ -59,6 +61,8 @@ class User {
             favoriteSports: this.favoriteSports,
             about: this.about,
             dob: this.dob,
+            eventsCreated: this.eventsCreated,
+            eventsJoined: this.eventsJoined,
             // profilePic: this.profilePic
         };
     }
@@ -74,6 +78,8 @@ class User {
             'favoriteSports',
             'about',
             'dob',
+            'eventsCreated',
+            'eventsJoined',
         //   'profilePic'
         ];
   
@@ -86,4 +92,3 @@ class User {
   }
   
   module.exports = User;
-  

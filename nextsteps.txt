@@ -54,3 +54,5 @@ for later:
     until the fields are filled / when the info is retrieved from server)
 
 - account.html doesn't have the 'active aria-current="page"' code
+
+- make indentation consistent in all files
