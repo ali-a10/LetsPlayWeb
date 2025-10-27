@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("params: ",params, eventId);
 
     // delete event btn
-    const deleteBtn = document.getElementById('delete-event');
+    const deleteBtn = document.getElementById('deleteBtn');
     
     if (eventId !== null) {  // load event info
         document.getElementById('form-title').innerText = 'Edit Event';
@@ -58,6 +58,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     else {  // we're in create event mode
+        document.getElementById('submitBtn').innerText = 'Post Event';
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            window.location.href = '/events';
+        });
+
         deleteBtn.style.display = 'none';
     }
 });
@@ -68,9 +73,17 @@ document.getElementById('event-form').addEventListener('submit', async (e) => {
   
     const event = {
         title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
         date: document.getElementById('date').value,
+        time: document.getElementById('time').value,
+        location: document.getElementById('location').value,
         sport: document.getElementById('sport').value,
+        isFree: document.querySelector('input[name="isFree"]:checked').value === 'true',
         price: document.getElementById('price').value,
+        currentParticipants: document.getElementById('currentParticipants').value,
+        maxParticipants: document.getElementById('maxParticipants').value,
+        ageGroup: document.getElementById('ageGroup').value,
+        level: document.getElementById('level').value,
     };
   
     const params = new URLSearchParams(window.location.search);

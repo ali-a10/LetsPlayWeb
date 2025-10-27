@@ -4,7 +4,8 @@ class Event {
         userId,
         title,
         description,
-        dateTime,
+        date,
+        time,
         location,
         activity,
         isFree,
@@ -13,13 +14,14 @@ class Event {
         maxParticipants,
         ageGroup,
         level,
-        usersJoined
+        usersJoined = []
     }) {
         this.id = id;
         this.userId = userId;  // The user who created the event
         this.title = title;
         this.description = description;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.location = location;
         this.activity = activity;
         this.isFree = isFree;
@@ -33,7 +35,7 @@ class Event {
 
     // Validate required fields and data formats
     validate() {
-        if (!this.title || !this.description || !this.dateTime || !this.location || !this.activity) {
+        if (!this.title || !this.description || !this.date || !this.time || !this.location || !this.activity) {
             throw new Error('Title, description, date and time, location, and activity are required.');
         }
 
@@ -55,7 +57,8 @@ class Event {
             userId: this.userId,
             title: this.title,
             description: this.description,
-            dateTime: this.dateTime,
+            date: this.date,
+            time: this.time,
             location: this.location,
             activity: this.activity,
             isFree: this.isFree,
@@ -73,7 +76,8 @@ class Event {
         const allowedFields = [
             'title',
             'description',
-            'dateTime',
+            'date',
+            'time',
             'location',
             'activity',
             'isFree',

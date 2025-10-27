@@ -1,4 +1,5 @@
 const User = require('./models/User.js');
+const Event = require('./models/Event.js');
 const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, updateEvent, writeJSON } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
@@ -166,32 +167,80 @@ app.get('/getEvents', async (req, res) => {
 });
 
 
+// app.post('/post-event', async (req, res) => {
+//   const { title, date, sport, price } = req.body;
+//   if (!title || !date || !sport || !price) {
+//     return res.status(400).json({ error: 'Missing required fields' });
+//   }
+//   // will also need user info in the event (username, maybe date event is created)
+//   // might want to give events ids
+  
+//   // figure out what the id should be
+//   const events = await getEvents();
+//   const lastEventId = events[events.length - 1].id;
+//   const id = lastEventId + 1
+
+//   const newEvent = {
+//     id,
+//     title,
+//     date,
+//     sport,
+//     price,
+//     createdBy: req.session.user.id
+//   };
+  
+//   try {
+//     await addEvent(newEvent);
+//     res.status(201).json({ event: newEvent });
+//   } catch (err) {
+//     res.status(500).json({ error: 'Failed to save event' });
+//   }
+// });
 app.post('/post-event', async (req, res) => {
-  const { title, date, sport, price } = req.body;
-  if (!title || !date || !sport || !price) {
+  const {
+    title,
+    description,
+    date,
+    time,
+    location,
+    sport,
+    isFree,
+    price,
+    currentParticipants,
+    maxParticipants,
+    ageGroup,
+    level
+  } = req.body;
+
+  if (!title || !description || !date || !time || !location || !sport || (!isFree && !price) || !currentParticipants || !maxParticipants) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
-  // will also need user info in the event (username, maybe date event is created)
-  // might want to give events ids
-  
-  // figure out what the id should be
-  const events = await getEvents();
-  const lastEventId = events[events.length - 1].id;
-  const id = lastEventId + 1
 
-  const newEvent = {
-    id,
-    title,
-    date,
-    sport,
-    price,
-    createdBy: req.session.user.id
-  };
-  
   try {
+    const events = await getEvents();
+    const id = events.length > 0 ? events[events.length - 1].id + 1 : 1;
+
+    const newEvent = new Event({
+      id,
+      userId: req.session.user.id,
+      title,
+      description,
+      date,
+      time,
+      location,
+      sport,
+      isFree,
+      price: isFree ? 0 : price,
+      currentParticipants,
+      maxParticipants,
+      ageGroup,
+      level,
+    });
+
     await addEvent(newEvent);
     res.status(201).json({ event: newEvent });
   } catch (err) {
+    console.error('Error creating event:', err);
     res.status(500).json({ error: 'Failed to save event' });
   }
 });

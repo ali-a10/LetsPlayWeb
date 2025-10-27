@@ -27,5 +27,37 @@
     "date": "1999-11-29",
     "sport": "Basketball",
     "price": "1"
+  },
+  {
+    "id": 4,
+    "userId": 1,
+    "title": "volleyball",
+    "description": "vball123",
+    "date": "2025-10-28",
+    "time": "22:00",
+    "location": "a",
+    "isFree": false,
+    "price": "1",
+    "currentParticipants": "3",
+    "maxParticipants": "12",
+    "ageGroup": "",
+    "level": "Beginner",
+    "usersJoined": []
+  },
+  {
+    "id": 5,
+    "userId": 1,
+    "title": "another test",
+    "description": "test2",
+    "date": "2025-10-27",
+    "time": "17:30",
+    "location": "a",
+    "isFree": true,
+    "price": null,
+    "currentParticipants": "1",
+    "maxParticipants": "14",
+    "ageGroup": "",
+    "level": "Intermediate",
+    "usersJoined": []
   }
 ]
