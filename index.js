@@ -203,7 +203,7 @@ app.post('/post-event', async (req, res) => {
     date,
     time,
     location,
-    sport,
+    activity,
     isFree,
     price,
     currentParticipants,
@@ -212,7 +212,7 @@ app.post('/post-event', async (req, res) => {
     level
   } = req.body;
 
-  if (!title || !description || !date || !time || !location || !sport || (!isFree && !price) || !currentParticipants || !maxParticipants) {
+  if (!title || !description || !date || !time || !location || !activity || (!isFree && !price) || !currentParticipants || !maxParticipants) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
@@ -228,7 +228,7 @@ app.post('/post-event', async (req, res) => {
       date,
       time,
       location,
-      sport,
+      activity,
       isFree,
       price: isFree ? 0 : price,
       currentParticipants,

@@ -65,7 +65,7 @@
         <input type="text" id="location" name="location" class="form-control" required>
       </div>
 
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="sport" class="form-label">Sport</label>
         <select id="sport" name="sport" class="form-select" required>
           <option value="">Select sport</option>
@@ -73,6 +73,11 @@
           <option value="Basketball">Basketball</option>
           <option value="Volleyball">Volleyball</option>
         </select>
+      </div> -->
+      <div class="mb-3">
+        <label for="activity" class="form-label">Activity</label>
+        <input type="text" id="activity" name="activity" class="form-control" placeholder="Type a sport or activity..." autocomplete="off" required>
+        <ul id="activitySuggestions" class="list-group mt-1"></ul>
       </div>
 
       <div class="mb-3 d-flex gap-5">

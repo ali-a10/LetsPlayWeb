@@ -79,7 +79,8 @@ function loadPublicEvents(loggedInUser) {
       const myEventsContainer = document.getElementById('events-container');
       myEventsContainer.innerHTML = '';
 
-      const myEvents = events.filter(event => event.createdBy == loggedInUser.id);
+      const myEvents = events.filter(event => event.userId == loggedInUser.id);
+      const publicEvents = events.filter(event => event.userId != loggedInUser.id);
       if (myEvents.length === 0) {
         myEventsContainer.innerHTML = '<p>You have not created any events yet.</p>';
       }
@@ -95,7 +96,7 @@ function loadPublicEvents(loggedInUser) {
                 <div class="col-2 event-card-img placeholder mb-2"></div>
 
                 <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
-                  <div class="d-flex flex-column">
+                  <div class="d-flex flex-column align-items-start">
                     <h4 class="text-teal mb-2">${event.title}</h4>
                     <p class="mb-1 text-muted">
                       <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
@@ -104,7 +105,7 @@ function loadPublicEvents(loggedInUser) {
                       <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
                     </p>
                     <p class="mb-1">
-                      <i class="bi bi-dribbble text-teal"></i> ${event.sport}
+                      <i class="bi bi-dribbble text-teal"></i> ${event.activity}
                     </p>
                   </div>
 
@@ -114,7 +115,7 @@ function loadPublicEvents(loggedInUser) {
                     </div>
                     <div class="event-price mb-2">
                       <span class="badge bg-teal text-white fs-6">
-                        ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
+                        ${event.isFree === true ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
                       </span>
                     </div>
                     <button class="btn-outline-teal fs-5"
@@ -139,17 +140,16 @@ function loadPublicEvents(loggedInUser) {
       // });
 
       // load public events
-      events.forEach(event => {
+      publicEvents.forEach(event => {
         const card = document.createElement('div');
         // card.className = 'event-card';
-
         card.innerHTML = `
             <div class="container">
               <div class="row">
                 <div class="col-2 event-card-img placeholder mb-2"></div>
 
                 <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
-                  <div class="d-flex flex-column">
+                  <div class="d-flex flex-column align-items-start">
                     <h4 class="text-teal mb-2">${event.title}</h4>
                     <p class="mb-1 text-muted">
                       <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
@@ -158,7 +158,7 @@ function loadPublicEvents(loggedInUser) {
                       <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
                     </p>
                     <p class="mb-1">
-                      <i class="bi bi-dribbble text-teal"></i> ${event.sport}
+                      <i class="bi bi-dribbble text-teal"></i> ${event.activity}
                     </p>
                   </div>
 
@@ -168,7 +168,7 @@ function loadPublicEvents(loggedInUser) {
                     </div>
                     <div class="event-price mb-2">
                       <span class="badge bg-teal text-white fs-6">
-                        ${parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
+                        ${event.isFree === true ? "Free" : `$${parseFloat(event.price).toFixed(2)}`}
                       </span>
                     </div>
                     <button class="btn-view-event fs-5"

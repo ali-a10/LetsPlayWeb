@@ -1,41 +1,13 @@
 [
   {
     "id": 1,
-    "createdBy": 1,
-    "title": "Morning Soccer",
-    "time": "08:00",
-    "date": "2024-12-15",
-    "sport": "Soccer",
-    "location": "Community Park",
-    "price": "10",
-    "maxParticipants": 20,
-    "currentParticipants": 5,
-    "notes": "Bring a water bottle and soccer gear"
-  },
-  {
-    "id": 2,
-    "createdBy": 1,
-    "title": "2nd event",
-    "date": "2021-05-03",
-    "sport": "Volleyball",
-    "price": "1"
-  },
-  {
-    "id": 3,
-    "createdBy": 2,
-    "title": "bball",
-    "date": "1999-11-29",
-    "sport": "Basketball",
-    "price": "1"
-  },
-  {
-    "id": 4,
     "userId": 1,
     "title": "volleyball",
     "description": "vball123",
     "date": "2025-10-28",
     "time": "22:00",
     "location": "a",
+    "activity": "Volleyball",
     "isFree": false,
     "price": "1",
     "currentParticipants": "3",
@@ -45,19 +17,37 @@
     "usersJoined": []
   },
   {
-    "id": 5,
+    "id": 2,
     "userId": 1,
     "title": "another test",
     "description": "test2",
     "date": "2025-10-27",
     "time": "17:30",
     "location": "a",
+    "activity": "Soccer",
     "isFree": true,
     "price": null,
     "currentParticipants": "1",
     "maxParticipants": "14",
     "ageGroup": "",
     "level": "Intermediate",
+    "usersJoined": []
+  },
+  {
+    "id": 3,
+    "userId": 1,
+    "title": "testing new activity input",
+    "description": "a",
+    "date": "2025-10-29",
+    "time": "16:01",
+    "location": "a",
+    "activity": "Basketball",
+    "isFree": true,
+    "price": null,
+    "currentParticipants": "1",
+    "maxParticipants": "6",
+    "ageGroup": "",
+    "level": "Beginner",
     "usersJoined": []
   }
 ]

@@ -77,7 +77,7 @@ document.getElementById('event-form').addEventListener('submit', async (e) => {
         date: document.getElementById('date').value,
         time: document.getElementById('time').value,
         location: document.getElementById('location').value,
-        sport: document.getElementById('sport').value,
+        activity: document.getElementById('activity').value,
         isFree: document.querySelector('input[name="isFree"]:checked').value === 'true',
         price: document.getElementById('price').value,
         currentParticipants: document.getElementById('currentParticipants').value,
@@ -160,4 +160,28 @@ async function handleDeleteEvent(eventId) {
   }
   
 
-  
+// code for activity autcomplete
+const activityInput = document.getElementById('activity');
+const suggestionsList = document.getElementById('activitySuggestions');
+const activityOptions = ["Soccer", "Basketball", "Volleyball", "Tennis", "Hockey", "Baseball", "Running", "Pickleball"];
+
+activityInput.addEventListener('input', () => {
+  const inputValue = activityInput.value.toLowerCase();
+  suggestionsList.innerHTML = ''; // Clear old suggestions
+
+  if (inputValue.length === 0) return;
+
+  const filteredActivities = activityOptions.filter(a => a.toLowerCase().includes(inputValue));
+
+  filteredActivities.forEach(activity => {
+    const li = document.createElement('li');
+    li.textContent = activity;
+    li.classList.add('list-group-item', 'list-group-item-action');
+    li.style.cursor = 'pointer';
+    li.addEventListener('click', () => {
+      activityInput.value = activity;
+      suggestionsList.innerHTML = '';
+    });
+    suggestionsList.appendChild(li);
+  });
+});
