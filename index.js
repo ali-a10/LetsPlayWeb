@@ -1,6 +1,6 @@
 const User = require('./models/User.js');
 const Event = require('./models/Event.js');
-const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, updateEvent, writeJSON } = require('./dataHandler.js');
+const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, writeJSON } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -167,35 +167,6 @@ app.get('/getEvents', async (req, res) => {
 });
 
 
-// app.post('/post-event', async (req, res) => {
-//   const { title, date, sport, price } = req.body;
-//   if (!title || !date || !sport || !price) {
-//     return res.status(400).json({ error: 'Missing required fields' });
-//   }
-//   // will also need user info in the event (username, maybe date event is created)
-//   // might want to give events ids
-  
-//   // figure out what the id should be
-//   const events = await getEvents();
-//   const lastEventId = events[events.length - 1].id;
-//   const id = lastEventId + 1
-
-//   const newEvent = {
-//     id,
-//     title,
-//     date,
-//     sport,
-//     price,
-//     createdBy: req.session.user.id
-//   };
-  
-//   try {
-//     await addEvent(newEvent);
-//     res.status(201).json({ event: newEvent });
-//   } catch (err) {
-//     res.status(500).json({ error: 'Failed to save event' });
-//   }
-// });
 app.post('/post-event', async (req, res) => {
   const {
     title,
@@ -246,6 +217,7 @@ app.post('/post-event', async (req, res) => {
 });
 
 
+// NEEDS UPDATING TO USE Event MODEL
 app.put('/update-event/:id', async (req, res) => {
   const id = parseInt(req.params.id);
   const { title, date, sport, price } = req.body;
@@ -255,7 +227,7 @@ app.put('/update-event/:id', async (req, res) => {
   }
 
   try {
-    await updateEvent(id, { title, date, sport, price });
+    await editEvent(id, { title, date, sport, price });
     res.json({ message: 'Event updated successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message || 'Error updating event' });
@@ -280,12 +252,34 @@ app.delete('/delete-event/:id', async (req, res) => {
 
     events.splice(index, 1);  // removes 1 item starting at 'index'
     await writeJSON('./jsonDB/events.json', events);
+    /////////// remove this ^ and add a deleteEvent function in dataHandler.js
     res.status(200).json({ success: true, message: 'Event deleted' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error while deleting event' });
   }
 });
 
+
+app.put('/join', async (req, res) => {
+  try {
+    const { eventId, userId } = req.body;
+
+    if (!eventId || !userId) {
+      return res.status(400).json({ success: false, message: "Missing eventId or userId." });
+    }
+
+    await eventJoin(eventId, userId);
+
+    return res.status(200).json({
+      success: true,
+      message: `User successfully joined the event`
+    });
+
+  } catch (error) {
+    console.error("Error in /join:", error);
+    res.status(500).json({ success: false, message: "Server error while joining event." });
+  }
+});
 
 
 

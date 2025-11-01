@@ -97,7 +97,7 @@ async function addEvent(event) {
 }
 
 
-async function updateEvent(id, updatedData) {
+async function editEvent(id, updatedData) {
   const events = await getEvents();
   if (id < 0 || id > events.length) {
     throw new Error('Invalid event id');
@@ -109,5 +109,48 @@ async function updateEvent(id, updatedData) {
   await writeJSON(EVENTS_FILE, events);
 }
 
+async function eventJoin(eventId, userId) {
+  try {
+    const events = await getEvents();
+    const users = await getUsers();
+    const event = events.find(e => e.id === parseInt(eventId));
+    const user = users.find(u => u.id === parseInt(userId));
 
-module.exports = { getUsers, getUserById, addUser, editUser, getEvents, addEvent, updateEvent, writeJSON };
+    if (!event) {
+      return res.status(404).json({ success: false, message: "Event not found." });
+    }
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found." });
+    }
+
+    // Initialize arrays if they are undefined - but they most likely will be defined
+    if (!Array.isArray(event.usersJoined)) {
+      event.usersJoined = [];
+    }
+    if (!Array.isArray(user.eventsJoined)) {
+      user.eventsJoined = [];
+    }
+
+    // Check if user already joined
+    if (event.usersJoined.includes(user.id)) {
+      return res.status(400).json({ success: false, message: "User already joined this event." });
+    }
+
+    // Add user to event's list
+    event.usersJoined.push(user.id);
+    event.currentParticipants = (event.currentParticipants || 0) + 1;
+
+    // Add event to user's list
+    user.eventsJoined.push(event.id);
+
+    // Save updated data
+    await writeJSON(EVENTS_FILE, events);
+    await writeJSON(USERS_FILE, users);
+  }
+  catch (error) {
+    throw new Error('Error joining event: ' + error.message);
+  }
+}
+
+
+module.exports = { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, writeJSON };
