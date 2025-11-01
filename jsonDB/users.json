@@ -10,6 +10,23 @@
       "Soccer"
     ],
     "about": "",
-    "dob": "2025-10-21"
+    "dob": "2025-10-21",
+    "eventsCreated": [],
+    "eventsJoined": []
+  },
+  {
+    "id": 2,
+    "username": "ali2",
+    "email": "ali22@gmail.com",
+    "password": "909",
+    "phone": "1234567890",
+    "gender": "Male",
+    "favoriteSports": [
+      "Volleyball"
+    ],
+    "about": "love volleyball",
+    "dob": "2025-10-01",
+    "eventsCreated": [],
+    "eventsJoined": []
   }
 ]

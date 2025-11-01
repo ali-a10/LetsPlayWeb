@@ -74,6 +74,7 @@ body {
 .cta-btn:hover {
   background-color: #00C26C;
   color: #003b46;
+  transform: scale(1.05);
 }
 
 /* Placeholders */

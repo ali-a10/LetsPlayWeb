@@ -172,7 +172,7 @@ function loadPublicEvents(loggedInUser) {
                       </span>
                     </div>
                     <button class="btn-view-event fs-5"
-                      onclick="window.location.href='/event.html?id=${event.id}'">
+                      onclick="window.location.href='/event?id=${event.id}'">
                       View
                     </button>
                   </div>
