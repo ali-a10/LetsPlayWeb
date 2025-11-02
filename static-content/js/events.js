@@ -10,6 +10,7 @@ $(document).ready(function() {
           document.getElementById('logout-btn').classList.remove('d-none');
           document.getElementById('myaccount-btn').classList.remove('d-none');
           document.getElementById('my-event-list').style.display = 'block';
+          document.getElementById('joined-events-list').style.display = 'block';
           document.getElementById('events-list').style.display = 'block';
           document.getElementById('events-hero-btn').addEventListener('click', () => {
             window.location.href = '/event-edit';
@@ -74,13 +75,17 @@ function loadPublicEvents(loggedInUser) {
   fetch('/getEvents')
     .then(res => res.json())
     .then(events => {
-      const publicEventsContainer = document.getElementById('public-events-container');
-      publicEventsContainer.innerHTML = '';
       const myEventsContainer = document.getElementById('events-container');
       myEventsContainer.innerHTML = '';
+      const joinedEventsContainer = document.getElementById('joined-events-container');
+      joinedEventsContainer.innerHTML = '';
+      const publicEventsContainer = document.getElementById('public-events-container');
+      publicEventsContainer.innerHTML = '';
+      
 
       const myEvents = events.filter(event => event.userId == loggedInUser.id);
       const publicEvents = events.filter(event => event.userId != loggedInUser.id);
+      const joinedEvents = events.filter(event => Array.isArray(event.usersJoined) && event.usersJoined.includes(loggedInUser.id));
       if (myEvents.length === 0) {
         myEventsContainer.innerHTML = '<p>You have not created any events yet.</p>';
       }
@@ -139,50 +144,106 @@ function loadPublicEvents(loggedInUser) {
       //   });
       // });
 
-      // load public events
-      publicEvents.forEach(event => {
-        const card = document.createElement('div');
-        // card.className = 'event-card';
-        card.innerHTML = `
-            <div class="container">
-              <div class="row">
-                <div class="col-2 event-card-img placeholder mb-2"></div>
+      if (joinedEvents.length === 0) {
+        joinedEventsContainer.innerHTML = '<p>You have not joined any events yet.</p>';
+      }
+      else {
+        // load public events
+        joinedEvents.forEach(event => {
+          const card = document.createElement('div');
+          // card.className = 'event-card';
+          card.innerHTML = `
+              <div class="container">
+                <div class="row">
+                  <div class="col-2 event-card-img placeholder mb-2"></div>
 
-                <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
-                  <div class="d-flex flex-column align-items-start">
-                    <h4 class="text-teal mb-2">${event.title}</h4>
-                    <p class="mb-1 text-muted">
-                      <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
-                    </p>
-                    <p class="mb-1">
-                      <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
-                    </p>
-                    <p class="mb-1">
-                      <i class="bi bi-dribbble text-teal"></i> ${event.activity}
-                    </p>
-                  </div>
+                  <div class="col event-card joined-right-border shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
+                    <div class="d-flex flex-column align-items-start">
+                      <h4 class="text-teal mb-2">${event.title}</h4>
+                      <p class="mb-1 text-muted">
+                        <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
+                      </p>
+                      <p class="mb-1">
+                        <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                      </p>
+                      <p class="mb-1">
+                        <i class="bi bi-dribbble text-teal"></i> ${event.activity}
+                      </p>
+                    </div>
 
-                  <div class="text-end">
-                    <div class="event-capacity fw-semibold mb-1 fs-5">
-                      <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                    <div class="text-end">
+                      <div class="event-joined mb-2">
+                        <span class="badge bg-green text-white fs-5">
+                          Joined
+                        </span>
+                      </div>
+                      <div class="event-capacity fw-semibold mb-1 fs-5">
+                        <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                      </div>
+                      <button class="btn-view-event fs-5"
+                        onclick="window.location.href='/event?id=${event.id}'">
+                        View
+                      </button>
                     </div>
-                    <div class="event-price mb-2">
-                      <span class="badge bg-teal text-white fs-6">
-                        ${event.isFree === true ? "Free" : `$${parseFloat(event.price).toFixed(2)}`}
-                      </span>
-                    </div>
-                    <button class="btn-view-event fs-5"
-                      onclick="window.location.href='/event?id=${event.id}'">
-                      View
-                    </button>
                   </div>
                 </div>
-              </div>
-            </div>  
-        `;
+              </div>  
+          `;
 
-        publicEventsContainer.appendChild(card);
-      });
+          joinedEventsContainer.appendChild(card);
+        });
+      }
+
+
+      if (publicEvents.length === 0) {
+        publicEventsContainer.innerHTML = '<p>No public events available at the moment.</p>';
+      }
+      else {
+        // load public events
+        publicEvents.forEach(event => {
+          const card = document.createElement('div');
+          // card.className = 'event-card';
+          card.innerHTML = `
+              <div class="container">
+                <div class="row">
+                  <div class="col-2 event-card-img placeholder mb-2"></div>
+
+                  <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
+                    <div class="d-flex flex-column align-items-start">
+                      <h4 class="text-teal mb-2">${event.title}</h4>
+                      <p class="mb-1 text-muted">
+                        <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
+                      </p>
+                      <p class="mb-1">
+                        <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                      </p>
+                      <p class="mb-1">
+                        <i class="bi bi-dribbble text-teal"></i> ${event.activity}
+                      </p>
+                    </div>
+
+                    <div class="text-end">
+                      <div class="event-capacity fw-semibold mb-1 fs-5">
+                        <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                      </div>
+                      <div class="event-price mb-2">
+                        <span class="badge bg-teal text-white fs-6">
+                          ${event.isFree === true ? "Free" : `$${parseFloat(event.price).toFixed(2)}`}
+                        </span>
+                      </div>
+                      <button class="btn-view-event fs-5"
+                        onclick="window.location.href='/event?id=${event.id}'">
+                        View
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+          `;
+
+          publicEventsContainer.appendChild(card);
+        });
+      }
     })
     .catch(err => {
       console.error('Failed to load events:', err);

@@ -192,10 +192,15 @@ h2 {
   background-color: #009688;
 }
 
+.bg-green {
+  background-color: #00C26C;
+}
+
 .event-card {
   background-color: #fff;
   border-right: 4px solid #009688;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
 }
 
 .event-card:hover {
@@ -227,4 +232,21 @@ h2 {
   border: 1px solid #003b46;
   border-radius: 0.25rem;
   padding: 0.15rem 0.75rem;
+}
+
+.event-joined {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.event-joined .badge {
+  border-radius: 0 0 0 0.35em;
+  padding: 0.25em 0.75em;
+}
+
+.joined-right-border {
+  border-right: 4px solid #00C26C !important;
 }
