@@ -93,15 +93,15 @@ document.getElementById('event-form').addEventListener('submit', async (e) => {
         let res;
         if (eventId) {
             res = await fetch(`/update-event/${eventId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(event),
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(event),
             });
         } else {
             res = await fetch('/post-event', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(event),
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(event),
             });
         }
   

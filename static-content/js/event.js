@@ -1,4 +1,4 @@
-import { checkLoginStatus, bindLogoutBtn } from './auth.js';
+import { checkLoginStatus, bindLogoutBtn, showPopup } from './auth.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     checkLoginStatus()
@@ -49,3 +49,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+
+document.getElementById("join-event-btn").addEventListener("click", async () => {
+    try {
+        let user = null;
+        checkLoginStatus()
+        .then(async data => {
+            if (data.loggedIn) {
+                document.getElementById('logout-btn').classList.remove('d-none');
+                document.getElementById('myaccount-btn').classList.remove('d-none');
+                const params = new URLSearchParams(window.location.search);
+                const eventId = params.get('id');
+                const userId = data.user.id;
+            
+                const response = await fetch("/join", {
+                    method: "PUT",
+                    headers: {
+                    "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ eventId, userId })
+                });
+        
+                const data2 = await response.json();
+            
+                if (response.ok && data2.success) {
+                    showPopup("Successfully joined the event!", true);
+                    setTimeout(() => (window.location.href = '/events'), 1500);
+                } else {
+                    showPopup(data2.message || "Unable to join event.", false);
+                }
+            } else {
+                // User is not logged in, display login/signup options
+                document.getElementById('login-btn').classList.remove('d-none');
+                document.getElementById('signup-btn').classList.remove('d-none');
+                alert("You must be logged in to join an event.");
+                return;
+            }
+        })
+        .catch(error => {
+            console.log("ERROR from check login: ", error)
+        });
+    
+    } catch (err) {
+        console.error("Error joining event:", err);
+        showPopup("Something went wrong. Please try again later.", false);
+    }
+});
+  

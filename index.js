@@ -1,6 +1,6 @@
 const User = require('./models/User.js');
 const Event = require('./models/Event.js');
-const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, writeJSON } = require('./dataHandler.js');
+const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, writeJSON } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -269,15 +269,11 @@ app.put('/join', async (req, res) => {
     }
 
     await eventJoin(eventId, userId);
-
-    return res.status(200).json({
-      success: true,
-      message: `User successfully joined the event`
-    });
+    res.status(200).json({ success: true, message: `User successfully joined the event`});
 
   } catch (error) {
-    console.error("Error in /join:", error);
-    res.status(500).json({ success: false, message: "Server error while joining event." });
+    console.error("Error in /join:", error.message);
+    res.status(error.status).json({ success: false, message: error.message || "Server error while joining event." });
   }
 });
 
