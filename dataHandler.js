@@ -153,5 +153,43 @@ async function eventJoin(eventId, userId) {
   await writeJSON(USERS_FILE, users);
 }
 
+async function eventLeave(eventId, userId) {
+  const events = await getEvents();
+  const users = await getUsers();
 
-module.exports = { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, writeJSON };
+  // this will be mutating these objects inside the array
+  const event = events.find(e => e.id === parseInt(eventId));
+  const user = users.find(u => u.id === parseInt(userId));
+
+  if (!event) {
+    const err = new Error('Event not found');
+    err.status = 404;
+    throw err;
+  }
+  if (!user) {
+    const err = new Error('User not found');
+    err.status = 404;
+    throw err;
+  }
+
+  // Check if user joined the event
+  if (event.usersJoined.includes(user.id)) {
+    // Remove user from event's list
+    event.usersJoined.splice(event.usersJoined.indexOf(user.id), 1);
+    event.currentParticipants = (parseInt(event.currentParticipants) - 1).toString();
+  
+    // Remove event from user's list
+    user.eventsJoined = user.eventsJoined.filter(eId => eId !== event.id);
+  }
+  else {
+    const err = new Error('You have not joined this event');
+    err.status = 400;
+    throw err;
+  }
+
+  await writeJSON(EVENTS_FILE, events);
+  await writeJSON(USERS_FILE, users);
+}
+
+
+module.exports = { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, eventLeave, writeJSON };

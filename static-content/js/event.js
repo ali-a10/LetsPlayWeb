@@ -78,7 +78,7 @@ document.getElementById("join-event-btn").addEventListener("click", async () => 
             
                 if (response.ok && data2.success) {
                     showPopup("Successfully joined the event!", true);
-                    setTimeout(() => (window.location.href = '/events'), 1500);
+                    setTimeout(() => (window.location.href = '/events'), 2000);
                 } else {
                     showPopup(data2.message || "Unable to join event.", false);
                 }
@@ -96,6 +96,52 @@ document.getElementById("join-event-btn").addEventListener("click", async () => 
     
     } catch (err) {
         console.error("Error joining event:", err);
+        showPopup("Something went wrong. Please try again later.", false);
+    }
+});
+  
+
+document.getElementById("leave-event-btn").addEventListener("click", async () => {
+    try {
+        checkLoginStatus()
+        .then(async data => {
+            if (data.loggedIn) {
+                document.getElementById('logout-btn').classList.remove('d-none');
+                document.getElementById('myaccount-btn').classList.remove('d-none');
+                const params = new URLSearchParams(window.location.search);
+                const eventId = params.get('id');
+                const userId = data.user.id;
+            
+                const response = await fetch("/leave", {
+                    method: "PUT",
+                    headers: {
+                    "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ eventId, userId })
+                });
+        
+                const data2 = await response.json();
+            
+                if (response.ok && data2.success) {
+                    showPopup("Successfully left the event!", false);
+                    setTimeout(() => (window.location.href = '/events'), 1500);
+                } else {
+                    showPopup(data2.message || "Unable to leave event.", false);
+                }
+            } else {
+                // User is not logged in, display login/signup options
+                document.getElementById('login-btn').classList.remove('d-none');
+                document.getElementById('signup-btn').classList.remove('d-none');
+                alert("You must be logged in to leave the event.");
+                return;
+            }
+        })
+        .catch(error => {
+            console.log("ERROR from check login: ", error)
+        });
+    
+    } catch (err) {
+        console.error("Error leaving event:", err);
         showPopup("Something went wrong. Please try again later.", false);
     }
 });

@@ -1,7 +1,5 @@
-#1 update updateEvent in datahandler.js so it uses the Event class
-#2 user.eventsCreated isnt being updated on event creation
-#3 remove writeJson from imports (this should only be used inside dataHandler.js)
-
+- remove writeJson from imports (this should only be used inside dataHandler.js)
+- test the failure cases (where errors are thrown)
 
 - check if we need to add and remove d-none in if statements, or is 1 of them 
     enough and it refreshes when the page is refreshed?

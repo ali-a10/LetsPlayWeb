@@ -1,6 +1,6 @@
 const User = require('./models/User.js');
 const Event = require('./models/Event.js');
-const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, writeJSON } = require('./dataHandler.js');
+const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, eventLeave, writeJSON } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -277,6 +277,23 @@ app.put('/join', async (req, res) => {
   }
 });
 
+
+app.put('/leave', async (req, res) => {
+  try {
+    const { eventId, userId } = req.body;
+
+    if (!eventId || !userId) {
+      return res.status(400).json({ success: false, message: "Missing eventId or userId." });
+    }
+
+    await eventLeave(eventId, userId);
+    res.status(200).json({ success: true, message: `User successfully left the event`});
+
+  } catch (error) {
+    console.error("Error in /leave:", error.message);
+    res.status(error.status).json({ success: false, message: error.message || "Server error while leaving event." });
+  }
+});
 
 
 //////////////// My Account page ////////////////

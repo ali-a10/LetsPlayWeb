@@ -10,13 +10,11 @@
     "activity": "Volleyball",
     "isFree": false,
     "price": "1",
-    "currentParticipants": "4",
+    "currentParticipants": "3",
     "maxParticipants": "12",
     "ageGroup": "",
     "level": "Beginner",
-    "usersJoined": [
-      2
-    ]
+    "usersJoined": []
   },
   {
     "id": 2,
