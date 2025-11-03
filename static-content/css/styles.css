@@ -61,6 +61,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
+/* buttons */
 .cta-btn {
   background-color: #03dac6;
   color: #003b46;
@@ -74,6 +75,22 @@ body {
 .cta-btn:hover {
   background-color: #00C26C;
   color: #003b46;
+  transform: scale(1.05);
+}
+
+.red-btn {
+  background-color: #d93838;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.red-btn:hover {
+  background-color: #bb0c0c;
+  color: white;
   transform: scale(1.05);
 }
 
