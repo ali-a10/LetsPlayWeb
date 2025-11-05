@@ -177,7 +177,7 @@ function loadPublicEvents(loggedInUser) {
                           Joined
                         </span>
                       </div>
-                      <div class="event-capacity fw-semibold mb-1 fs-5">
+                      <div class="event-capacity fw-semibold mb-2 fs-5">
                         <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
                       </div>
                       <button class="btn-view-event fs-5"

@@ -10,11 +10,13 @@
     "activity": "Volleyball",
     "isFree": false,
     "price": "1",
-    "currentParticipants": "3",
+    "currentParticipants": "4",
     "maxParticipants": "12",
     "ageGroup": "",
     "level": "Beginner",
-    "usersJoined": []
+    "usersJoined": [
+      2
+    ]
   },
   {
     "id": 2,
@@ -46,6 +48,23 @@
     "price": null,
     "currentParticipants": "1",
     "maxParticipants": "6",
+    "ageGroup": "",
+    "level": "Beginner",
+    "usersJoined": []
+  },
+  {
+    "id": 4,
+    "userId": 2,
+    "title": "tennis!",
+    "description": "ten",
+    "date": "2025-11-04",
+    "time": "07:43",
+    "location": "lisgar",
+    "activity": "Tennis",
+    "isFree": true,
+    "price": null,
+    "currentParticipants": "2",
+    "maxParticipants": "4",
     "ageGroup": "",
     "level": "Beginner",
     "usersJoined": []

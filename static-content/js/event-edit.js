@@ -49,9 +49,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             const event = events.find(e => e.id === parseInt(eventId));
             if (event) {
             document.getElementById('title').value = event.title;
+            document.getElementById('description').value = event.description;
             document.getElementById('date').value = event.date;
-            document.getElementById('sport').value = event.sport;
+            document.getElementById('time').value = event.time;
+            document.getElementById('location').value = event.location;
+            document.getElementById('activity').value = event.activity;
+            if (event.isFree === true) {
+                document.getElementById('isFreeYes').checked = true;
+            } else {
+                document.getElementById('isFreeNo').checked = true;
+            }
             document.getElementById('price').value = event.price;
+            document.getElementById('currentParticipants').value = event.currentParticipants;
+            document.getElementById('maxParticipants').value = event.maxParticipants;
+            document.getElementById('ageGroup').value = event.ageGroup;
+            document.getElementById('level').value = event.level;
             }
         } catch (err) {
             console.error('Error loading event:', err);
