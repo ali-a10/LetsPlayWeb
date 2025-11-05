@@ -1,6 +1,6 @@
 const User = require('./models/User.js');
 const Event = require('./models/Event.js');
-const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, eventLeave, writeJSON } = require('./dataHandler.js');
+const { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, eventLeave, deleteEvent } = require('./dataHandler.js');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -238,21 +238,7 @@ app.put('/update-event/:id', async (req, res) => {
 app.delete('/delete-event/:id', async (req, res) => {
   const eventId = parseInt(req.params.id);
   try {
-    const events = await getEvents();
-    const index = events.findIndex(e => e.id === eventId);
-
-    if (index === -1) {
-      return res.status(404).json({ success: false, message: 'Event not found' });
-    }
-
-    // Only allow deletion if user owns the event
-    if (events[index].createdBy !== req.session.user?.id) {
-      return res.status(403).json({ success: false, message: 'Unauthorized to delete this event' });
-    }
-
-    events.splice(index, 1);  // removes 1 item starting at 'index'
-    await writeJSON('./jsonDB/events.json', events);
-    /////////// remove this ^ and add a deleteEvent function in dataHandler.js
+    await deleteEvent(eventId, req.session.user.id);
     res.status(200).json({ success: true, message: 'Event deleted' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error while deleting event' });

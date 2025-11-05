@@ -179,7 +179,7 @@ async function eventLeave(eventId, userId) {
     event.currentParticipants = (parseInt(event.currentParticipants) - 1).toString();
   
     // Remove event from user's list
-    user.eventsJoined = user.eventsJoined.filter(eId => eId !== event.id);
+    user.eventsJoined.splice(event.id, 1);
   }
   else {
     const err = new Error('You have not joined this event');
@@ -191,5 +191,34 @@ async function eventLeave(eventId, userId) {
   await writeJSON(USERS_FILE, users);
 }
 
+async function deleteEvent(eventId, userId) {
+  const events = await getEvents();
+  const eventIndex = events.findIndex(e => e.id === parseInt(eventId));
+  if (eventIndex === -1) {
+    const err = new Error('Event not found');
+    err.status = 404;
+    throw err;
+  }
 
-module.exports = { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, eventLeave, writeJSON };
+  if (events[eventIndex].userId !== userId) {
+    const err = new Error('Unauthorized: You are not the creator of this event');
+    err.status = 403;
+    throw err;
+  }
+
+  // remove the event from any users who joined it
+  const users = await getUsers();
+  for (const user of users) {
+    if (Array.isArray(user.eventsJoined) && user.eventsJoined.includes(parseInt(eventId))) {
+      user.eventsJoined.splice(eventId, 1);
+    }
+  }
+  
+  events.splice(eventIndex, 1);
+  
+  await writeJSON(USERS_FILE, users);
+  await writeJSON(EVENTS_FILE, events);
+}
+
+
+module.exports = { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, eventLeave, deleteEvent };
