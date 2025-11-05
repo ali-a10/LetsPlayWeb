@@ -244,9 +244,17 @@ h2 {
 }
 
 .btn-view-event {
-  background-color: #03dac6;
-  color: #003b46;
-  border: 1px solid #003b46;
+  background-color: #03c3af;
+  color: #fff;
+  border: 1px solid #03c3af;
+  border-radius: 0.25rem;
+  padding: 0.15rem 0.75rem;
+}
+
+.btn-view-event:hover {
+  background-color: #009688;
+  color: white;
+  /* border: 1px solid #003b46; */
   border-radius: 0.25rem;
   padding: 0.15rem 0.75rem;
 }
