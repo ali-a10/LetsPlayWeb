@@ -118,10 +118,12 @@ document.getElementById('event-form').addEventListener('submit', async (e) => {
         }
   
         const result = await res.json();
-        console.log("RES",res);
     
         if (res.ok) {
-            showPopup('Event created successfully!', true);
+            if (eventId)
+                showPopup('Event updated successfully!', true);
+            else
+                showPopup('Event created successfully!', true);
         } else {
             showPopup(result.error || 'Something went wrong', false);
         }

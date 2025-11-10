@@ -2,18 +2,18 @@
   {
     "id": 1,
     "userId": 1,
-    "title": "volleyball",
-    "description": "vball123",
+    "title": "volleyball 123",
+    "description": "vball123\ntest",
     "date": "2025-10-28",
-    "time": "22:00",
-    "location": "a",
+    "time": "19:00",
+    "location": "a court",
     "activity": "Volleyball",
     "isFree": false,
     "price": "1",
-    "currentParticipants": "4",
+    "currentParticipants": "7",
     "maxParticipants": "12",
     "ageGroup": "",
-    "level": "Beginner",
+    "level": "Advanced",
     "usersJoined": [
       2
     ]

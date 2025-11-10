@@ -217,17 +217,29 @@ app.post('/post-event', async (req, res) => {
 });
 
 
-// NEEDS UPDATING TO USE Event MODEL
 app.put('/update-event/:id', async (req, res) => {
   const id = parseInt(req.params.id);
-  const { title, date, sport, price } = req.body;
+  const {
+    title,
+    description,
+    date,
+    time,
+    location,
+    activity,
+    isFree,
+    price,
+    currentParticipants,
+    maxParticipants,
+    ageGroup,
+    level
+  } = req.body;
 
-  if (!title || !date || !sport || !price) {
+  if (!title || !description || !date || !time || !location || !activity || (!isFree && !price) || !currentParticipants || !maxParticipants) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
   try {
-    await editEvent(id, { title, date, sport, price });
+    await editEvent(id, req.body);
     res.json({ message: 'Event updated successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message || 'Error updating event' });

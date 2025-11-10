@@ -1,11 +1,11 @@
-- remove writeJson from imports (this should only be used inside dataHandler.js)
 - test the failure cases (where errors are thrown)
+
+- might want to improve when user doesnt fill out a required field
 
 - check if we need to add and remove d-none in if statements, or is 1 of them 
     enough and it refreshes when the page is refreshed?
 
 
-- check comment in app.delete('/delete-event/:id') in index.js
 - update the update-event method in index.js and make sure client side is updated as well
 
 

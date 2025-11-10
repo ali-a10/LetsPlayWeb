@@ -1,6 +1,7 @@
 // import fs from 'fs/promises';
 const fs = require('fs/promises');
 const User = require('./models/User');
+const Event = require('./models/Event');
 
 const USERS_FILE = './jsonDB/users.json';
 const EVENTS_FILE = './jsonDB/events.json';
@@ -102,9 +103,15 @@ async function editEvent(id, updatedData) {
   if (id < 0 || id > events.length) {
     throw new Error('Invalid event id');
   }
+  const eventIndex = events.findIndex(e => e.id === parseInt(id));
+  if (eventIndex === -1) {
+    throw new Error('Event not found');
+  }
 
-  // Replace the existing event at id with new data
-  events[id - 1] = { ...events[id-1], ...updatedData };
+  const eventToUpdate = new Event(events[eventIndex]);
+  console.log("event to update: ", eventToUpdate);
+  eventToUpdate.updateFields(updatedData);
+  events[eventIndex] = eventToUpdate.eventToJSON();
 
   await writeJSON(EVENTS_FILE, events);
 }
