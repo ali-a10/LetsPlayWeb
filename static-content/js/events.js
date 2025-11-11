@@ -18,8 +18,10 @@ $(document).ready(function() {
 
           loadEvents(data.user)
             .then((events) => {
-              console.log("Events loaded", events);
-              handleFilterUI(events);
+              let publicEvents = events.filter(event => event.userId != data.user.id);
+              console.log("Events loaded", publicEvents);
+
+              handleFilterUI(publicEvents);
             });
 
         } else {
@@ -230,48 +232,58 @@ function formatDate(dateStr) {
 }
 
 
-// function renderFilteredEvents(events) {
-//   const container = document.getElementById('public-events-container');
-//   container.innerHTML = '';
-//   if (events.length === 0) {
-//     container.innerHTML = '<p class="text-muted mt-3">No events match your filters.</p>';
-//     return;
-//   }
-//   events.forEach(event => {
-//     const card = document.createElement('div');
-//     card.className = 'col-md-6';
-//     card.innerHTML = `
-//       <div class="event-card shadow-sm p-3 mb-3 rounded d-flex justify-content-between align-items-center h-100">
-//         <div class="d-flex flex-column align-items-start">
-//           <h4 class="text-teal mb-2">${event.title}</h4>
-//           <p class="mb-1 text-muted">
-//             <strong>${new Date(event.date).toLocaleDateString()}</strong> • ${event.time || ''}
-//           </p>
-//           <p class="mb-1">
-//             <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
-//           </p>
-//           <p class="mb-1">
-//             <i class="bi bi-dribbble text-teal"></i> ${event.activity}
-//           </p>
-//         </div>
-//         <div class="text-end">
-//           <div class="event-capacity fw-semibold mb-1 fs-5">
-//             <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
-//           </div>
-//           <div class="event-price mb-2">
-//             <span class="badge bg-teal text-white fs-6">
-//               ${event.isFree ? "Free" : `$${parseFloat(event.price).toFixed(2)}`}
-//             </span>
-//           </div>
-//           <button class="btn-view-event fs-5" onclick="window.location.href='/event?id=${event.id}'">View</button>
-//         </div>
-//       </div>`;
-//     container.appendChild(card);
-//   });
-// }
+function renderFilteredEvents(events) {
+  const container = document.getElementById('public-events-container');
+  container.innerHTML = '';
+  if (events.length === 0) {
+    container.innerHTML = '<p class="text-muted mt-3">No events match your filters.</p>';
+    return;
+  }
+  events.forEach(event => {
+    const card = document.createElement('div');
+    card.innerHTML = `
+              <div class="container">
+                <div class="row">
+                  <div class="col-2 event-card-img placeholder mb-2"></div>
+
+                  <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
+                    <div class="d-flex flex-column align-items-start">
+                      <h4 class="text-teal mb-2">${event.title}</h4>
+                      <p class="mb-1 text-muted">
+                        <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
+                      </p>
+                      <p class="mb-1">
+                        <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                      </p>
+                      <p class="mb-1">
+                        <i class="bi bi-dribbble text-teal"></i> ${event.activity}
+                      </p>
+                    </div>
+
+                    <div class="text-end">
+                      <div class="event-capacity fw-semibold mb-1 fs-5">
+                        <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                      </div>
+                      <div class="event-price mb-2">
+                        <span class="badge bg-teal text-white fs-6">
+                          ${event.isFree === true ? "Free" : `$${parseFloat(event.price).toFixed(2)}`}
+                        </span>
+                      </div>
+                      <button class="btn-view-event fs-5"
+                        onclick="window.location.href='/event?id=${event.id}'">
+                        View
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+          `;
+    container.appendChild(card);
+  });
+}
 
 
-function handleFilterUI(allEvents) {
+function handleFilterUI(publicEvents) {
   const activityInput = document.getElementById('filter-activity');
   const suggestionsList = document.getElementById('activity-suggestions');
   const applyBtn = document.getElementById('apply-filters-btn');
@@ -304,31 +316,32 @@ function handleFilterUI(allEvents) {
 
   // #endregion
   
-  // Apply filters
-  // applyBtn.addEventListener('click', () => {
-  //   const filters = {
-  //     activity: activityInput.value.trim().toLowerCase(),
-  //     level: document.getElementById('filter-level').value,
-  //     minPrice: parseFloat(document.getElementById('filter-price-min').value) || 0,
-  //     maxPrice: parseFloat(document.getElementById('filter-price-max').value) || Infinity,
-  //     minSpots: parseInt(document.getElementById('filter-spots').value) || 0,
-  //     sortBy: document.querySelector('input[name="sortOption"]:checked')?.value
-  //   };
+  // #region Apply filters
+  applyBtn.addEventListener('click', () => {
+    const filters = {
+      activity: activityInput.value.trim().toLowerCase(),
+      level: document.getElementById('filter-level').value,
+      minPrice: parseFloat(document.getElementById('filter-price-min').value) || 0,
+      maxPrice: parseFloat(document.getElementById('filter-price-max').value) || Infinity,
+      minSpots: parseInt(document.getElementById('filter-spots').value) || 0,
+      sortBy: document.querySelector('input[name="sortOption"]:checked')?.value
+    };
 
-  //   const filtered = allEvents
-  //     .filter(e => (!filters.activity || e.activity.toLowerCase().includes(filters.activity)))
-  //     .filter(e => (!filters.level || e.level === filters.level))
-  //     .filter(e => (e.price >= filters.minPrice && e.price <= filters.maxPrice))
-  //     .filter(e => ((e.maxParticipants - (e.currentParticipants || 0)) >= filters.minSpots));
+    const filtered = publicEvents
+      .filter(e => (!filters.activity || e.activity.toLowerCase().includes(filters.activity)))
+      .filter(e => (!filters.level || e.level === filters.level))
+      .filter(e => (e.price >= filters.minPrice && e.price <= filters.maxPrice))
+      .filter(e => ((e.maxParticipants - (e.currentParticipants || 0)) >= filters.minSpots));
 
-  //   if (filters.sortBy === 'date') {
-  //     filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
-  //   } else if (filters.sortBy === 'price') {
-  //     filtered.sort((a, b) => a.price - b.price);
-  //   }
+    if (filters.sortBy === 'date') {
+      filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+    } else if (filters.sortBy === 'price') {
+      filtered.sort((a, b) => a.price - b.price);
+    }
+    renderFilteredEvents(filtered);
+  });
 
-  //   renderFilteredEvents(filtered);
-  // });
+  // #endregion
 }
 
 
