@@ -77,6 +77,87 @@
       <div id="events-list" style="display:none;">
         <div class="d-flex justify-content-between align-items-center m-4">
           <h2>Explore Events</h2>
+          <!-- Filters & Sorting -->
+          <div>
+            <!-- Header -->
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <button 
+                class="btn btn-secondary" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#filter-collapse" 
+                aria-expanded="false" 
+                aria-controls="filter-collapse">
+                <i class="bi bi-sliders"></i> Show Filters
+              </button>
+            </div>
+
+            <!-- Collapsible Content -->
+            <div class="collapse" id="filter-collapse">
+              <div class="card-body">
+                <div class="row g-3 align-items-end">
+
+                  <!-- Sort By -->
+                  <div class="col-md-3">
+                    <label class="form-label fw-semibold">Sort By</label>
+                    <div class="d-flex flex-wrap gap-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortOption" id="sort-date" value="date">
+                        <label class="form-check-label" for="sort-date">Soonest Date</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortOption" id="sort-price" value="price">
+                        <label class="form-check-label" for="sort-price">Lowest Price</label>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Activity -->
+                  <div class="col-md-3 position-relative">
+                    <label for="filter-activity" class="form-label fw-semibold">Activity</label>
+                    <input type="text" class="form-control" id="filter-activity" placeholder="Start typing...">
+                    <ul class="list-group position-absolute w-100 mt-1 d-none" id="activity-suggestions"></ul>
+                  </div>
+
+                  <!-- Skill Level -->
+                  <div class="col-md-2">
+                    <label for="filter-level" class="form-label fw-semibold">Skill Level</label>
+                    <select class="form-select" id="filter-level">
+                      <option value="">Any</option>
+                      <option value="Beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="Advanced">Advanced</option>
+                    </select>
+                  </div>
+
+                  <!-- Price Range -->
+                  <div class="col-md-2">
+                    <label class="form-label fw-semibold">Price Range ($)</label>
+                    <div class="d-flex gap-2">
+                      <input type="number" class="form-control" id="filter-price-min" placeholder="Min">
+                      <input type="number" class="form-control" id="filter-price-max" placeholder="Max">
+                    </div>
+                  </div>
+
+                  <!-- Spots Left -->
+                  <div class="col-md-2">
+                    <label for="filter-spots" class="form-label fw-semibold">Min Spots Left</label>
+                    <input type="number" class="form-control" id="filter-spots" placeholder="e.g. 2">
+                  </div>
+
+                  <!-- Buttons -->
+                  <div class="col-md-12 d-flex justify-content-end mt-3">
+                    <button id="apply-filters-btn" class="btn btn-primary px-4 rounded-3">
+                      <i class="bi bi-funnel"></i> Apply Filters
+                    </button>
+                    <button id="clear-filters-btn" class="btn btn-outline-secondary ms-2 px-4 rounded-3">
+                      <i class="bi bi-x-circle"></i> Clear
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="public-events-container" class="row g-4"></div>
       </div>

@@ -3,7 +3,6 @@ if (window.location.pathname.includes('/account')) {
     let user = null;
     checkLoginStatus()
       .then(data => {
-        console.log("DATA ON LINE 7: ", data);
         if (data.loggedIn) {
           document.getElementById('login-btn').style.display = 'none';
           document.getElementById('signup-btn').style.display = 'none';
@@ -33,7 +32,6 @@ if (window.location.pathname.includes('/account')) {
             .done(function(data, textStatus, jqXHR) {
               const user = data.user;
               Object.keys(user).forEach(key => {
-                console.log("KEY: ", key);
                 if (key == "gender") {
                   const genderInputs = document.getElementsByName("gender");
                   genderInputs.forEach(input => {

@@ -275,3 +275,19 @@ h2 {
 .joined-right-border {
   border-right: 4px solid #00C26C !important;
 }
+
+/* event filter */
+#activity-suggestions {
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#activity-suggestions li {
+  cursor: pointer;
+}
+
+#activity-suggestions li:hover {
+  background-color: #03dac6;
+  color: #fff;
+}

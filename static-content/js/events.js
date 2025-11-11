@@ -15,7 +15,13 @@ $(document).ready(function() {
           document.getElementById('events-hero-btn').addEventListener('click', () => {
             window.location.href = '/event-edit';
           });
-          loadPublicEvents(data.user);
+
+          loadEvents(data.user)
+            .then((events) => {
+              console.log("Events loaded", events);
+              handleFilterUI(events);
+            });
+
         } else {
             // User is not logged in, display login/signup options
             document.getElementById('login-btn').classList.remove('d-none');
@@ -31,39 +37,6 @@ $(document).ready(function() {
       });
 });
 
-function getEvents() {
-  fetch('/getEvents')
-    .then(response => response.json())
-    .then(events => {
-      const eventsContainer = document.getElementById('events-container');
-      eventsContainer.innerHTML = ''; // Clear previous events
-
-      events.forEach((event, index) => {
-        const eventBox = document.createElement('div');
-        eventBox.className = 'event-box';
-
-        eventBox.innerHTML = `
-          <h3>${event.title}</h3>
-          <p><strong>Date:</strong> ${event.date}</p>
-          <p><strong>Sport:</strong> ${event.sport}</p>
-          <p><strong>Price:</strong> ${event.price}</p>
-          <button class="btn btn-secondary edit-event-btn" data-index="${index}">Edit</button>
-        `;
-
-        eventsContainer.appendChild(eventBox);
-      });
-
-      // Add click handlers for edit buttons
-      document.querySelectorAll('.edit-event-btn').forEach(button => {
-        button.addEventListener('click', function () {
-          const eventIndex = this.getAttribute('data-index');
-          window.location.href = `/event-edit?id=${eventIndex}`;
-        });
-      });
-    })
-    .catch(error => console.error('Error fetching events:', error));
-}
-
 
 document.addEventListener('DOMContentLoaded', () => {
   bindLogoutBtn();
@@ -71,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function loadPublicEvents(loggedInUser) {
-  fetch('/getEvents')
+function loadEvents(loggedInUser) {
+  return fetch('/getEvents')
     .then(res => res.json())
     .then(events => {
       const myEventsContainer = document.getElementById('events-container');
@@ -244,6 +217,7 @@ function loadPublicEvents(loggedInUser) {
           publicEventsContainer.appendChild(card);
         });
       }
+      return events;
     })
     .catch(err => {
       console.error('Failed to load events:', err);
@@ -253,6 +227,108 @@ function loadPublicEvents(loggedInUser) {
 function formatDate(dateStr) {
   const date = new Date(dateStr);
   return date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+
+// function renderFilteredEvents(events) {
+//   const container = document.getElementById('public-events-container');
+//   container.innerHTML = '';
+//   if (events.length === 0) {
+//     container.innerHTML = '<p class="text-muted mt-3">No events match your filters.</p>';
+//     return;
+//   }
+//   events.forEach(event => {
+//     const card = document.createElement('div');
+//     card.className = 'col-md-6';
+//     card.innerHTML = `
+//       <div class="event-card shadow-sm p-3 mb-3 rounded d-flex justify-content-between align-items-center h-100">
+//         <div class="d-flex flex-column align-items-start">
+//           <h4 class="text-teal mb-2">${event.title}</h4>
+//           <p class="mb-1 text-muted">
+//             <strong>${new Date(event.date).toLocaleDateString()}</strong> • ${event.time || ''}
+//           </p>
+//           <p class="mb-1">
+//             <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+//           </p>
+//           <p class="mb-1">
+//             <i class="bi bi-dribbble text-teal"></i> ${event.activity}
+//           </p>
+//         </div>
+//         <div class="text-end">
+//           <div class="event-capacity fw-semibold mb-1 fs-5">
+//             <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+//           </div>
+//           <div class="event-price mb-2">
+//             <span class="badge bg-teal text-white fs-6">
+//               ${event.isFree ? "Free" : `$${parseFloat(event.price).toFixed(2)}`}
+//             </span>
+//           </div>
+//           <button class="btn-view-event fs-5" onclick="window.location.href='/event?id=${event.id}'">View</button>
+//         </div>
+//       </div>`;
+//     container.appendChild(card);
+//   });
+// }
+
+
+function handleFilterUI(allEvents) {
+  const activityInput = document.getElementById('filter-activity');
+  const suggestionsList = document.getElementById('activity-suggestions');
+  const applyBtn = document.getElementById('apply-filters-btn');
+  const clearBtn = document.getElementById('clear-filters-btn');
+
+  // #region code for activity autocomplete
+  const activityOptions = ["Soccer", "Basketball", "Volleyball", "Tennis", "Hockey", "Baseball", "Running", "Pickleball"];
+
+  activityInput.addEventListener('input', () => {
+    const inputValue = activityInput.value.toLowerCase();
+    suggestionsList.innerHTML = ''; // Clear old suggestions
+
+    if (inputValue.length === 0) return;
+
+    suggestionsList.classList.remove('d-none');
+    const filteredActivities = activityOptions.filter(a => a.toLowerCase().includes(inputValue));
+
+    filteredActivities.forEach(activity => {
+      const li = document.createElement('li');
+      li.textContent = activity;
+      li.classList.add('list-group-item', 'list-group-item-action');
+      li.style.cursor = 'pointer';
+      li.addEventListener('click', () => {
+        activityInput.value = activity;
+        suggestionsList.innerHTML = '';
+      });
+      suggestionsList.appendChild(li);
+    });
+  });
+
+  // #endregion
+  
+  // Apply filters
+  // applyBtn.addEventListener('click', () => {
+  //   const filters = {
+  //     activity: activityInput.value.trim().toLowerCase(),
+  //     level: document.getElementById('filter-level').value,
+  //     minPrice: parseFloat(document.getElementById('filter-price-min').value) || 0,
+  //     maxPrice: parseFloat(document.getElementById('filter-price-max').value) || Infinity,
+  //     minSpots: parseInt(document.getElementById('filter-spots').value) || 0,
+  //     sortBy: document.querySelector('input[name="sortOption"]:checked')?.value
+  //   };
+
+  //   const filtered = allEvents
+  //     .filter(e => (!filters.activity || e.activity.toLowerCase().includes(filters.activity)))
+  //     .filter(e => (!filters.level || e.level === filters.level))
+  //     .filter(e => (e.price >= filters.minPrice && e.price <= filters.maxPrice))
+  //     .filter(e => ((e.maxParticipants - (e.currentParticipants || 0)) >= filters.minSpots));
+
+  //   if (filters.sortBy === 'date') {
+  //     filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+  //   } else if (filters.sortBy === 'price') {
+  //     filtered.sort((a, b) => a.price - b.price);
+  //   }
+
+  //   renderFilteredEvents(filtered);
+  // });
 }
 
 
