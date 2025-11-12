@@ -18,9 +18,9 @@ $(document).ready(function() {
 
           loadEvents(data.user)
             .then((events) => {
-              let publicEvents = events.filter(event => event.userId != data.user.id);
-              console.log("Events loaded", publicEvents);
-
+              let publicEvents = events.filter(event => event.userId != data.user.id &&
+                (!Array.isArray(event.usersJoined) || !event.usersJoined.includes(data.user.id))
+              );
               handleFilterUI(publicEvents);
             });
 
@@ -59,7 +59,10 @@ function loadEvents(loggedInUser) {
       
 
       const myEvents = events.filter(event => event.userId == loggedInUser.id);
-      const publicEvents = events.filter(event => event.userId != loggedInUser.id);
+      // events the user has NOT joined and did not create
+      const publicEvents = events.filter(event => event.userId != loggedInUser.id &&
+        (!Array.isArray(event.usersJoined) || !event.usersJoined.includes(loggedInUser.id))
+      );
       const joinedEvents = events.filter(event => Array.isArray(event.usersJoined) && event.usersJoined.includes(loggedInUser.id));
       if (myEvents.length === 0) {
         myEventsContainer.innerHTML = '<p>You have not created any events yet.</p>';

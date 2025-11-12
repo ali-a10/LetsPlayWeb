@@ -93,14 +93,17 @@
             </div>
 
             <!-- Collapsible Content -->
-            <div class="collapse" id="filter-collapse">
+            
+          </div>
+        </div>
+        <div class="collapse mb-4" id="filter-collapse">
               <div class="card-body">
                 <div class="row g-3 align-items-end">
 
                   <!-- Sort By -->
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                     <label class="form-label fw-semibold">Sort By</label>
-                    <div class="d-flex flex-wrap gap-3">
+                    <div class="d-flex flex-wrap gap-1">
                       <div class="form-check">
                         <input class="form-check-input" type="radio" name="sortOption" id="sort-date" value="date">
                         <label class="form-check-label" for="sort-date">Soonest Date</label>
@@ -131,7 +134,7 @@
                   </div>
 
                   <!-- Price Range -->
-                  <div class="col-md-2">
+                  <div class="col-md-3">
                     <label class="form-label fw-semibold">Price Range ($)</label>
                     <div class="d-flex gap-2">
                       <input type="number" class="form-control" id="filter-price-min" placeholder="Min">
@@ -147,8 +150,8 @@
 
                   <!-- Buttons -->
                   <div class="col-md-12 d-flex justify-content-end mt-3">
-                    <button id="apply-filters-btn" class="btn btn-primary px-4 rounded-3">
-                      <i class="bi bi-funnel"></i> Apply Filters
+                    <button id="apply-filters-btn" class="btn btn-secondary px-4 rounded-3">
+                      <i class="bi bi-funnel"></i> Apply
                     </button>
                     <button id="clear-filters-btn" class="btn btn-outline-secondary ms-2 px-4 rounded-3">
                       <i class="bi bi-x-circle"></i> Clear
@@ -157,8 +160,6 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
         <div id="public-events-container" class="row g-4"></div>
       </div>
     </div>
