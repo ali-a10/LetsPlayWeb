@@ -342,6 +342,18 @@ function handleFilterUI(publicEvents) {
   });
 
   // #endregion
+
+  // #region Clear filters
+  clearBtn.addEventListener('click', () => {
+    activityInput.value = '';
+    document.getElementById('filter-level').value = '';
+    document.getElementById('filter-price-min').value = '';
+    document.getElementById('filter-price-max').value = '';
+    document.getElementById('filter-spots').value = '';
+    document.querySelectorAll('input[name="sortOption"]').forEach(radio => radio.checked = false);
+    renderFilteredEvents(publicEvents);
+  });
+  // #endregion
 }
 
 
