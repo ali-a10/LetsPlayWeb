@@ -12,7 +12,7 @@ body {
 
 /* Hero */
 .hero {
-  background-color: #003b46;
+  background-color: #00475a;
   color: white;
   padding: 2rem;
 }
@@ -63,8 +63,8 @@ body {
 
 /* buttons */
 .cta-btn {
-  background-color: #03dac6;
-  color: #003b46;
+  background-color: #00cece;
+  color: #00475a;
   font-weight: bold;
   border: none;
   padding: 0.5rem 1rem;
@@ -73,8 +73,8 @@ body {
 }
 
 .cta-btn:hover {
-  background-color: #00C26C;
-  color: #003b46;
+  background-color: #0ed385;
+  color: #00475a;
   transform: scale(1.05);
 }
 
@@ -175,7 +175,7 @@ body {
 
 /* CTA Banner */
 .cta-banner {
-  background-color: #003b46;
+  background-color: #00475a;
   color: white;
   text-align: center;
   padding: 3rem 2rem;
@@ -188,7 +188,7 @@ body {
 .main-section {
   background-color: #f9f9f9;
   border-radius: 1rem;
-  border: 0.25rem solid #003b46;
+  border: 0.25rem solid #00475a;
   padding: 3rem 2rem;
   margin: 2rem auto;
   max-width: 1000px;
@@ -198,7 +198,7 @@ body {
 h2 {
   text-align: left;
   margin-bottom: 2rem;
-  color: #003b46;
+  color: #00475a;
 }
 
 .text-teal {
@@ -254,7 +254,7 @@ h2 {
 .btn-view-event:hover {
   background-color: #009688;
   color: white;
-  /* border: 1px solid #003b46; */
+  /* border: 1px solid #00475a; */
   border-radius: 0.25rem;
   padding: 0.15rem 0.75rem;
 }
