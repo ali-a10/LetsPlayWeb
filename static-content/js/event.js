@@ -39,6 +39,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                         document.getElementById('event-level').innerText = event.level || 'All levels';
                         document.getElementById('event-currentParticipants').innerText = event.currentParticipants;
                         document.getElementById('event-maxParticipants').innerText = event.maxParticipants || 'No limit';
+                        // fetch creator's name
+                        try {
+                            const userRes = await fetch(`/user/${event.userId}`);
+                            const userData = await userRes.json();
+                            if (userRes.ok && userData.user) {
+                                document.getElementById('event-creator-name').innerText = userData.user.username;
+                            } else {
+                                document.getElementById('event-creator-name').innerText = 'An error occurred';
+                            }
+                        } catch (err) {
+                            document.getElementById('event-creator-name').innerText = 'An error occurred';
+                        }
                     } catch (err) {
                         console.log('Error loading event:', err);
                     }

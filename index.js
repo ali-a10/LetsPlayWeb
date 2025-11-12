@@ -327,7 +327,6 @@ app.get('/user/:id', async (req, res) => {
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
-
     res.status(200).json({ success: true, user });
   } catch (error) {
     console.error('Error fetching user:', error);
