@@ -39,8 +39,8 @@
   </header>
 
   <section class="main-section">
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
-      <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%; border: 1px solid #003b46;">
+    <div class="container d-flex justify-content-center align-items-center">
+      <div class="p-4" style="max-width: 400px; width: 100%;">
         <h1 class="text-center" style="color: #003b46;">Welcome Back</h1>
         <p class="text-center" style="color: #1e1e1e;">Log in to access your account</p>
         <form id="login-form" class="mt-4">
@@ -52,11 +52,10 @@
             <label for="login-password" class="form-label" style="color: #003b46;">Password</label>
             <input type="password" id="login-password" name="password" class="form-control" placeholder="Enter your password" required>
           </div>
-        <p id="errorMessage" class="error-msg mt-3" style="display: none;"></p>
+        <p id="errorMessage" class="error-msg mt-3" style="color: red; display: none;"></p>
         <button type="submit" class="cta-btn w-100">Log in</button>
         </form>
         <p class="text-center mt-3" style="color: #1e1e1e;">Don't have an account? <a href="/account/create" class="text-teal">Sign up</a></p>
-      </div>
     </div>
   </section>
 
