@@ -39,7 +39,7 @@
   </header>
 
   <section class="container my-5 main-section">
-    <h2 class="mb-4 text-center">My Account</h2>
+    <h2 id="page-title" class="mb-4 text-center"></h2>
     <form id="account-form" enctype="multipart/form-data" class="p-4">
       
       <!-- Username and Email -->
@@ -47,10 +47,12 @@
         <div class="col-md-6">
           <label for="username" class="form-label">Username</label>
           <input type="text" id="username" class="form-control" required>
+          <label class="form-label d-none" id="username-label"></label>
         </div>
         <div class="col-md-6">
           <label for="email" class="form-label">Email</label>
           <input type="email" id="email" class="form-control" required>
+          <label class="form-label d-none" id="email-label"></label>
         </div>
       </div>
   
@@ -74,7 +76,7 @@
   
       <!-- Gender -->
       <div class="mb-3">
-        <label class="form-label">Gender</label>
+        <label class="form-label" id="gender">Gender</label>
         <div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male">
@@ -85,6 +87,7 @@
             <label class="form-check-label" for="genderFemale">Female</label>
           </div>
         </div>
+        <label class="form-label d-none" id="gender-label"></label>
       </div>
   
       <!-- Favorite Sports -->
@@ -104,6 +107,7 @@
       <div class="mb-3">
         <label for="about" class="form-label">About Me (optional)</label>
         <textarea id="about" class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
+        <label class="form-label d-none" id="about-label"></label>
       </div>
   
       <!-- Profile Picture -->

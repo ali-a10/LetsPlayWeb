@@ -1,5 +1,8 @@
 - if login credentials are wrong, no message is shown
 
+- have a user profile screen (can be accessed through the 'created by')
+    through each event view
+
 - test the failure cases (where errors are thrown)
 
 - might want to improve when user doesnt fill out a required field

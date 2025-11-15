@@ -19,14 +19,57 @@ if (window.location.pathname.includes('/account')) {
         // Check if we're in "create" or "edit" mode based on the current page URL
         const path = window.location.pathname;
         const isSignUpMode = path.includes('create');  // Check if URL contains 'create'
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user');
+        const isViewMode = userId !== null;
+
+        console.log(path, isSignUpMode, isViewMode, urlParams, urlParams.get('user'));
         // Update page elements based on the mode
         
         if (isSignUpMode) {
           // document.getElementById('signup-btns');
           // document.getElementById('save-btns').classList;
           document.getElementById('account-form').addEventListener('submit', signup);
-        } 
+          document.getElementById('page-title').innerText = 'Create an Account';
+        }
+        else if (isViewMode) {
+          // Viewing another user's profile
+          document.getElementById('page-title').innerText = 'User Profile';
+          console.log("viewing user id: ", userId);
+          getUser(userId)
+            .done(function(data, textStatus, jqXHR) {
+              const user = data.user;
+              const allowedFields = ['username', 'favoriteSports', 'about']
+              Object.keys(user).forEach(key => {
+                const inputElement = document.getElementById(key); 
+                if (inputElement) {
+                  if (allowedFields.includes(key)) {
+                    if (inputElement) {
+                      inputElement.value = user[key];
+                      inputElement.disabled = true; // disable the input field
+                    }
+                  } else {
+                    // hide the element
+                    console.log("hiding element for key: ", inputElement, key);
+                    inputElement.parentElement.classList.add('d-none');
+                  }
+
+                }
+                
+              });
+              // Hide signup and save buttons
+              document.getElementById('signup-btns').classList.add('d-none');
+              document.getElementById('save-btns').classList.add('d-none');
+            })
+            .fail(function(err) {
+              console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+            });
+
+          
+        }
         else {
+          // Editing own profile
+          document.getElementById('page-title').innerText = 'My Account';
 
           getUser(data.user.id)
             .done(function(data, textStatus, jqXHR) {

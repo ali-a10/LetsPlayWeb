@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const userData = await userRes.json();
                             if (userRes.ok && userData.user) {
                                 document.getElementById('event-creator-name').innerText = userData.user.username;
+                                // link to creator's account page
+                                document.getElementById('event-creator-name').href = `/account?user=${userData.user.id}`;
                             } else {
                                 document.getElementById('event-creator-name').innerText = 'An error occurred';
                             }
