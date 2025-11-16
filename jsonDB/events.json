@@ -28,7 +28,7 @@
     "location": "a",
     "activity": "Soccer",
     "isFree": true,
-    "price": null,
+    "price": "",
     "currentParticipants": "1",
     "maxParticipants": "14",
     "ageGroup": "",

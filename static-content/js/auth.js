@@ -433,7 +433,7 @@ function getUser(id) {
 // helper for popup when account info is updated (or failed to update)
 export function showPopup(message, isSuccess) {
   const popup = document.getElementById('notification-popup');
-  popup.textContent = message;
+  popup.innerHTML = "<p class='text-center fs-5 m-0 p-3 text-light'>" + message + "</p>";
   popup.style.backgroundColor = isSuccess ? '#28a745' : '#dc3545'; // Green or red
   popup.style.display = 'block';
 
