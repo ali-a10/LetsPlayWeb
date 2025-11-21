@@ -44,36 +44,109 @@
     <div id="error-div" class="text-center mb-5 d-none">
       <h2 class="fw-bold text-white">An error has occurred</h2>
     </div>
-    <div id="event-details" class="card shadow-lg border-0 p-4 rounded-4 container-fluid">
-      <h2 id="event-title" class="fw-bold mb-3"></h2>
-      <p id="event-description" class="text-muted mb-4"></p>
+    <!-- <div id="event-details" class="card shadow-lg border-0 p-4 rounded-4 container-fluid">
+      <h2 id="event-title1" class="fw-bold mb-3"></h2>
+      <p id="event-description1" class="text-muted mb-4"></p>
 
       <div class="row g-3">
-        <div class="col-md-6"><strong>Date:</strong> <span id="event-date"></span></div>
-        <div class="col-md-6"><strong>Time:</strong> <span id="event-time"></span></div>
-        <div class="col-md-6"><strong>Location:</strong> <span id="event-location"></span></div>
-        <div class="col-md-6"><strong>Activity:</strong> <span id="event-activity"></span></div>
-        <div class="col-md-6"><strong>Price:</strong> <span id="event-price"></span></div>
-        <div class="col-md-6"><strong>Age Group:</strong> <span id="event-ageGroup"></span></div>
-        <div class="col-md-6"><strong>Level:</strong> <span id="event-level"></span></div>
+        <div class="col-md-6"><strong>Date:</strong> <span id="event-date1"></span></div>
+        <div class="col-md-6"><strong>Time:</strong> <span id="event-time1"></span></div>
+        <div class="col-md-6"><strong>Location:</strong> <span id="event-location1"></span></div>
+        <div class="col-md-6"><strong>Activity:</strong> <span id="event-activity1"></span></div>
+        <div class="col-md-6"><strong>Price:</strong> <span id="event-price1"></span></div>
+        <div class="col-md-6"><strong>Age Group:</strong> <span id="event-ageGroup1"></span></div>
+        <div class="col-md-6"><strong>Level:</strong> <span id="event-level1"></span></div>
         <div class="col-md-6"><strong>Participants:</strong>
-          <span id="event-currentParticipants"></span> /
-          <span id="event-maxParticipants"></span>
+          <span id="event-currentParticipants1"></span> /
+          <span id="event-maxParticipants1"></span>
         </div>
       </div>
 
-      <!-- created by section -->
       <div class="text-center mt-4">
         <p class="text-muted">
-          Created by <a id="event-creator-name" class="fw-bold"></a>
+          Created by </a>
         </p>
       </div>
 
-      <div class="text-center">
+      
+
+    </div> -->
+
+
+    <div class="event-container" id="event-details">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h1 class="event-title" id="event-title">Event Title</h1>
+    
+        <!-- Host Info -->
+        <div class="host-profile me-5">
+          <div class="host-pfp"></div>
+          <div>
+            <h5 id="event-hostname">Hosted by <a id="event-creator-name" class="fw-bold"></a></h5>
+            <span class="text-muted">⭐ 4.8 rating</span>
+          </div>
+        </div>
+      </div>
+  
+       <!-- DESCRIPTION -->
+       <div class="mt-4 event-box">
+        <h5>Description</h5>
+        <p class="fs-5" id="event-description"></p>
+      </div>
+      <p>could remove the box and 'description' title from here and see how that looks (just the description text</p>
+  
+      <!-- EVENT DETAILS GRID -->
+      <div class="event-grid">
+  
+        <div class="event-box">
+          <h5>Activity</h5>
+          <p class="fs-5" id="event-activity"></p>
+        </div>
+  
+        <div class="event-box">
+          <h5>Date</h5>
+          <p class="fs-5" id="event-date"></p>
+        </div>
+  
+        <div class="event-box">
+          <h5>Time</h5>
+          <p class="fs-5" id="event-time"></p>
+        </div>
+  
+        <div class="event-box">
+          <h5>Location</h5>
+          <p class="fs-5" id="event-location"></p>
+        </div>
+  
+        <div class="event-box">
+          <h5>Price</h5>
+          <p class="fs-5" id="event-price"></p>
+        </div>
+  
+        <div class="event-box">
+          <h5>Age Group</h5>
+          <p class="fs-5" id="event-ageGroup"></p>
+        </div>
+  
+        <div class="event-box">
+          <h5>Skill Level</h5>
+          <p class="fs-5" id="event-level"></p>
+        </div>
+  
+        <div class="event-box">
+          <h5>Spots Left</h5>
+          <p class="fs-5"><span id="event-currentParticipants"></span>/<span id="event-maxParticipants"></span></p>
+        </div>
+  
+      </div>
+  
+      <!-- ORIGINAL BUTTONS -->
+      <!-- <div class="text-center">
         <button id="join-event-btn" class="cta-btn btn-lg px-4 py-2 shadow-sm mt-4">
           Join Event
         </button>
-      </div>
+      </div> -->
 
       <div class="text-center">
         <button id="leave-event-btn" class="d-none mt-4 red-btn btn-lg px-4 py-2 shadow-sm text-white">
@@ -83,12 +156,15 @@
         
       <div id="notification-popup" class="mt-2"></div>
 
-    </div>
 
-    <div class="text-center mt-4">
-      <button class="btn btn-outline-secondary" onclick="window.location.href='/events'">
-        ← Back to Events
-      </button>
+      <!-- JOIN BUTTON -->
+      <button id="join-event-btn" class="join-btn">Join Event</button>
+  
+      <div class="text-center mt-4">
+        <button class="btn btn-outline-secondary" onclick="window.location.href='/events'">
+          ← Back to Events
+        </button>
+      </div>  
     </div>
   </main>
 

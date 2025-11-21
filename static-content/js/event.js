@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         if (Array.isArray(event.usersJoined) && event.usersJoined.includes(data.user.id)) {
                             document.getElementById('join-event-btn').classList.add('d-none');
                             document.getElementById('leave-event-btn').classList.remove('d-none');
+                            document.getElementById('event-details').classList.add('event-joined-page');
                         }
-            
                         document.getElementById('event-title').innerText = event.title;
                         document.getElementById('event-description').innerText = event.description;
                         document.getElementById('event-date').innerText = event.date;
@@ -53,6 +53,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                         } catch (err) {
                             document.getElementById('event-creator-name').innerText = 'An error occurred';
                         }
+                        document.getElementById('event-title1').innerText = event.title;
+                        document.getElementById('event-description1').innerText = event.description;
+                        document.getElementById('event-date1').innerText = event.date;
+                        document.getElementById('event-time1').innerText = event.time;
+                        document.getElementById('event-location1').innerText = event.location;
+                        document.getElementById('event-activity1').innerText = event.activity;
+                        document.getElementById('event-price1').innerText = event.isFree === true ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`;
+                        document.getElementById('event-ageGroup1').innerText = event.ageGroup || '-';
+                        document.getElementById('event-level1').innerText = event.level || 'All levels';
+                        document.getElementById('event-currentParticipants1').innerText = event.currentParticipants;
+                        document.getElementById('event-maxParticipants1').innerText = event.maxParticipants || 'No limit';
                     } catch (err) {
                         console.log('Error loading event:', err);
                     }

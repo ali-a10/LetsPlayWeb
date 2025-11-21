@@ -28,5 +28,24 @@
     "dob": "2025-10-01",
     "eventsCreated": [],
     "eventsJoined": []
+  },
+  {
+    "id": 3,
+    "username": "karim",
+    "email": "asdasd@yahoo.com",
+    "password": "abcdefg",
+    "phone": "812081280",
+    "gender": "Male",
+    "favoriteSports": [
+      "Soccer",
+      "Basketball",
+      "Volleyball"
+    ],
+    "about": "",
+    "dob": "2025-11-20",
+    "eventsCreated": [],
+    "eventsJoined": [
+      1
+    ]
   }
 ]

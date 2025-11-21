@@ -291,3 +291,88 @@ h2 {
   background-color: #03dac6;
   color: #fff;
 }
+
+.event-container {
+  max-width: 850px;
+  margin: 3rem auto;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  color: #0a1a2f;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+  border-left: 10px solid #009688;
+  border-right: 10px solid #03dac6;
+}
+
+.event-joined-page {
+  border-left: 10px solid #00C26C !important;
+  border-right: 10px solid #00C26C !important;
+}
+
+.event-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.event-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.event-box {
+  background: #f7f9fc;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border: 2px solid #dce3e8;
+}
+
+.event-box h5 {
+  margin-bottom: 0.5rem;
+  color: #0a1a2f;
+  font-weight: 700;
+}
+
+.join-btn {
+  margin-top: 2rem;
+  width: 100%;
+  background: #03dac6;
+  color: #003840;
+  font-size: 1.25rem;
+  padding: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.7rem;
+  transition: 0.15s ease-in-out;
+}
+
+.join-btn:hover {
+  background: #00c4b0;
+}
+
+.back-link {
+  margin-top: 1.5rem;
+  display: inline-block;
+  color: #03dac6;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  color: #10ffdd;
+}
+
+.host-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.host-pfp {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #03dac6;
+  border: 3px solid white;
+}
