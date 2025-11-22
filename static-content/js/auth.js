@@ -83,6 +83,16 @@ if (window.location.pathname.includes('/account')) {
                     }
                   });
                 }
+                else if (key === 'favoriteSports') {
+                  // set multiple select options
+                  const favoriteSports = document.getElementById('activitySuggestions');
+                  console.log(favoriteSports);
+
+                  // iterate through the user's favorite sports
+                  user[key].forEach(sport => {
+                    addActivity(sport);  // add chip
+                  });
+                }
                 else {
                   const element = document.getElementById(key);
                   if (element) {
@@ -329,16 +339,26 @@ function editProfile(event) {
         })
         .done(function(data, textStatus, jqXHR) {
           // Collect form fields
-          const fields = ['email', 'username', 'password', 'phone', 'dob', 'gender', 'about'];
+          const fields = ['email', 'username', 'password', 'phone', 'dob', 'gender', 'favoriteSports', 'about'];
           const fieldsToUpdate = {};
           let updateNeeded = false;
 
           for (const field of fields) {
-            console.log("testingggggggg : ", data.user[field]);
-            let newValue = null;
+            let newValue = null;  // this i used to check if there are new updates made to the user fields upon clicking asve
             if (field === 'gender') {
               newValue = document.querySelector('input[name="gender"]:checked')?.value || '';
               console.log(`Type of ${field}:`, typeof document.querySelector('input[name="gender"]:checked')?.value);
+            }
+            else if (field === 'favoriteSports') {
+              // get all divs inside selectedActivities
+              const selectedDivs = document.getElementById('selectedActivities').children;
+              const selectedSports = [];
+              for (const div of selectedDivs) {
+                // get the text content without the 'x' character
+                selectedSports.push(div.textContent.slice(0, -1).trim());
+              }
+              console.log("selected sports: ", selectedSports, data.user[field]);
+              newValue = selectedSports
             }
             else {
               newValue = document.getElementById(field).value.trim();
@@ -443,8 +463,8 @@ export function showPopup(message, isSuccess) {
 }
 
 
-// Containers
-const activityInput = document.getElementById("activity");
+// code for the autocomplete multiple select for activities/sports
+const activityInput = document.getElementById("favoriteSports");
 const suggestionsList = document.getElementById("activitySuggestions");
 const selectedContainer = document.getElementById("selectedActivities");
 
@@ -457,32 +477,34 @@ const activityOptions = [
 let selectedActivities = [];
 
 // AUTOCOMPLETE
-activityInput.addEventListener("input", () => {
-  const inputValue = activityInput.value.toLowerCase();
-  suggestionsList.innerHTML = "";
-
-  if (!inputValue) return;
-
-  const filtered = activityOptions.filter(sport =>
-    sport.toLowerCase().includes(inputValue) &&
-    !selectedActivities.includes(sport) // don’t show ones already selected
-  );
-
-  filtered.forEach(activity => {
-    const li = document.createElement("li");
-    li.textContent = activity;
-    li.classList.add("list-group-item", "list-group-item-action");
-    li.style.cursor = "pointer";
-
-    li.addEventListener("click", () => {
-      addActivity(activity);
-      activityInput.value = "";
-      suggestionsList.innerHTML = "";
+if (activityInput) {
+  activityInput.addEventListener("input", () => {
+    const inputValue = activityInput.value.toLowerCase();
+    suggestionsList.innerHTML = "";
+  
+    if (!inputValue) return;
+  
+    const filtered = activityOptions.filter(sport =>
+      sport.toLowerCase().includes(inputValue) &&
+      !selectedActivities.includes(sport) // don’t show ones already selected
+    );
+  
+    filtered.forEach(activity => {
+      const li = document.createElement("li");
+      li.textContent = activity;
+      li.classList.add("list-group-item", "list-group-item-action");
+      li.style.cursor = "pointer";
+  
+      li.addEventListener("click", () => {
+        addActivity(activity);
+        activityInput.value = "";
+        suggestionsList.innerHTML = "";
+      });
+  
+      suggestionsList.appendChild(li);
     });
-
-    suggestionsList.appendChild(li);
-  });
-});
+  });  
+}
 
 // ADD CHIP
 function addActivity(activity) {

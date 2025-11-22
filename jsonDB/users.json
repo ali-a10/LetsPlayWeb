@@ -7,10 +7,11 @@
     "phone": "6471234567",
     "gender": "Male",
     "favoriteSports": [
-      "Soccer"
+      "Soccer",
+      "Basketball"
     ],
     "about": "",
-    "dob": "2025-10-21",
+    "dob": "2025-10-20",
     "eventsCreated": [],
     "eventsJoined": []
   },
