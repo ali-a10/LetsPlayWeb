@@ -92,17 +92,20 @@
       </div>
   
       <!-- Favorite Sports -->
+      <!-- Favorite Sports -->
       <div class="mb-3">
-        <label class="form-label">Favorite Sports (select at least one)</label>
-        <select id="favoriteSports" class="form-select" multiple required>
-          <option>Soccer</option>
-          <option>Basketball</option>
-          <option>Volleyball</option>
-          <option>Tennis</option>
-          <option>Running</option>
-        </select>
-        <small class="text-muted">Hold Ctrl (Windows) or Command (Mac) to select multiple</small>
+        <label for="activity" class="form-label">Activity</label>
+
+        <!-- Selected activity chips will go here -->
+        <div id="selectedActivities" class="d-flex flex-wrap gap-2 mb-2"></div>
+
+        <input type="text" id="activity" name="activity" 
+              class="form-control" placeholder="Type a sport or activity..."
+              autocomplete="off">
+
+        <ul id="activitySuggestions" class="list-group mt-1"></ul>
       </div>
+
   
       <!-- About Me -->
       <div class="mb-3">
@@ -129,7 +132,7 @@
 
       <!-- Error message container -->
       <p id="accountErrorMessage" style="color: red; display: none;"></p>
-      <div id="notification-popup" class="popup"></div>
+      <div id="notification-popup" class="popup rounded"></div>
 
     </form>
   </section>

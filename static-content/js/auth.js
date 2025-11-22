@@ -441,3 +441,79 @@ export function showPopup(message, isSuccess) {
     popup.style.display = 'none';
   }, 3000);
 }
+
+
+// Containers
+const activityInput = document.getElementById("activity");
+const suggestionsList = document.getElementById("activitySuggestions");
+const selectedContainer = document.getElementById("selectedActivities");
+
+const activityOptions = [
+  "Soccer", "Basketball", "Volleyball", "Tennis",
+  "Hockey", "Baseball", "Running", "Pickleball"
+];
+
+// Will store chosen activities
+let selectedActivities = [];
+
+// AUTOCOMPLETE
+activityInput.addEventListener("input", () => {
+  const inputValue = activityInput.value.toLowerCase();
+  suggestionsList.innerHTML = "";
+
+  if (!inputValue) return;
+
+  const filtered = activityOptions.filter(sport =>
+    sport.toLowerCase().includes(inputValue) &&
+    !selectedActivities.includes(sport) // don’t show ones already selected
+  );
+
+  filtered.forEach(activity => {
+    const li = document.createElement("li");
+    li.textContent = activity;
+    li.classList.add("list-group-item", "list-group-item-action");
+    li.style.cursor = "pointer";
+
+    li.addEventListener("click", () => {
+      addActivity(activity);
+      activityInput.value = "";
+      suggestionsList.innerHTML = "";
+    });
+
+    suggestionsList.appendChild(li);
+  });
+});
+
+// ADD CHIP
+function addActivity(activity) {
+  selectedActivities.push(activity);
+
+  // Create the chip
+  const chip = document.createElement("div");
+  chip.classList.add("badge", "bg-white", "text-dark", "border", "fs-6");
+  chip.style.padding = "0.5rem 0.75rem";
+  chip.style.display = "flex";
+  chip.style.alignItems = "center";
+  chip.style.gap = "0.5rem";
+
+  chip.textContent = activity;
+
+  // Add small X button
+  const removeBtn = document.createElement("span");
+  removeBtn.textContent = "×";
+  removeBtn.style.cursor = "pointer";
+  removeBtn.style.fontWeight = "bold";
+
+  removeBtn.addEventListener("click", () => {
+    removeActivity(activity, chip);
+  });
+
+  chip.appendChild(removeBtn);
+  selectedContainer.appendChild(chip);
+}
+
+// REMOVE CHIP
+function removeActivity(activity, chipElement) {
+  selectedActivities = selectedActivities.filter(a => a !== activity);
+  chipElement.remove();
+}
