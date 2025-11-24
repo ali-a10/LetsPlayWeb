@@ -8,6 +8,17 @@ CODE NOTES:
 _______________________________________________________________________________________
 WEBSITE NOTES:
 
+all available URLs:
+- /
+- /about
+- /events
+- /login
+- /account/create
+- /account/edit
+- /event-edit --create event
+- /event-edit?id=X -- edit event
+- /event?id=X -- view event
+- /account?user=X -- view another user
 
 nav bar:
     (logged out)
