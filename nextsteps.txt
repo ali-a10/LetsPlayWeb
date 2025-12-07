@@ -1,3 +1,8 @@
+- functionality for when the event date passes
+
+- add to every user's page (both 'my account' and when viewing another user):
+    - past events
+
 - add the new autocomplete multiple sports feature to sign up page
 
 - test the failure cases (where errors are thrown)

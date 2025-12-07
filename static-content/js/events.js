@@ -69,7 +69,13 @@ function loadEvents(loggedInUser) {
       }
       else {
         // load my events
-        myEvents.forEach((event, index) => {
+        let numOfMyEvents = 0;
+        myEvents.forEach(event => {
+          // continue if event date has passed
+          if (new Date(event.date) < new Date()) {
+            return;
+          }
+          numOfMyEvents++;
           const card = document.createElement('div');
           // card.className = 'event-card';
 
@@ -113,6 +119,9 @@ function loadEvents(loggedInUser) {
 
           myEventsContainer.appendChild(card);
         });
+        if (numOfMyEvents === 0) {
+          myEventsContainer.innerHTML = '<p>You have not created any events yet.</p>';
+        }
       }
       // Add click handlers for edit buttons
       // document.querySelectorAll('.edit-event-btn').forEach(button => {
@@ -127,7 +136,12 @@ function loadEvents(loggedInUser) {
       }
       else {
         // load public events
+        let numOfJoinedEvents = 0;
         joinedEvents.forEach(event => {
+          if (new Date(event.date) < new Date()) {
+            return;
+          }
+          numOfJoinedEvents++;
           const card = document.createElement('div');
           // card.className = 'event-card';
           card.innerHTML = `
@@ -170,6 +184,9 @@ function loadEvents(loggedInUser) {
 
           joinedEventsContainer.appendChild(card);
         });
+        if (numOfJoinedEvents === 0) {
+          joinedEventsContainer.innerHTML = '<p>You have not joined any events yet.</p>';
+        }
       }
 
 
@@ -178,7 +195,12 @@ function loadEvents(loggedInUser) {
       }
       else {
         // load public events
+        let numOfPublicEvents = 0;
         publicEvents.forEach(event => {
+          if (new Date(event.date) < new Date()) {
+            return;
+          }
+          numOfPublicEvents++;
           const card = document.createElement('div');
           // card.className = 'event-card';
           card.innerHTML = `
@@ -220,7 +242,11 @@ function loadEvents(loggedInUser) {
           `;
 
           publicEventsContainer.appendChild(card);
+          console.log("COntainter", publicEventsContainer);
         });
+        if (numOfPublicEvents === 0) {
+          publicEventsContainer.innerHTML = '<p>No public events available at the moment.</p>';
+        }
       }
       return events;
     })
