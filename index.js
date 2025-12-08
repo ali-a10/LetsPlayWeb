@@ -28,7 +28,7 @@ app.get('/account/:action', (req, res) => {
 
 
 //////////////// Signup & login ////////////////
-app.post('/signup', async (req, res) => {
+app.post('/submitSignup', async (req, res) => {
   try {
     const { username, email, password, phone, gender, favoriteSports, about, dob, profilePic } = req.body;
     let users = await getUsers();
@@ -343,6 +343,10 @@ app.get('/:page', (req, res) => {
   // if user isn't logged in, they shouldn't be able to access account.html
   if (page === 'account' && !req.session.user) {
     return res.redirect('login');
+  }
+
+  if (page === 'signup') {
+    return res.sendFile(__dirname + '/static-content/login.html');
   }
 
   // i still dk if we wanna move this to its own function:

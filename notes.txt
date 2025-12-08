@@ -13,7 +13,7 @@ all available URLs:
 - /about
 - /events
 - /login
-- /account/create
+- /signup
 - /account/edit
 - /event-edit --create event
 - /event-edit?id=X -- edit event
