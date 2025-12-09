@@ -11,6 +11,7 @@ $(document).ready(function () {
           document.getElementById('logout-btn').style.display = 'block';
           document.getElementById('myaccount-btn').style.display = 'block';
           user = data.user;
+          getPastEventsByUser(user.id);
       } else {
           // User is not logged in, display login/signup options
           document.getElementById('login-btn').style.display = 'block';
@@ -234,6 +235,36 @@ function getUser(id) {
     contentType: "application/json; charset=utf-8",
     dataType: "json"
   })
+}
+
+
+function getPastEventsByUser(userId) {
+  // get past events
+  $.ajax({
+    method: "GET",
+    url: `/pastevents/user/${userId}`,
+    processData: false,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json"
+  })
+  .done(function(data, textStatus, jqXHR) {
+    // populate past events section
+    console.log("Past events data: ", data);
+    let pastEventsContainer = document.getElementById('past-events-created-container');
+    data.pastEvents.forEach(event => {
+      let eventDiv = document.createElement('div');
+      eventDiv.classList.add('event-item', 'mb-3', 'p-3', 'border', 'rounded');
+      eventDiv.innerHTML = `
+        <h5>${event.title}</h5>
+        <p>${event.date} at ${event.time}</p>
+        <p>${event.location}</p>
+      `;
+      pastEventsContainer.appendChild(eventDiv);
+    });
+  })
+  .fail(function(err) {
+    console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+  });
 }
 
   

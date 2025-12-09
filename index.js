@@ -294,6 +294,52 @@ app.put('/leave', async (req, res) => {
 });
 
 
+// Get all past events for a user
+app.get('/pastevents/user/:userId', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+
+    // Load users + events
+    const users = await getUsers();
+    const events = await getEvents();
+
+    // Find the user
+    const user = users.find(u => u.id === userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    // Convert today to a comparable date (no time)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Get all events the user joined
+    const joinedEvents = events.filter(e => e.userId == userId);
+
+    // Filter ONLY past events
+    const pastEvents = joinedEvents.filter(e => {
+      const eventDate = new Date(e.date);
+      return eventDate < today;
+    });
+
+    return res.json({
+      success: true,
+      pastEvents
+    });
+
+  } catch (err) {
+    console.error("Error getting past events:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error retrieving past events"
+    });
+  }
+});
+
+
 //////////////// My Account page ////////////////
 app.put('/editProfile/:id', async (req, res) => {
   try {
