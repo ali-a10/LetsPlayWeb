@@ -152,23 +152,15 @@ async function signup(event) {
 
     const data = await response.json();
 
-    const messageBox = document.getElementById('accountErrorMessage');
-    messageBox.style.display = 'block';
-
     if (data.success) {
-      messageBox.textContent = 'Account created successfully! Redirecting...';
-      messageBox.style.color = 'green';
-      setTimeout(() => (window.location.href = '/'), 1500);
+      showPopup('Account created successfully! Redirecting...', data.success);
+      setTimeout(() => (window.location.href = '/'), 3000);
     } else {
-      messageBox.textContent = data.message || 'Sign up failed. Please try again.';
-      messageBox.style.color = 'red';
+      showPopup(data.message || 'Sign up failed. Please try again.', false);
     }
   } catch (err) {
     console.error('Error:', err);
-    const messageBox = document.getElementById('accountErrorMessage');
-    messageBox.textContent = 'An unexpected error occurred.';
-    messageBox.style.color = 'red';
-    messageBox.style.display = 'block';
+    showPopup('An unexpected error occurred.', false);
   }
 }
 
