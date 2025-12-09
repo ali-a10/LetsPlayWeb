@@ -20,21 +20,14 @@ $(document).ready(function () {
       
         // Check if we're in "create" or "edit" mode based on the current page URL
         const path = window.location.pathname;
-        const isSignUpMode = path.includes('create');  // Check if URL contains 'create'
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get('user');
         const isViewMode = userId !== null;
 
-        console.log(path, isSignUpMode, isViewMode, urlParams, urlParams.get('user'));
+        console.log(path, isViewMode, urlParams, urlParams.get('user'));
         // Update page elements based on the mode
         
-        if (isSignUpMode) {
-            // document.getElementById('signup-btns');
-            // document.getElementById('save-btns').classList;
-            document.getElementById('account-form').addEventListener('submit', signup);
-            document.getElementById('page-title').innerText = 'Create an Account';
-        }
-        else if (isViewMode) {
+        if (isViewMode) {
             // Viewing another user's profile
             document.getElementById('page-title').innerText = 'User Profile';
             console.log("viewing user id: ", userId);
@@ -103,10 +96,6 @@ $(document).ready(function () {
                 }
                 });
             });
-            
-
-            document.getElementById('signup-btns').classList.add('d-none');
-            document.getElementById('save-btns').classList.remove('d-none');
             document.getElementById('save-button').addEventListener('click', (event) => {
                 editProfile(event);  // when we get into this page, this is set once
                 // i.e it doesn't change until we refresh the page

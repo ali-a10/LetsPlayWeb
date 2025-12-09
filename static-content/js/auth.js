@@ -1,6 +1,5 @@
 if (window.location.pathname.includes('/signup')) {
-  document.getElementById('account-form').addEventListener('submit', signup);
-  document.getElementById('page-title').innerText = 'Create an Account';
+  document.getElementById('signup-form').addEventListener('submit', signup);
 }
 else if (window.location.pathname.includes('/login')) {
   document.getElementById('login-form').addEventListener('submit', login);
@@ -114,10 +113,15 @@ async function signup(event) {
   const phone = document.getElementById('phone').value.trim();
   const dob = document.getElementById('dob').value;
   const gender = document.querySelector('input[name="gender"]:checked')?.value || '';
-
+  console.log(document.getElementById('favoriteSports'));
   // Collect multiple select (Favorite Sports)
-  const favoriteSports = Array.from(document.getElementById('favoriteSports').selectedOptions)
-                              .map(option => option.value);
+  // get all divs inside selectedActivities
+  const selectedDivs = document.getElementById('selectedActivities').children;
+  const selectedSports = [];
+  for (const div of selectedDivs) {
+    // get the text content without the 'x' character
+    selectedSports.push(div.textContent.slice(0, -1).trim());
+  }
 
   const about = document.getElementById('about').value.trim();
   // const profilePicInput = document.getElementById('profilePic');

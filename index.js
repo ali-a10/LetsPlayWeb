@@ -345,10 +345,6 @@ app.get('/:page', (req, res) => {
     return res.redirect('login');
   }
 
-  if (page === 'signup') {
-    return res.sendFile(__dirname + '/static-content/login.html');
-  }
-
   // i still dk if we wanna move this to its own function:
   if (page === 'create' && req.session.user) {
     res.sendFile(__dirname + '/static-content/event-edit.html');

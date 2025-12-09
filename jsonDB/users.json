@@ -8,10 +8,11 @@
     "gender": "Male",
     "favoriteSports": [
       "Soccer",
-      "Basketball"
+      "Basketball",
+      "Tennis"
     ],
     "about": "",
-    "dob": "2025-10-20",
+    "dob": "2000-10-20",
     "eventsCreated": [],
     "eventsJoined": []
   },
@@ -44,6 +45,19 @@
     ],
     "about": "",
     "dob": "2025-11-20",
+    "eventsCreated": [],
+    "eventsJoined": []
+  },
+  {
+    "id": 4,
+    "username": "newSignUp",
+    "email": "testing@signup.com",
+    "password": "123",
+    "phone": "1234567891",
+    "gender": "Female",
+    "favoriteSports": {},
+    "about": "",
+    "dob": "2000-12-12",
     "eventsCreated": [],
     "eventsJoined": []
   }
