@@ -137,7 +137,6 @@ function editProfile(event) {
             let newValue = null;  // this i used to check if there are new updates made to the user fields upon clicking asve
             if (field === 'gender') {
               newValue = document.querySelector('input[name="gender"]:checked')?.value || '';
-              console.log(`Type of ${field}:`, typeof document.querySelector('input[name="gender"]:checked')?.value);
             }
             else if (field === 'favoriteSports') {
               // get all divs inside selectedActivities
@@ -147,13 +146,10 @@ function editProfile(event) {
                 // get the text content without the 'x' character
                 selectedSports.push(div.textContent.slice(0, -1).trim());
               }
-              console.log("selected sports: ", selectedSports, data.user[field]);
               newValue = selectedSports
             }
             else {
               newValue = document.getElementById(field).value.trim();
-              console.log(`Type of ${field}:`, typeof document.getElementById(field).value);
-
             }
             if (newValue !== data.user[field]) {
               fieldsToUpdate[field] = newValue;
@@ -205,7 +201,7 @@ function editProfile(event) {
             .fail(function(err) {
               console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
               const errMsg = err.responseJSON?.message || 'Failed to update profile.';
-              showPopup(errMsg, data.success);
+              showPopup(errMsg, false);
             });
           }
         })

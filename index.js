@@ -302,6 +302,20 @@ app.put('/editProfile/:id', async (req, res) => {
     }
     const { emailNew, usernameNew, passwordNew, phoneNew, genderNew, aboutNew, dobNew   } = req.body;
     const userId = parseInt(req.params.id);
+    
+    // const users = await getUsers();
+    // // Check for duplicates
+    // if (users.some(user => user.email === email)) {
+    //   return res.status(400).json({ success: false, message: 'Email already in use' });
+    // }
+
+    // if (users.some(user => user.username === username)) {
+    //   return res.status(400).json({ success: false, message: 'Username already exists' });
+    // }
+
+    // if (phone && users.some(user => user.phone === phone)) {
+    //   return res.status(400).json({ success: false, message: 'Phone number already in use' });
+    // }
     await editUser(userId, req.body);
 
     // Update session info
@@ -314,8 +328,10 @@ app.put('/editProfile/:id', async (req, res) => {
     return res.status(200).json({ success: true, message: 'Profile updated successfully' });
 
   } catch (err) {
-    console.error('Error updating profile:', err);
-    res.status(500).json({ success: false, message: 'Server error while updating profile' });
+    if (err.status) {
+      return res.status(err.status).json({ success: false, message: err.message });
+    } 
+    return res.status(500).json({ success: false, message: 'Server error while updating profile' });
   }
 });
 

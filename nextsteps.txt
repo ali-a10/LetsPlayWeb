@@ -3,8 +3,6 @@
     - check all the fields that should be unique to each user
     - NOTE: the errors are being displayed in the VScode terminal 
 
-- functionality for when the event date passes
-
 - add to every user's page (both 'my account' and when viewing another user):
     - past events
 

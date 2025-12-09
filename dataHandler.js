@@ -53,19 +53,19 @@ async function editUser(id, updatedUserInfo) {
   // Find the index of the user to edit
   const userIndex = users.findIndex(user => user.id === id);
   if (userIndex === -1) {
-    throw new Error(`User not found`);
+    throw throwStatusError('User not found', 404);
   }
 
   // Check for unique username, email, and phone number
   for (const user of users) {
     if (user.username === updatedUserInfo.username && user.id !== id) {
-      throw new Error('Username already in use');
+      throw throwStatusError('Username already in use', 400);
     }
     if (user.email === updatedUserInfo.email && user.id !== id) {
-      throw new Error('Email already in use');
+      throw throwStatusError('Email already in use', 400);
     }
     if (user.phone === updatedUserInfo.phone && user.id !== id) {
-      throw new Error('Phone number already in use');
+      throw throwStatusError('Phone number already in use', 400);
     }
   }
 
@@ -227,5 +227,12 @@ async function deleteEvent(eventId, userId) {
   await writeJSON(EVENTS_FILE, events);
 }
 
+
+// function for throwing error with status code
+function throwStatusError(message, status) {
+  const err = new Error(message);
+  err.status = status;
+  return err;
+}
 
 module.exports = { getUsers, getUserById, addUser, editUser, getEvents, addEvent, editEvent, eventJoin, eventLeave, deleteEvent };
