@@ -249,17 +249,46 @@ function getPastEventsByUser(userId) {
   })
   .done(function(data, textStatus, jqXHR) {
     // populate past events section
-    console.log("Past events data: ", data);
     let pastEventsContainer = document.getElementById('past-events-created-container');
     data.pastEvents.forEach(event => {
-      let eventDiv = document.createElement('div');
-      eventDiv.classList.add('event-item', 'mb-3', 'p-3', 'border', 'rounded');
-      eventDiv.innerHTML = `
-        <h5>${event.title}</h5>
-        <p>${event.date} at ${event.time}</p>
-        <p>${event.location}</p>
-      `;
-      pastEventsContainer.appendChild(eventDiv);
+      // let eventDiv = document.createElement('div');
+      const card = document.createElement('div');
+      // card.className = 'event-card';
+
+      card.innerHTML = `
+            <div class="container">
+              <div class="row">
+                <div class="col-2 event-card-img placeholder mb-2"></div>
+
+                <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
+                  <div class="d-flex flex-column align-items-start">
+                    <h4 class="text-teal mb-2">${event.title}</h4>
+                    <p class="mb-1 text-muted">
+                      <strong>${event.date}</strong> • ${event.time || ''}
+                    </p>
+                    <p class="mb-1">
+                      <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                    </p>
+                    <p class="mb-1">
+                      <i class="bi bi-dribbble text-teal"></i> ${event.activity}
+                    </p>
+                  </div>
+
+                  <div class="text-end">
+                    <div class="event-capacity fw-semibold mb-1 fs-5">
+                      <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                    </div>
+                    <div class="event-price mb-2">
+                      <span class="badge bg-teal text-white fs-6">
+                        ${event.isFree === true ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+          `;
+      pastEventsContainer.appendChild(card);
     });
   })
   .fail(function(err) {
