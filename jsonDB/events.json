@@ -100,10 +100,13 @@
     "activity": "Tennis",
     "isFree": false,
     "price": "10",
-    "currentParticipants": "2",
+    "currentParticipants": "4",
     "maxParticipants": "4",
     "ageGroup": "",
     "level": "",
-    "usersJoined": []
+    "usersJoined": [
+      1,
+      4
+    ]
   }
 ]

@@ -39,6 +39,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                         document.getElementById('event-level').innerText = event.level || 'All levels';
                         document.getElementById('event-currentParticipants').innerText = event.currentParticipants;
                         document.getElementById('event-maxParticipants').innerText = event.maxParticipants || 'No limit';
+                        
+                        // view participants
+                        const participantsList = document.getElementById("participants-list");
+                        participantsList.innerHTML = "";
+                        console.log("event usersJoined: ", event.usersJoined);
+                        event.usersJoined.forEach(async userId => {
+                            const userRes = await fetch(`/user/${userId}`);
+                            const userData = await userRes.json();
+                            if (userRes.ok && userData.user) {
+                                const li = document.createElement("li");
+                                li.className = "list-group-item d-flex justify-content-between align-items-center";
+                                li.innerHTML = `
+                                    <span><a href="/account?user=${userData.user.id}">${userData.user.username}</a></span>
+                                `;
+                                participantsList.appendChild(li);
+                            } else {
+                                // idk idk idk
+                            }
+                            
+                        });
+                        
                         // fetch creator's name
                         try {
                             const userRes = await fetch(`/user/${event.userId}`);
@@ -171,37 +192,13 @@ document.getElementById("leave-event-btn").addEventListener("click", async () =>
     }
 });
 
-// const viewParticipantsLink = document.getElementById("view-participants-link");
-// const participantsList = document.getElementById("participants-list");
-// const participantsCount = document.getElementById("participants-count");
+const viewParticipantsLink = document.getElementById("view-participants-link");
 
-// const params = new URLSearchParams(window.location.search);
-// const eventId = params.get("id");
+viewParticipantsLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    const modal = new bootstrap.Modal(document.getElementById("participantsModal"));
+    modal.show();
+});
 
-// viewParticipantsLink.addEventListener("click", async (e) => {
-//   e.preventDefault();
 
-//   try {
-//     const res = await fetch(`/events/${eventId}/participants`);
-//     const data = await res.json();
 
-//     participantsList.innerHTML = "";
-
-//     data.participants.forEach(user => {
-//       const li = document.createElement("li");
-//       li.className = "list-group-item d-flex justify-content-between align-items-center";
-//       li.innerHTML = `
-//         <span>${user.username}</span>
-//       `;
-//       participantsList.appendChild(li);
-//     });
-
-//     const modal = new bootstrap.Modal(
-//       document.getElementById("participantsModal")
-//     );
-//     modal.show();
-
-//   } catch (err) {
-//     console.error("Failed to load participants", err);
-//   }
-// });
