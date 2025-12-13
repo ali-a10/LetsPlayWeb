@@ -11,8 +11,6 @@ these in order:
 
 - BUG: go to my account, fav sports, each sport is displayed twice
 
-- add the new autocomplete multiple sports feature to sign up page
-
 - test the failure cases (where errors are thrown)
 
 - might want to improve when user doesnt fill out a required field
@@ -21,18 +19,8 @@ these in order:
     enough and it refreshes when the page is refreshed?
 
 
-- update the update-event method in index.js and make sure client side is updated as well
-
-
-1. events page:
-    - make events more detailed (add other fields)
-        - and sort them by most recently modified or created
-    - make sure http://localhost:3000/event-edit?id=X is accessible only
-        if event w/ id=X is the current user's event
-
-        - ALSO make sure only logged in users can go to that page
-            - if no user is logged in and i go to the event-edit page, don't have the form,
-            maybe redirect user to events page or put a message on a blank page
+- make sure http://localhost:3000/event-edit?id=X is accessible only
+    if event w/ id=X is the current user's event
 
 - handle case where users input random url parameters
     - e.g. /accountss
@@ -40,10 +28,6 @@ these in order:
         - e.g. not logged in trying to access pages only for logged in users
         - DID THIS BUT DOUBLE CHECK^^^
 
-to check:
-- have to understand syntax on line 91 in datahandler: 
-    // Replace the existing event at id with new data
-    events[id] = { ...events[id], ...updatedData };
 
 - use document.addEventListener('DOMContentLoaded'...) instead of $(document).ready()
     - some pages may have both
@@ -65,7 +49,5 @@ for later:
 - have a loading icon (e.g. when clicking edit event, instead of seeing the empty
     fields for a sec then having the text load into them, have a loading icon
     until the fields are filled / when the info is retrieved from server)
-
-- account.html doesn't have the 'active aria-current="page"' code
 
 - make indentation consistent in all files

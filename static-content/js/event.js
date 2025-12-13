@@ -54,18 +54,31 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     li.innerHTML = `
                                     <span>You</span>
                                     `;
-                                } else {
+                                } else if (userId === event.userId) {
+                                    li.innerHTML = `
+                                    <span><a href="/account?user=${userData.user.id}">${userData.user.username} (Host)</a></span>
+                                    `;
+                                }
+                                else {
                                     li.innerHTML = `
                                     <span><a href="/account?user=${userData.user.id}">${userData.user.username}</a></span>
                                     `;
                                 }
                                 
-                                participantsList.appendChild(li);
+                                participantsList.prepend(li);
                             } else {
                                 // idk idk idk
-                            }
-                            
+                            }                            
                         });
+                        // add the host's +1s if any to the participants list
+                        let usersInList = event.usersJoined.length;
+                        while (usersInList < event.currentParticipants) {
+                            const li = document.createElement("li");
+                            li.className = "list-group-item d-flex justify-content-between align-items-center";
+                            li.innerHTML = `<span>Host's +1</span>`;
+                            participantsList.prepend(li);
+                            usersInList++;
+                        }
 
                         // check if event is full
                         if (event.currentParticipants >= event.maxParticipants) {
