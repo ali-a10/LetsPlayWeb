@@ -376,3 +376,41 @@ h2 {
   background: #03dac6;
   border: 3px solid white;
 }
+
+.two-img-wrapper {
+  position: relative;
+  display: flex;
+}
+
+/* 
+.two-img-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+} */
+
+
+/* Overlay across both images */
+.overlay-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Circle inside the overlay */
+.circle-overlay {
+  width: 22em;
+  height: 22em;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}

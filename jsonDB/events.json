@@ -64,10 +64,46 @@
     "activity": "Tennis",
     "isFree": true,
     "price": null,
-    "currentParticipants": "2",
+    "currentParticipants": "3",
     "maxParticipants": "4",
     "ageGroup": "",
     "level": "Beginner",
+    "usersJoined": [
+      5
+    ]
+  },
+  {
+    "id": 5,
+    "userId": 5,
+    "title": "volleyball girls",
+    "description": "game of volleyball all girls 6v6",
+    "date": "2025-12-18",
+    "time": "20:30",
+    "location": "meadowvale",
+    "activity": "Volleyball",
+    "isFree": true,
+    "price": "",
+    "currentParticipants": "1",
+    "maxParticipants": "12",
+    "ageGroup": "20",
+    "level": "Intermediate",
+    "usersJoined": []
+  },
+  {
+    "id": 6,
+    "userId": 2,
+    "title": "tennis",
+    "description": "test",
+    "date": "2025-12-22",
+    "time": "22:44",
+    "location": "a court",
+    "activity": "Tennis",
+    "isFree": false,
+    "price": "10",
+    "currentParticipants": "2",
+    "maxParticipants": "4",
+    "ageGroup": "",
+    "level": "",
     "usersJoined": []
   }
 ]

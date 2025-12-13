@@ -250,10 +250,11 @@ function getPastEventsByUser(userId) {
   .done(function(data, textStatus, jqXHR) {
     // populate past events section
     let pastEventsContainer = document.getElementById('past-events-created-container');
+    if (data.pastEvents.length === 0) {
+      pastEventsContainer.innerHTML = '<p>You have not created any events yet.</p>';
+    }
     data.pastEvents.forEach(event => {
-      // let eventDiv = document.createElement('div');
       const card = document.createElement('div');
-      // card.className = 'event-card';
 
       card.innerHTML = `
             <div class="container">
