@@ -63,7 +63,7 @@ function loadEvents(loggedInUser) {
       const publicEvents = events.filter(event => event.userId != loggedInUser.id &&
         (!Array.isArray(event.usersJoined) || !event.usersJoined.includes(loggedInUser.id))
       );
-      const joinedEvents = events.filter(event => Array.isArray(event.usersJoined) && event.usersJoined.includes(loggedInUser.id));
+      const joinedEvents = events.filter(event => Array.isArray(event.usersJoined) && event.usersJoined.includes(loggedInUser.id) && event.userId != loggedInUser.id);
       if (myEvents.length === 0) {
         myEventsContainer.innerHTML = '<p>You have not created any events yet.</p>';
       }

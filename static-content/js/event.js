@@ -50,9 +50,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                             if (userRes.ok && userData.user) {
                                 const li = document.createElement("li");
                                 li.className = "list-group-item d-flex justify-content-between align-items-center";
-                                li.innerHTML = `
+                                if (userId === data.user.id) {
+                                    li.innerHTML = `
+                                    <span>You</span>
+                                    `;
+                                } else {
+                                    li.innerHTML = `
                                     <span><a href="/account?user=${userData.user.id}">${userData.user.username}</a></span>
-                                `;
+                                    `;
+                                }
+                                
                                 participantsList.appendChild(li);
                             } else {
                                 // idk idk idk
@@ -66,10 +73,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                             joinBtn.disabled = true;
                             joinBtn.textContent = "Event Full";
                             joinBtn.style.cursor = "not-allowed";
-                            // joinBtn.classList.add("btn-secondary");
                             joinBtn.removeEventListener("click", handleJoinClick);
                             joinBtn.style.backgroundColor = "lightgray";
-
                         }
                         
                         // fetch creator's name

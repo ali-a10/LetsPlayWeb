@@ -135,7 +135,7 @@ async function eventJoin(eventId, userId) {
 
   // Initialize arrays if they are undefined - but they most likely will be defined
   if (!Array.isArray(event.usersJoined)) {
-    event.usersJoined = [];
+    event.usersJoined = [event.userId];
   }
   if (!Array.isArray(user.eventsJoined)) {
     user.eventsJoined = [];

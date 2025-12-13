@@ -206,6 +206,7 @@ app.post('/post-event', async (req, res) => {
       maxParticipants,
       ageGroup,
       level,
+      usersJoined: [req.session.user.id]
     });
 
     await addEvent(newEvent);

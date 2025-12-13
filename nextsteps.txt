@@ -5,6 +5,7 @@
 these in order:
 1. ability for everyone to see the users signed up for the event (maybe click view participants and a popup appears of a list of usernames)
     - for participants the user inputs (who won't have names), have 'with host' or something
+2. ability for host to 'view' their own event
 2. ability for users to rate and report each other
     - maybe each user has a rating for attendance and a rating for hosting
 
