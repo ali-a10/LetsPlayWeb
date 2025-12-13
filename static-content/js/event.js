@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         // view participants
                         const participantsList = document.getElementById("participants-list");
                         participantsList.innerHTML = "";
-                        console.log("event usersJoined: ", event.usersJoined);
+
                         event.usersJoined.forEach(async userId => {
                             const userRes = await fetch(`/user/${userId}`);
                             const userData = await userRes.json();
@@ -59,6 +59,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }
                             
                         });
+
+                        // check if event is full
+                        if (event.currentParticipants >= event.maxParticipants) {
+                            const joinBtn = document.getElementById("join-event-btn");
+                            joinBtn.disabled = true;
+                            joinBtn.textContent = "Event Full";
+                            joinBtn.style.cursor = "not-allowed";
+                            // joinBtn.classList.add("btn-secondary");
+                            joinBtn.removeEventListener("click", handleJoinClick);
+                            joinBtn.style.backgroundColor = "lightgray";
+
+                        }
                         
                         // fetch creator's name
                         try {
@@ -101,7 +113,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 
-document.getElementById("join-event-btn").addEventListener("click", async () => {
+document.getElementById("join-event-btn").addEventListener("click", handleJoinClick);
+
+async function handleJoinClick() {
     try {
         checkLoginStatus()
         .then(async data => {
@@ -144,7 +158,7 @@ document.getElementById("join-event-btn").addEventListener("click", async () => 
         console.error("Error joining event:", err);
         showPopup("Something went wrong. Please try again later.", false);
     }
-});
+};
   
 
 document.getElementById("leave-event-btn").addEventListener("click", async () => {

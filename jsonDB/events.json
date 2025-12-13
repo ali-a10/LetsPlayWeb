@@ -47,11 +47,13 @@
     "activity": "Basketball",
     "isFree": true,
     "price": null,
-    "currentParticipants": "1",
+    "currentParticipants": "2",
     "maxParticipants": "6",
     "ageGroup": "",
     "level": "Beginner",
-    "usersJoined": []
+    "usersJoined": [
+      5
+    ]
   },
   {
     "id": 4,

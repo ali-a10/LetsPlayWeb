@@ -59,21 +59,21 @@
     "about": "",
     "dob": "2000-12-12",
     "eventsCreated": [],
-    "eventsJoined": [
-      6
-    ]
+    "eventsJoined": []
   },
   {
     "id": 5,
     "username": "shushu",
     "email": "shushu@mail.com",
-    "password": "shushu",
+    "password": "s123",
     "phone": "shu-shu-shush",
     "gender": "Female",
-    "favoriteSports": {},
-    "about": "i like to play sports",
-    "dob": "2025-12-06",
+    "favoriteSports": [],
+    "about": "",
+    "dob": "",
     "eventsCreated": [],
-    "eventsJoined": []
+    "eventsJoined": [
+      3
+    ]
   }
 ]

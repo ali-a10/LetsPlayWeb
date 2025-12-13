@@ -148,6 +148,12 @@ async function eventJoin(eventId, userId) {
     throw err;
   }
 
+  if (event.currentParticipants >= event.maxParticipants) {
+    const err = new Error('This event is already full');
+    err.status = 409;
+    throw err;
+  }
+
   // Add user to event's list
   event.usersJoined.push(user.id);
   event.currentParticipants = (parseInt(event.currentParticipants) + 1).toString();
