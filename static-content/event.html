@@ -135,8 +135,8 @@
         </div>
   
         <div class="event-box">
-          <h5>Spots Left</h5>
-          <p class="fs-5"><span id="event-currentParticipants"></span>/<span id="event-maxParticipants"></span></p>
+          <h5>Participants</h5>
+          <p class="fs-5"><span id="event-currentParticipants"></span>/<span id="event-maxParticipants"></span>  ·  <a href="#" id="view-participants-link">View</a></p>
         </div>
   
       </div>
@@ -171,6 +171,24 @@
   <footer class="text-center py-4 text-light hero mt-5">
     <p class="mb-0">© 2025 Let's Play. Connect. Compete. Have Fun.</p>
   </footer>
+
+  <div class="modal fade" id="participantsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title">Participants</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <div class="modal-body">
+          <ul id="participants-list" class="list-group list-group-flush"></ul>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
 
   <script type="module" src="js/event.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

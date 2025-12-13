@@ -170,4 +170,38 @@ document.getElementById("leave-event-btn").addEventListener("click", async () =>
         showPopup("Something went wrong. Please try again later.", false);
     }
 });
-  
+
+// const viewParticipantsLink = document.getElementById("view-participants-link");
+// const participantsList = document.getElementById("participants-list");
+// const participantsCount = document.getElementById("participants-count");
+
+// const params = new URLSearchParams(window.location.search);
+// const eventId = params.get("id");
+
+// viewParticipantsLink.addEventListener("click", async (e) => {
+//   e.preventDefault();
+
+//   try {
+//     const res = await fetch(`/events/${eventId}/participants`);
+//     const data = await res.json();
+
+//     participantsList.innerHTML = "";
+
+//     data.participants.forEach(user => {
+//       const li = document.createElement("li");
+//       li.className = "list-group-item d-flex justify-content-between align-items-center";
+//       li.innerHTML = `
+//         <span>${user.username}</span>
+//       `;
+//       participantsList.appendChild(li);
+//     });
+
+//     const modal = new bootstrap.Modal(
+//       document.getElementById("participantsModal")
+//     );
+//     modal.show();
+
+//   } catch (err) {
+//     console.error("Failed to load participants", err);
+//   }
+// });
