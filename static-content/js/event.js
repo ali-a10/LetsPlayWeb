@@ -21,9 +21,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                             document.getElementById('error-div').classList.remove('d-none');
                             return;
                         }
-            
-                        // if user joined event, hide join button
-                        if (Array.isArray(event.usersJoined) && event.usersJoined.includes(data.user.id)) {
+                        if (event.userId === data.user.id) {
+                            document.getElementById('join-event-btn').classList.add('d-none');
+                            document.getElementById('event-details').classList.add('event-joined-page');
+                            document.getElementById("join-event-btn").removeEventListener("click", handleJoinClick);
+                            document.getElementById("leave-event-btn").removeEventListener("click", handleLeaveClick);
+                        }
+                        else if (Array.isArray(event.usersJoined) && event.usersJoined.includes(data.user.id)) {
+                            // if user joined event, hide join button
                             document.getElementById('join-event-btn').classList.add('d-none');
                             document.getElementById('leave-event-btn').classList.remove('d-none');
                             document.getElementById('event-details').classList.add('event-joined-page');
@@ -179,7 +184,10 @@ async function handleJoinClick() {
 };
   
 
-document.getElementById("leave-event-btn").addEventListener("click", async () => {
+document.getElementById("leave-event-btn").addEventListener("click", handleLeaveClick);
+    
+    
+async function handleLeaveClick() {
     try {
         checkLoginStatus()
         .then(async data => {
@@ -222,11 +230,10 @@ document.getElementById("leave-event-btn").addEventListener("click", async () =>
         console.error("Error leaving event:", err);
         showPopup("Something went wrong. Please try again later.", false);
     }
-});
+};
 
-const viewParticipantsLink = document.getElementById("view-participants-link");
 
-viewParticipantsLink.addEventListener("click", (e) => {
+document.getElementById("view-participants-link").addEventListener("click", (e) => {
     e.preventDefault();
     const modal = new bootstrap.Modal(document.getElementById("participantsModal"));
     modal.show();

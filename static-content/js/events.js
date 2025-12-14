@@ -111,6 +111,10 @@ function loadEvents(loggedInUser) {
                       onclick="window.location.href='/event-edit?id=${event.id}'">
                       Edit
                     </button>
+                    <button class="btn-view-event fs-5"
+                        onclick="window.location.href='/event?id=${event.id}'">
+                        View
+                      </button>
                   </div>
                 </div>
               </div>
