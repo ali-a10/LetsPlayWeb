@@ -54,7 +54,6 @@ $(document).ready(function () {
                 
                 });
                 // Hide signup and save buttons
-                document.getElementById('signup-btns').classList.add('d-none');
                 document.getElementById('save-btns').classList.add('d-none');
             })
             .fail(function(err) {
@@ -374,3 +373,68 @@ function removeActivity(activity, chipElement) {
   selectedActivities = selectedActivities.filter(a => a !== activity);
   chipElement.remove();
 }
+
+
+// RATINGS
+let selectedRating = 0;
+
+const rateSection = document.getElementById('rate-user-section');
+const stars = document.querySelectorAll('.star');
+const ratingText = document.getElementById('rating-text');
+const submitBtn = document.getElementById('submit-rating-btn');
+const successMsg = document.getElementById('rating-success');
+
+/**
+ * Call this when:
+ * - user is logged in
+ * - viewing ANOTHER user's profile
+ */
+function enableRatingUI() {
+  rateSection.style.display = 'block';
+}
+
+// Hover behavior
+stars.forEach(star => {
+  star.addEventListener('mouseenter', () => {
+    const value = parseInt(star.dataset.value);
+    highlightStarsToggle(value);
+    ratingText.textContent = `${value} out of 5`;
+  });
+
+  star.addEventListener('mouseleave', () => {
+    highlightStarsToggle(selectedRating);
+    ratingText.textContent = selectedRating
+      ? `${selectedRating} out of 5`
+      : '';
+  });
+
+  star.addEventListener('click', () => {
+    selectedRating = parseInt(star.dataset.value);
+    submitBtn.disabled = false;
+    highlightStarsToggle(selectedRating);
+    ratingText.textContent = `${selectedRating} out of 5`;
+  });
+});
+
+function highlightStarsToggle(value) {
+  stars.forEach(star => {
+    star.classList.toggle('active', parseInt(star.dataset.value) <= value);
+  });
+}
+
+// Submit rating (backend call later)
+submitBtn.addEventListener('click', async () => {
+  console.log("1", selectedRating);
+  if (!selectedRating) return;
+
+  // 🔜 Later: POST to backend
+  // await fetch('/rate-user', {...})
+
+  submitBtn.disabled = true;
+  console.log("2", successMsg.textContent);
+  successMsg.classList.remove('d-none');
+  setTimeout(() => {
+    successMsg.classList.add('d-none');
+  }, 3000);
+});
+

@@ -22,6 +22,8 @@ class User {
         this.dob = dob || '';
         this.eventsCreated = [];
         this.eventsJoined = [];
+        this.averageRating = 0;
+        this.numberOfRatings = 0;
     //   this.profilePic = profilePic || '';
     }
   
@@ -63,6 +65,8 @@ class User {
             dob: this.dob,
             eventsCreated: this.eventsCreated,
             eventsJoined: this.eventsJoined,
+            averageRating: this.averageRating,
+            numberOfRatings: this.numberOfRatings,
             // profilePic: this.profilePic
         };
     }
@@ -80,6 +84,8 @@ class User {
             'dob',
             'eventsCreated',
             'eventsJoined',
+            'averageRating',
+            'numberOfRatings'
         //   'profilePic'
         ];
   
