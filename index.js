@@ -341,13 +341,48 @@ app.get('/pastevents/user/:userId', async (req, res) => {
 });
 
 
+// rate host 
+app.put('/rate-host', async (req, res) => {
+  try {
+    const { hostId, rating } = req.body;
+    const userId = req.session.user.id;
+    if (!userId || !hostId || !rating) {
+      return res.status(400).json({ success: false, message: 'Missing a required field' });
+    }
+    const users = await getUsers();
+    const user = users.find(u => u.id === parseInt(hostId));
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    // Update rating
+    user.ratings[userId] = rating;
+    let totalRating = 0;
+    Object.keys(user.ratings).forEach(rater => {
+      totalRating += user.ratings[rater];
+    });
+    user.averageRating = totalRating / Object.keys(user.ratings).length;
+
+    await editUser(user.id, { ratings: user.ratings , averageRating: user.averageRating });
+    return res.status(200).json({ success: true, message: 'Rating submitted successfully' });
+  } catch (err) {
+    console.error('Error rating host:', err);
+    return res.status(500).json({ success: false, message: 'Server error while submitting rating' });
+  }
+});
+
+
 //////////////// My Account page ////////////////
 app.put('/editProfile/:id', async (req, res) => {
   try {
     if (!req.session.user) {
       return res.status(401).json({ success: false, message: 'Not logged in' });
     }
+    console.log("bodyy ", req.body);
     const { emailNew, usernameNew, passwordNew, phoneNew, genderNew, aboutNew, dobNew   } = req.body;
+    console.log("usernameNew ", usernameNew);
+    console.log("emailNew ", emailNew);
+    console.log("passwordNew ", passwordNew);
+    console.log("phoneNew ", phoneNew);
     const userId = parseInt(req.params.id);
     
     // const users = await getUsers();

@@ -29,7 +29,17 @@ async function writeJSON(filePath, data) {
 
 async function getUsers() {
   const users = await readJSON(USERS_FILE);
-  return users.map(u => new User(u));
+  // Convert plain objects to User instances
+  let userInstances = [];
+  users.forEach(user => {
+    let userInstance = new User(user);
+    userInstance.eventsCreated = user.eventsCreated;
+    userInstance.eventsJoined = user.eventsJoined;
+    userInstance.ratings = user.ratings;
+    userInstance.averageRating = user.averageRating;
+    userInstances.push(userInstance);
+  });
+  return userInstances;
 }
 
 

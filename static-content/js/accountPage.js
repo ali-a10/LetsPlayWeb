@@ -380,9 +380,9 @@ function removeActivity(activity, chipElement) {
 
 
 // RATINGS
+let selectedRating = 0;
 
 function initRatingSection() {
-  let selectedRating = 0;
   const stars = document.querySelectorAll('.star');
   const ratingText = document.getElementById('rating-text');
   const submitBtn = document.getElementById('submit-rating-btn');
@@ -415,8 +415,30 @@ function initRatingSection() {
   submitBtn.addEventListener('click', async () => {
     if (!selectedRating) return;
 
+    // collect data
+    const urlParams = new URLSearchParams(window.location.search);
+    const ratedUserId = urlParams.get('user');
+    const ratingJson = { hostId: ratedUserId, rating: selectedRating };
+
     // 🔜 Later: POST to backend
     // await fetch('/rate-user', {...})
+    $.ajax({
+      method: "PUT",
+      url: '/rate-host',
+      processData: false,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      data: JSON.stringify(ratingJson)
+    })
+    .done(function(data, textStatus, jqXHR) {
+      console.log("Server Response: " + JSON.stringify(data));
+      showPopup(data.message || 'Profile updated.', data.success);
+    })
+    .fail(function(err) {
+      console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+      const errMsg = err.responseJSON?.message || 'Failed to update profile.';
+      showPopup(errMsg, false);
+    });
 
     submitBtn.disabled = true;
     successMsg.classList.remove('d-none');
