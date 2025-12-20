@@ -103,10 +103,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 document.getElementById('event-creator-name').innerText = userData.user.username;
                                 // link to creator's account page
                                 document.getElementById('event-creator-name').href = `/account?user=${userData.user.id}`;
+                                document.getElementById('averageRating').innerText = userData.user.averageRating ? userData.user.averageRating.toFixed(2) : 'N/A';
+                                const ratingsCount = Object.keys(userData.user.ratings || {}).length;
+                                document.getElementById('ratings').innerText = ratingsCount;
                             } else {
                                 document.getElementById('event-creator-name').innerText = 'An error occurred';
                             }
                         } catch (err) {
+                            console.log('Error fetching creator info:', err);
                             document.getElementById('event-creator-name').innerText = 'An error occurred';
                         }
                         document.getElementById('event-title1').innerText = event.title;

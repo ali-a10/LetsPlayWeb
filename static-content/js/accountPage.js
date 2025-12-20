@@ -40,22 +40,31 @@ $(document).ready(function () {
             getUser(userId)
             .done(function(data, textStatus, jqXHR) {
                 const user = data.user;
-                const allowedFields = ['username', 'favoriteSports', 'about']
+                const allowedFields = ['username', 'favoriteSports', 'about', 'averageRating', 'ratings'];
                 Object.keys(user).forEach(key => {
-                const inputElement = document.getElementById(key); 
-                if (inputElement) {
-                    if (allowedFields.includes(key)) {
-                    if (inputElement) {
-                        inputElement.value = user[key];
-                        inputElement.disabled = true; // disable the input field
+                  const element = document.getElementById(key);
+                  if (allowedFields.includes(key)) {
+                    if (element) {
+                      if (key === 'averageRating') {
+                        element.innerHTML = user[key] ? user[key].toFixed(2) : 'N/A';
+                      }
+                      else if (key === 'ratings') {
+                        // get length of ratings object
+                        const ratingsCount = Object.keys(user[key]).length;
+                        element.innerHTML = ratingsCount;
+                      }
+                      else {
+                        element.value = user[key];
+                        element.disabled = true; // disable the input field
+                      }
                     }
+                    } else if (key === 'id' || key === 'eventsCreated' || key === 'eventsJoined' || key === 'ratings') {
+                      // do nothing
                     } else {
-                    // hide the element
-                    console.log("hiding element for key: ", inputElement, key);
-                    inputElement.parentElement.classList.add('d-none');
+                      // hide the element
+                      console.log("hiding element for key: ", element, key);
+                      element.parentElement.classList.add('d-none');
                     }
-                }
-                
                 });
                 // Hide signup and save buttons
                 document.getElementById('save-btns').classList.add('d-none');
@@ -74,30 +83,40 @@ $(document).ready(function () {
             .done(function(data, textStatus, jqXHR) {
                 const user = data.user;
                 Object.keys(user).forEach(key => {
-                if (key == "gender") {
+                  if (key == "gender") {
                     const genderInputs = document.getElementsByName("gender");
                     genderInputs.forEach(input => {
-                        if (input.value === user[key]) {
-                            input.checked = true;
-                        }
+                      if (input.value === user[key]) {
+                        input.checked = true;
+                      }
                     });
-                }
-                else if (key === 'favoriteSports') {
+                  }
+                  else if (key === 'favoriteSports') {
                     // set multiple select options
                     const favoriteSports = document.getElementById('activitySuggestions');
                     console.log(favoriteSports);
 
                     // iterate through the user's favorite sports
                     user[key].forEach(sport => {
-                        addActivity(sport);  // add chip
+                      addActivity(sport);  // add chip
                     });
-                }
-                else {
+                  }
+                  else if (key === 'averageRating') {
+                    const ratingElement = document.getElementById('averageRating');
+                    ratingElement.innerHTML = user[key] ? user[key].toFixed(2) : 'N/A';
+                  }
+                  else if (key === 'ratings') {
+                    const ratingElement = document.getElementById('ratings');
+                    // get length of ratings object
+                    const ratingsCount = Object.keys(user[key]).length;
+                    ratingElement.innerHTML = ratingsCount;
+                  }
+                  else {
                     const element = document.getElementById(key);
                     if (element) {
-                        element.value = user[key];
+                      element.value = user[key];
                     }
-                }
+                  }
                 });
             });
             document.getElementById('save-button').addEventListener('click', (event) => {
