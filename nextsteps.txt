@@ -1,5 +1,3 @@
-- store rating and load it when visiting a user you've rated
-
 
 - add to every user's page (both 'my account' and when viewing another user):
     - past events

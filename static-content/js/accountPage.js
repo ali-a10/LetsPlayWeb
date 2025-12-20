@@ -2,7 +2,7 @@ import { checkLoginStatus, bindLogoutBtn, showPopup } from './auth.js';
 
 
 $(document).ready(function () {
-  let user = null;
+  let loggedInUser = null;
   checkLoginStatus()
     .then(data => {
       if (data.loggedIn) {
@@ -10,123 +10,133 @@ $(document).ready(function () {
           document.getElementById('signup-btn').style.display = 'none';
           document.getElementById('logout-btn').style.display = 'block';
           document.getElementById('myaccount-btn').style.display = 'block';
-          user = data.user;
-          getPastEventsByUser(user.id);
+          loggedInUser = data.user;
+          getPastEventsByUser(loggedInUser.id);
+
+          // Check if we're in "create" or "edit" mode based on the current page URL
+          const path = window.location.pathname;
+          const urlParams = new URLSearchParams(window.location.search);
+          const userId = urlParams.get('user');
+          const isViewMode = userId !== null;
+
+          console.log(path, isViewMode, urlParams, urlParams.get('user'));
+          // Update page elements based on the mode
+          
+          if (isViewMode) {
+              // Viewing another user's profile
+              document.getElementById('page-title').innerText = 'User Profile';
+              
+              const rateSection = document.getElementById('rate-user-section');
+              initRatingSection();
+              rateSection.classList.remove('d-none');
+
+              console.log("viewing user id: ", userId);
+              getUser(userId)
+              .done(function(data2, textStatus, jqXHR) {
+                  const user = data2.user;
+                  const allowedFields = ['username', 'favoriteSports', 'about', 'averageRating', 'ratings'];
+                  Object.keys(user).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (allowedFields.includes(key)) {
+                      if (element) {
+                        if (key === 'averageRating') {
+                          element.innerHTML = user[key] ? user[key].toFixed(2) : 'N/A';
+                        }
+                        else if (key === 'ratings') {
+                          // get length of ratings object
+                          const ratingsCount = Object.keys(user[key]).length;
+                          element.innerHTML = ratingsCount;
+                          
+                          if (user.ratings[loggedInUser.id]) {
+                            // loggedInUser has rated this host before
+                            const loggedInUserRating = user.ratings[loggedInUser.id];
+                            highlightStarsToggle(loggedInUserRating, document.querySelectorAll('.star'));
+                            document.getElementById('rating-text').innerText = `${loggedInUserRating} out of 5`;
+                            document.getElementById('submit-rating-btn').disabled = true;
+                          }
+                        }
+                        else {
+                          element.value = user[key];
+                          element.disabled = true; // disable the input field
+                        }
+                      }
+                      } else if (key === 'id' || key === 'eventsCreated' || key === 'eventsJoined' || key === 'ratings') {
+                        // do nothing
+                      } else {
+                        // hide the element
+                        console.log("hiding element for key: ", element, key);
+                        element.parentElement.classList.add('d-none');
+                      }
+                  });
+                  // Hide signup and save buttons
+                  document.getElementById('save-btns').classList.add('d-none');
+              })
+              .fail(function(err) {
+                  console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
+              });
+
+              
+          }
+          else {
+              // Editing own profile
+              document.getElementById('page-title').innerText = 'My Account';
+
+              getUser(data.user.id)
+              .done(function(data2, textStatus, jqXHR) {
+                  const user = data2.user;
+                  Object.keys(user).forEach(key => {
+                    if (key == "gender") {
+                      const genderInputs = document.getElementsByName("gender");
+                      genderInputs.forEach(input => {
+                        if (input.value === user[key]) {
+                          input.checked = true;
+                        }
+                      });
+                    }
+                    else if (key === 'favoriteSports') {
+                      // set multiple select options
+                      const favoriteSports = document.getElementById('activitySuggestions');
+                      console.log(favoriteSports);
+
+                      // iterate through the user's favorite sports
+                      user[key].forEach(sport => {
+                        addActivity(sport);  // add chip
+                      });
+                    }
+                    else if (key === 'averageRating') {
+                      const ratingElement = document.getElementById('averageRating');
+                      ratingElement.innerHTML = user[key] ? user[key].toFixed(2) : 'N/A';
+                    }
+                    else if (key === 'ratings') {
+                      const ratingElement = document.getElementById('ratings');
+                      // get length of ratings object
+                      const ratingsCount = Object.keys(user[key]).length;
+                      ratingElement.innerHTML = ratingsCount;
+                    }
+                    else {
+                      const element = document.getElementById(key);
+                      if (element) {
+                        element.value = user[key];
+                      }
+                    }
+                  });
+              });
+              document.getElementById('save-button').addEventListener('click', (event) => {
+                  editProfile(event);  // when we get into this page, this is set once
+                  // i.e it doesn't change until we refresh the page
+                  // so we might have to get the current user every time save-button is clicked
+                  // that means we might have to call editProfile(event) and get the user inseide
+                  // this function
+              });
+          }
+
+
       } else {
           // User is not logged in, display login/signup options
           document.getElementById('login-btn').style.display = 'block';
           document.getElementById('signup-btn').style.display = 'block';
           document.getElementById('logout-btn').style.display = 'none';
       }
-      
-        // Check if we're in "create" or "edit" mode based on the current page URL
-        const path = window.location.pathname;
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('user');
-        const isViewMode = userId !== null;
-
-        console.log(path, isViewMode, urlParams, urlParams.get('user'));
-        // Update page elements based on the mode
-        
-        if (isViewMode) {
-            // Viewing another user's profile
-            document.getElementById('page-title').innerText = 'User Profile';
-            
-            const rateSection = document.getElementById('rate-user-section');
-            initRatingSection();
-            rateSection.classList.remove('d-none');
-
-            console.log("viewing user id: ", userId);
-            getUser(userId)
-            .done(function(data, textStatus, jqXHR) {
-                const user = data.user;
-                const allowedFields = ['username', 'favoriteSports', 'about', 'averageRating', 'ratings'];
-                Object.keys(user).forEach(key => {
-                  const element = document.getElementById(key);
-                  if (allowedFields.includes(key)) {
-                    if (element) {
-                      if (key === 'averageRating') {
-                        element.innerHTML = user[key] ? user[key].toFixed(2) : 'N/A';
-                      }
-                      else if (key === 'ratings') {
-                        // get length of ratings object
-                        const ratingsCount = Object.keys(user[key]).length;
-                        element.innerHTML = ratingsCount;
-                      }
-                      else {
-                        element.value = user[key];
-                        element.disabled = true; // disable the input field
-                      }
-                    }
-                    } else if (key === 'id' || key === 'eventsCreated' || key === 'eventsJoined' || key === 'ratings') {
-                      // do nothing
-                    } else {
-                      // hide the element
-                      console.log("hiding element for key: ", element, key);
-                      element.parentElement.classList.add('d-none');
-                    }
-                });
-                // Hide signup and save buttons
-                document.getElementById('save-btns').classList.add('d-none');
-            })
-            .fail(function(err) {
-                console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
-            });
-
-            
-        }
-        else {
-            // Editing own profile
-            document.getElementById('page-title').innerText = 'My Account';
-
-            getUser(data.user.id)
-            .done(function(data, textStatus, jqXHR) {
-                const user = data.user;
-                Object.keys(user).forEach(key => {
-                  if (key == "gender") {
-                    const genderInputs = document.getElementsByName("gender");
-                    genderInputs.forEach(input => {
-                      if (input.value === user[key]) {
-                        input.checked = true;
-                      }
-                    });
-                  }
-                  else if (key === 'favoriteSports') {
-                    // set multiple select options
-                    const favoriteSports = document.getElementById('activitySuggestions');
-                    console.log(favoriteSports);
-
-                    // iterate through the user's favorite sports
-                    user[key].forEach(sport => {
-                      addActivity(sport);  // add chip
-                    });
-                  }
-                  else if (key === 'averageRating') {
-                    const ratingElement = document.getElementById('averageRating');
-                    ratingElement.innerHTML = user[key] ? user[key].toFixed(2) : 'N/A';
-                  }
-                  else if (key === 'ratings') {
-                    const ratingElement = document.getElementById('ratings');
-                    // get length of ratings object
-                    const ratingsCount = Object.keys(user[key]).length;
-                    ratingElement.innerHTML = ratingsCount;
-                  }
-                  else {
-                    const element = document.getElementById(key);
-                    if (element) {
-                      element.value = user[key];
-                    }
-                  }
-                });
-            });
-            document.getElementById('save-button').addEventListener('click', (event) => {
-                editProfile(event);  // when we get into this page, this is set once
-                // i.e it doesn't change until we refresh the page
-                // so we might have to get the current user every time save-button is clicked
-                // that means we might have to call editProfile(event) and get the user inseide
-                // this function
-            });
-        }
     })
     .catch(error => {
         console.log("ERROR from check login: ", error)
@@ -439,8 +449,6 @@ function initRatingSection() {
     const ratedUserId = urlParams.get('user');
     const ratingJson = { hostId: ratedUserId, rating: selectedRating };
 
-    // 🔜 Later: POST to backend
-    // await fetch('/rate-user', {...})
     $.ajax({
       method: "PUT",
       url: '/rate-host',
@@ -452,6 +460,11 @@ function initRatingSection() {
     .done(function(data, textStatus, jqXHR) {
       console.log("Server Response: " + JSON.stringify(data));
       showPopup(data.message || 'Profile updated.', data.success);
+
+      // update # of ratings and avg rating on page
+      document.getElementById('averageRating').innerHTML = data.averageRating ? data.averageRating.toFixed(2) : 'N/A';
+      const ratingsCount = Object.keys(data.ratings).length;
+      document.getElementById('ratings').innerHTML = ratingsCount;
     })
     .fail(function(err) {
       console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));

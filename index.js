@@ -363,7 +363,7 @@ app.put('/rate-host', async (req, res) => {
     user.averageRating = totalRating / Object.keys(user.ratings).length;
 
     await editUser(user.id, { ratings: user.ratings , averageRating: user.averageRating });
-    return res.status(200).json({ success: true, message: 'Rating submitted successfully' });
+    return res.status(200).json({ success: true, ratings: user.ratings , averageRating: user.averageRating, message: 'Rating submitted successfully' });
   } catch (err) {
     console.error('Error rating host:', err);
     return res.status(500).json({ success: false, message: 'Server error while submitting rating' });
