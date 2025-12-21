@@ -23,9 +23,7 @@ $(document).ready(function () {
           // Update page elements based on the mode
           
           if (isViewMode) {
-              // Viewing another user's profile
-              document.getElementById('page-title').innerText = 'User Profile';
-              
+              // Viewing another user's profile              
               const rateSection = document.getElementById('rate-user-section');
               initRatingSection();
               rateSection.classList.remove('d-none');
@@ -34,7 +32,8 @@ $(document).ready(function () {
               getUser(userId)
               .done(function(data2, textStatus, jqXHR) {
                   const user = data2.user;
-                  const allowedFields = ['username', 'favoriteSports', 'about', 'averageRating', 'ratings'];
+                  document.getElementById('page-title').innerText = `${user.username}'s Profile`;
+                  const allowedFields = ['favoriteSports', 'about', 'averageRating', 'ratings'];
                   Object.keys(user).forEach(key => {
                     const element = document.getElementById(key);
                     if (allowedFields.includes(key)) {
@@ -64,7 +63,6 @@ $(document).ready(function () {
                         // do nothing
                       } else {
                         // hide the element
-                        console.log("hiding element for key: ", element, key);
                         element.parentElement.classList.add('d-none');
                       }
                   });
@@ -415,7 +413,6 @@ function initRatingSection() {
   const stars = document.querySelectorAll('.star');
   const ratingText = document.getElementById('rating-text');
   const submitBtn = document.getElementById('submit-rating-btn');
-  const successMsg = document.getElementById('rating-success');
   // Hover behavior
   stars.forEach(star => {
     star.addEventListener('mouseenter', () => {
@@ -458,25 +455,18 @@ function initRatingSection() {
       data: JSON.stringify(ratingJson)
     })
     .done(function(data, textStatus, jqXHR) {
-      console.log("Server Response: " + JSON.stringify(data));
       showPopup(data.message || 'Profile updated.', data.success);
-
       // update # of ratings and avg rating on page
       document.getElementById('averageRating').innerHTML = data.averageRating ? data.averageRating.toFixed(2) : 'N/A';
       const ratingsCount = Object.keys(data.ratings).length;
       document.getElementById('ratings').innerHTML = ratingsCount;
+      submitBtn.disabled = true;
     })
     .fail(function(err) {
       console.log("Request failed. Status: " + err.status + ", Response: " + JSON.stringify(err.responseJSON));
       const errMsg = err.responseJSON?.message || 'Failed to update profile.';
       showPopup(errMsg, false);
     });
-
-    submitBtn.disabled = true;
-    successMsg.classList.remove('d-none');
-    setTimeout(() => {
-      successMsg.classList.add('d-none');
-    }, 3000);
   });
 };
 
@@ -486,3 +476,10 @@ function highlightStarsToggle(value, stars) {
     star.classList.toggle('active', parseInt(star.dataset.value) <= value);
   });
 }
+
+
+document.getElementById("rateHost").addEventListener("click", (e) => {
+  e.preventDefault();
+  const modal = new bootstrap.Modal(document.getElementById("ratingModal"));
+  modal.show();
+});
