@@ -41,22 +41,19 @@
 
   <section class="container my-5 main-section">
     <h2 id="page-title" class="text-center"></h2>
-    <div class="text-center">
-      <span class="fs-5">⭐ <span id="averageRating"></span> </span>
+    <div class="text-center row">
+      <div><span class="fs-5">⭐ <span id="averageRating"></span> </span>
       <span class="text-muted">(<span id="ratings"></span> ratings)</span>
-    </div>
-    <form id="account-form" enctype="multipart/form-data" class="p-4">
       
-      <!-- Rate User Section -->
-      <section id="rate-user-section" class="d-none">
-        <h5 class="mb-2">Rate this user as a host</h5>
-        <button type="button" id="rateHost" class="btn btn-primary btn-sm">
+      <span id="rate-user-section" class="d-none ms-2">
+        <button type="button" id="rateHost" class="btn btn-secondary btn-sm">
           Rate User
         </button>
 
         
-      </section>
-
+      </span></div>
+    </div>
+    <form id="account-form" enctype="multipart/form-data" class="p-4">
       <!-- Username and Email -->
       <div class="row mb-3">
         <div class="col-md-6">
