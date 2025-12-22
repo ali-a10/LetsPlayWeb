@@ -118,27 +118,30 @@ body {
   margin-top: 2rem;
 }
 
-.card {
+.how-it-works-card {
   background-color: #e0f7fa;
   padding: 1.5rem;
   border-radius: 0.75rem;
-  width: 200px;
+  border: solid 0.25rem #00bcd4;
+  width: 15em;
 }
 
-.card h3 {
+.how-it-works-card h3 {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
 
-.icon {
-  width: 40px;
-  height: 40px;
-  margin: 0 auto;
+.how-it-works h1 {
+  color: #00475a;
 }
 
 /* Featured Events */
 .featured-events {
   padding: 3rem 2rem;
+}
+
+.featured-events h1 {
+  color: #00475a;
 }
 
 .events-list {

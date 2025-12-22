@@ -100,7 +100,7 @@ function loadEvents(loggedInUser) {
 
                   <div class="text-end">
                     <div class="event-capacity fw-semibold mb-1 fs-5">
-                      <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                      <i class="bi bi-people-fill text-teal me-2"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
                     </div>
                     <div class="event-price mb-2">
                       <span class="badge bg-teal text-white fs-6">
@@ -174,7 +174,7 @@ function loadEvents(loggedInUser) {
                         </span>
                       </div>
                       <div class="event-capacity fw-semibold mb-2 fs-5">
-                        <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                        <i class="bi bi-people-fill text-teal me-2"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
                       </div>
                       <button class="btn-view-event fs-5"
                         onclick="window.location.href='/event?id=${event.id}'">
@@ -228,7 +228,7 @@ function loadEvents(loggedInUser) {
 
                     <div class="text-end">
                       <div class="event-capacity fw-semibold mb-1 fs-5">
-                        <i class="bi bi-people-fill text-teal"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                        <i class="bi bi-people-fill text-teal me-2"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
                       </div>
                       <div class="event-price mb-2">
                         <span class="badge bg-teal text-white fs-6">
