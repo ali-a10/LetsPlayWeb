@@ -11,7 +11,7 @@ $(document).ready(function() {
           document.getElementById('myaccount-btn').classList.remove('d-none');
           document.getElementById('my-event-list').style.display = 'block';
           document.getElementById('joined-events-list').style.display = 'block';
-          document.getElementById('events-list').style.display = 'block';
+          document.getElementById('filter-section').classList.remove('d-none');
           document.getElementById('events-hero-btn').addEventListener('click', () => {
             window.location.href = '/event-edit';
           });
@@ -32,6 +32,9 @@ $(document).ready(function() {
             document.getElementById('events-hero-btn').addEventListener('click', () => {
               window.location.href = '/login';
             });
+
+            // load some events for public view
+            loadEvents(-1);  // dummy user id
         }
       })
       .catch(error => {
@@ -47,6 +50,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function loadEvents(loggedInUser) {
+  if (loggedInUser == -1) {
+    // load some public events
+    return fetch('/getEvents')
+      .then(res => res.json())
+      .then(events => {
+        // only select 3 upcoming events
+        console.log(events);
+        const publicEvents = events.slice(0, 3);
+        const publicEventsContainer = document.getElementById('public-events-container');
+        publicEventsContainer.innerHTML = '';
+
+        if (publicEvents.length === 0) {
+          publicEventsContainer.innerHTML = '<p>No events available at the moment.</p>';
+        }
+        else {
+          // load public events
+          let numOfPublicEvents = 0;
+          publicEvents.forEach(event => {
+            if (new Date(event.date) < new Date()) {
+              return;
+            }
+            numOfPublicEvents++;
+            const card = document.createElement('div');
+            card.innerHTML = `
+                <div class="container">
+                  <div class="row">
+                    <div class="col-2 event-card-img placeholder mb-2"></div>
+  
+                    <div class="col event-card shadow-sm p-3 mb-3 rounded-end d-flex justify-content-between align-items-center h-100">
+                      <div class="d-flex flex-column align-items-start">
+                        <h4 class="text-teal mb-2">${event.title}</h4>
+                        <p class="mb-1 text-muted">
+                          <strong>${formatDate(event.date)}</strong> • ${event.time || ''}
+                        </p>
+                        <p class="mb-1">
+                          <i class="bi bi-geo-alt-fill text-teal"></i> <strong>${event.location || 'Location TBD'}</strong>
+                        </p>
+                        <p class="mb-1">
+                          <i class="bi bi-dribbble text-teal"></i> ${event.activity}
+                        </p>
+                      </div>
+  
+                      <div class="text-end">
+                        <div class="event-capacity fw-semibold mb-1 fs-5">
+                          <i class="bi bi-people-fill text-teal me-2"></i> ${event.currentParticipants || 0}/${event.maxParticipants || 10}
+                        </div>
+                        <div class="event-price mb-2">
+                          <span class="badge bg-teal text-white fs-6">
+                            ${event.isFree === true ? "Free" : `$${parseFloat(event.price).toFixed(2)}`}
+                          </span>
+                        </div>
+                        <button class="btn-view-event"
+                          onclick="window.location.href='/login'">
+                          Log in to view
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+            `;
+  
+            publicEventsContainer.appendChild(card);
+          });
+          if (numOfPublicEvents === 0) {
+            publicEventsContainer.innerHTML = '<p>No events available at the moment.</p>';
+          }
+        }
+        return events;
+      });
+  }
   return fetch('/getEvents')
     .then(res => res.json())
     .then(events => {
