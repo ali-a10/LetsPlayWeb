@@ -433,3 +433,41 @@ h2 {
 .star.hover {
   color: #ffc107; /* Bootstrap gold */
 }
+
+/* WHY USE THE APP */
+.why-section {
+  background: radial-gradient(
+    circle at top,
+    rgba(0, 255, 220, 0.08),
+    transparent 60%
+  );
+}
+
+.why-card {
+  background: rgba(10, 40, 50, 0.65);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.why-item {
+  position: relative;
+  padding-right: 1rem;
+}
+
+.why-item:nth-child(odd) {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+  .why-item:nth-child(odd) {
+    border-right: none;
+  }
+}
+
+.why-icon {
+  font-size: 1.6rem;
+  color: #5ef1df;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
